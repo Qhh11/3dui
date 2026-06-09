@@ -1,0 +1,8 @@
+﻿<Solution>
+  <Project Path="Boxophobic.Utils.Editor.csproj" />
+  <Project Path="ble-plugin-unity.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
+  <Project Path="Boxophobic.Utils.Scripts.csproj" />
+  <Project Path="bleplugin-x86_64.csproj" />
+  <Project Path="Boxophobic.SkyboxCubemapExtended.Editor.csproj" />
+</Solution>
