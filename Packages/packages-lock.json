@@ -228,6 +228,14 @@
       },
       "url": "https://packages.unity.com"
     },
+    "idev.dyrda.touch-controls": {
+      "version": "file:dev.dyrda.touch-controls",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.inputsystem": "1.0.1"
+      }
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,

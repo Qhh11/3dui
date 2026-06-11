@@ -1,0 +1,17 @@
+{
+  "name": "idev.dyrda.touch-controls",
+  "version": "0.0.1",
+  "displayName": "Touch Controls",
+  "description": "",
+  "unity": "2019.1",
+  "unityRelease": "0b5",
+  "keywords": [],
+  "author": {
+    "name": "Daniel Dyrda",
+    "email": "daniel@dyrda.digital",
+    "url": "https://www.dyrda.digital"
+  },
+  "dependencies": {
+    "com.unity.inputsystem": "1.0.1"
+  }
+}
