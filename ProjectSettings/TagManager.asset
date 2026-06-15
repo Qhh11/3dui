@@ -13,6 +13,7 @@ TagManager:
   - Mode1Drag
   - Mode1Place
   - Del
+  - TrackingObject
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - UI
   - 1
   - 2
-  - 
+  - Draggable
   - 
   - 
   - 
@@ -52,3 +53,4 @@ TagManager:
     locked: 0
   m_RenderingLayers:
   - Default
+  m_MigratedRenderPipelines: []

@@ -14,7 +14,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/scene.unity
     guid: 0783f22134e576047851032cab55f908
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Runzhe Test 1.unity
     guid: c548c202ff6909842b70c5384a81fa1b
+  - enabled: 1
+    path: Assets/Scenes/Test Drag.unity
+    guid: 0e8aec4365fe559458f70dea28548c6d
   m_configObjects: {}

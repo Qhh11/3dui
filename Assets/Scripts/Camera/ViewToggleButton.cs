@@ -36,6 +36,8 @@ public class ViewToggleButton : MonoBehaviour
     [Tooltip("切回某个视角时，是否以当前手机朝向重新校准(避免恢复时朝向错乱)")]
     public bool recenterOnActivate = true;
 
+    public TouchDragger touchDragger;
+
     private bool isFirstPerson;
 
     void Start()
@@ -60,6 +62,8 @@ public class ViewToggleButton : MonoBehaviour
         // 2) 只启用当前视角的控制脚本，另一个停掉 -> 它的 Update 不再跑，转动停止
         SetController(firstPersonController, isFirstPerson);
         SetController(secondaryController, !isFirstPerson);
+
+        //if (touchDragger != null) touchDragger.enabled = isFirstPerson;
     }
 
     private void SetController(MonoBehaviour controller, bool active)
