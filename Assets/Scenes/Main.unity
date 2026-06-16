@@ -5788,6 +5788,24 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 232460247}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &236409005
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1162239267}
+  - component: {fileID: 1162239266}
+  - component: {fileID: 1162239265}
+  m_Layer: 5
+  m_Name: User View
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1001 &236421993
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12147,13 +12165,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 432332538}
+  - component: {fileID: 432332540}
+  - component: {fileID: 432332539}
   m_Layer: 5
   m_Name: shooting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &432332538
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12163,7 +12183,7 @@ RectTransform:
   m_GameObject: {fileID: 432332537}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.97165984, y: 0.97165984, z: 0.97165984}
+  m_LocalScale: {x: 0.9716597, y: 0.9716597, z: 0.9716597}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1425761527}
@@ -12176,6 +12196,33 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &432332539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432332537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 159c406dcaeebaa4686e0b3a602c74cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIToggleFade
+  canvasGroup: {fileID: 432332540}
+  fadeDuration: 0.3
+  interactImmediatelyWhenShowing: 1
+--- !u!225 &432332540
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 432332537}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &432877487
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18908,7 +18955,7 @@ Transform:
   m_GameObject: {fileID: 660137398}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 2.81, z: 1.56}
+  m_LocalPosition: {x: -0, y: 110.94, z: -81.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19733,11 +19780,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 430462941}
-  m_Father: {fileID: 877435739}
+  m_Father: {fileID: 1162239267}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -33.39987}
+  m_AnchoredPosition: {x: 0, y: 319.6001}
   m_SizeDelta: {x: 653, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &686518944
@@ -23976,7 +24023,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 877435739}
+    m_TransformParent: {fileID: 1162239267}
     m_Modifications:
     - target: {fileID: 7645664034481385416, guid: 630c5b2723603d64ea3852417640b4fd,
         type: 3}
@@ -24066,12 +24113,12 @@ PrefabInstance:
     - target: {fileID: 7645664034481385418, guid: 630c5b2723603d64ea3852417640b4fd,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 200
+      value: -464.5
       objectReference: {fileID: 0}
     - target: {fileID: 7645664034481385418, guid: 630c5b2723603d64ea3852417640b4fd,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 200
+      value: -152.99997
       objectReference: {fileID: 0}
     - target: {fileID: 7645664034481385418, guid: 630c5b2723603d64ea3852417640b4fd,
         type: 3}
@@ -24920,7 +24967,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 829.7959, y: 405.6333}
+  m_AnchoredPosition: {x: -120, y: -120}
   m_SizeDelta: {x: 77.6776, y: 77.6776}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &801685500
@@ -24970,6 +25017,30 @@ MonoBehaviour:
       - m_Target: {fileID: 1703834558}
         m_TargetAssemblyTypeName: SwitchPerspectiveButtonController, Assembly-CSharp
         m_MethodName: OnSwitchButtonClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1162239265}
+        m_TargetAssemblyTypeName: UIToggleFade, Assembly-CSharp
+        m_MethodName: ToggleUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 432332539}
+        m_TargetAssemblyTypeName: UIToggleFade, Assembly-CSharp
+        m_MethodName: ToggleUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -27205,9 +27276,8 @@ RectTransform:
   m_LocalScale: {x: 1.0291667, y: 1.0291667, z: 1.0291667}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 771726695}
   - {fileID: 432332538}
-  - {fileID: 686518943}
+  - {fileID: 1162239267}
   m_Father: {fileID: 1399025606}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -35309,6 +35379,54 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Level1DialogueDatabase
   loadPortraitsFromResources: 1
+--- !u!114 &1162239265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236409005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 159c406dcaeebaa4686e0b3a602c74cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIToggleFade
+  canvasGroup: {fileID: 1162239266}
+  fadeDuration: 0.3
+  interactImmediatelyWhenShowing: 1
+--- !u!225 &1162239266
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236409005}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!224 &1162239267
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236409005}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 686518943}
+  - {fileID: 771726695}
+  m_Father: {fileID: 877435739}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1165604725
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55310,10 +55428,10 @@ RectTransform:
   - {fileID: 801685499}
   m_Father: {fileID: 1399025606}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1703834558
 MonoBehaviour:
@@ -57287,12 +57405,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72e1d278f36200a4cbb41a27e7bcf154, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RocketLauncher
-  aimCamera: {fileID: 0}
+  aimCamera: {fileID: 129442566}
   rocketPrefab: {fileID: 7029897005938000182, guid: 87e0cf9a65cf9d64bbcf01b3b4453953,
     type: 3}
-  firePoint: {fileID: 0}
-  rocketSpeed: 35
-  maxAimDistance: 200
+  firePoint: {fileID: 660137399}
+  rocketSpeed: 5000
+  maxAimDistance: 50000
   aimMask:
     serializedVersion: 2
     m_Bits: 4294967295

@@ -8,8 +8,8 @@ public class RocketLauncher : MonoBehaviour
     public Transform firePoint;
 
     [Header("Settings")]
-    public float rocketSpeed = 35f;
-    public float maxAimDistance = 200f;
+    public float rocketSpeed = 5000f;
+    public float maxAimDistance = 50000f;
     public LayerMask aimMask = ~0;
 
     public void Fire()
@@ -37,6 +37,8 @@ public class RocketLauncher : MonoBehaviour
         }
 
         Vector3 shootDirection = (targetPoint - firePoint.position).normalized;
+        
+        Debug.DrawRay(firePoint.position, shootDirection * maxAimDistance, Color.red);
 
         GameObject rocket = Instantiate(
             rocketPrefab,

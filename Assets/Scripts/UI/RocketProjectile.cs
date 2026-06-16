@@ -6,7 +6,7 @@ public class RocketProjectile : MonoBehaviour
 {
     [Header("Explosion")]
     public GameObject explosionPrefab;
-    public float explosionRadius = 5f;
+    public float explosionRadius = 200f;
     public float explosionForce = 500f;
     public float damage = 50f;
     public LayerMask damageMask = ~0;
