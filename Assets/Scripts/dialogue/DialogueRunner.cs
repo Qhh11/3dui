@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class DialogueRunner : MonoBehaviour
 {
@@ -45,6 +46,7 @@ public class DialogueRunner : MonoBehaviour
     private string fullCurrentText;
     private bool isTyping;
     private bool waitingForChoice;
+    private bool isWaitingForExternalAction;
 
     private void Awake()
     {
@@ -69,8 +71,12 @@ public class DialogueRunner : MonoBehaviour
             return;
         }
 
-        // When choices are visible, only the choice buttons should respond.
         if (waitingForChoice)
+        {
+            return;
+        }
+
+        if (isWaitingForExternalAction)
         {
             return;
         }
@@ -90,16 +96,69 @@ public class DialogueRunner : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            if (IsPointerOverUi(-1))
+            {
+                return false;
+            }
+
             return true;
         }
 
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
-            return touch.phase == TouchPhase.Began;
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                if (IsPointerOverUi(touch.fingerId))
+                {
+                    return false;
+                }
+
+                return true;
+            }
         }
 
         return false;
+    }
+
+    private bool IsPointerOverUi(int pointerId)
+    {
+        if (EventSystem.current == null)
+        {
+            return false;
+        }
+
+        if (pointerId >= 0)
+        {
+            return EventSystem.current.IsPointerOverGameObject(pointerId);
+        }
+
+        return EventSystem.current.IsPointerOverGameObject();
+    }
+
+    public void WaitForExternalAction()
+    {
+        isWaitingForExternalAction = true;
+    }
+
+    public void ContinueAfterExternalAction(bool endDialogue)
+    {
+        if (!isWaitingForExternalAction)
+        {
+            return;
+        }
+
+        isWaitingForExternalAction = false;
+
+        if (endDialogue)
+        {
+            EndDialogue();
+        }
+        else
+        {
+            Advance();
+        }
     }
 
     public void StartDialogue(DialogueSequence sequence)
@@ -117,6 +176,9 @@ public class DialogueRunner : MonoBehaviour
         SetDialogueVisible(true);
         SetInGameUiVisible(false);
         SetControlsEnabled(false);
+
+        SwitchPerspectiveButtonController.Instance?.NotifyDialogueOpened();
+
         ClearChoices();
         ShowCurrentEntry();
     }
@@ -364,6 +426,8 @@ public class DialogueRunner : MonoBehaviour
     private void CloseImmediate()
     {
         IsDialogueOpen = false;
+        isWaitingForExternalAction = false;
+
         currentSequence = null;
         currentIndex = 0;
         isTyping = false;
@@ -379,6 +443,8 @@ public class DialogueRunner : MonoBehaviour
         SetDialogueVisible(false);
         SetInGameUiVisible(true);
         SetControlsEnabled(true);
+
+        SwitchPerspectiveButtonController.Instance?.NotifyDialogueClosed();
     }
 
     private void SetDialogueVisible(bool visible)

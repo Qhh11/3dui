@@ -6,15 +6,44 @@ public static class DialogueIds
         public const string VillagerAFirstMeet = "villager_a_first_meet";
         public const string VillagerAWrongAnswer = "villager_a_wrong_answer";
         public const string VillagerACorrectAnswer = "villager_a_correct_answer";
+        public const string Level1FirstUfoView = "level1_first_ufo_view";
+        public const string Level1TentAnalyzed = "level1_tent_analyzed";
+        public const string Level1AfterSwitchBackToPlayer = "level1_after_switch_back_to_player";
     }
 
     public static class Events
     {
+        public const string StartWakeUpFade = "start_wake_up_fade";
+
+        public const string ShowSwitchHint = "show_switch_hint";
+        public const string ForceSwitchToUfo = "force_switch_to_ufo";
+        public const string ForceSwitchToPlayer = "force_switch_to_player";
+
+        public const string QuestSwitchBackToPlayer = "quest_switch_back_to_player";
         public const string QuestInvestigateTent = "quest_investigate_tent";
-        public const string QuestGoToWell = "quest_go_to_well";
+        public const string ShowAnalyzeTent = "show_analyze_tent";
+        public const string QuestAnalyzeTent = "quest_analyze_tent";
+        public const string QuestGoToTent = "quest_go_to_tent";
+
+        public const string ActivateTentArea = "activate_tent_area";
         public const string ActivateWellArea = "activate_well_area";
+        public const string ActivateAbandonedWellArea = "activate_abandoned_well_area";
+
+        public const string QuestGoToWell = "quest_go_to_well";
+        public const string QuestRetrieveFromAbandonedWell = "quest_retrieve_from_abandoned_well";
+        public const string QuestGoToFirstHouse = "quest_go_to_first_house";
+        public const string QuestClearWoodBeams = "quest_clear_wood_beams";
+        public const string QuestGoToSecondHouse = "quest_go_to_second_house";
+        public const string QuestMoveBridgeFirstCrossing = "quest_move_bridge_first_crossing";
+        public const string QuestMoveBridgeSecondCrossing = "quest_move_bridge_second_crossing";
+        public const string QuestGoToTower = "quest_go_to_tower";
+        public const string QuestClearTowerGate = "quest_clear_tower_gate";
+        public const string QuestEnterTower = "quest_enter_tower";
+
         public const string UnlockSiphon = "unlock_siphon";
-        public const string QuestGoToAbandonedWell = "quest_go_to_abandoned_well";
+
+        public const string PlaySignalGlitchLakeBody = "play_signal_glitch_lake_body";
+        public const string PlayBridgeFutureGlitch = "play_bridge_future_glitch";
     }
 
     public static class Flags

@@ -4,6 +4,7 @@ using UnityEngine;
 public class Level1DialogueDatabase : MonoBehaviour
 {
     public static Level1DialogueDatabase Instance { get; private set; }
+    public const string Level1FirstUfoView = "level1_first_ufo_view";
 
     [Header("Optional portraits loaded from Resources/Portraits")]
     [SerializeField] private bool loadPortraitsFromResources = true;
@@ -77,11 +78,19 @@ public class Level1DialogueDatabase : MonoBehaviour
         sequences.Clear();
 
         DialogueSequence prelude = NewSequence(DialogueIds.Sequences.Level1Prelude);
+        DialogueSequence level1FirstUfoView = NewSequence(DialogueIds.Sequences.Level1FirstUfoView);
+        DialogueSequence level1TentAnalyzed = NewSequence(DialogueIds.Sequences.Level1TentAnalyzed);
+        DialogueSequence level1AfterSwitchBackToPlayer = NewSequence(DialogueIds.Sequences.Level1AfterSwitchBackToPlayer);
+
         DialogueSequence villagerAFirstMeet = NewSequence(DialogueIds.Sequences.VillagerAFirstMeet);
         DialogueSequence villagerAWrongAnswer = NewSequence(DialogueIds.Sequences.VillagerAWrongAnswer);
         DialogueSequence villagerACorrectAnswer = NewSequence(DialogueIds.Sequences.VillagerACorrectAnswer);
 
         BuildPrelude(prelude);
+        BuildLevel1FirstUfoView(level1FirstUfoView);
+        BuildLevel1TentAnalyzed(level1TentAnalyzed);
+        BuildLevel1AfterSwitchBackToPlayer(level1AfterSwitchBackToPlayer);
+
         BuildVillagerAFirstMeet(villagerAFirstMeet, villagerAWrongAnswer, villagerACorrectAnswer);
         BuildVillagerAWrongAnswer(villagerAWrongAnswer, villagerAWrongAnswer, villagerACorrectAnswer);
         BuildVillagerACorrectAnswer(villagerACorrectAnswer);
@@ -100,18 +109,66 @@ public class Level1DialogueDatabase : MonoBehaviour
     {
         DialogueCharacter player = GetCharacter(DialogueIds.Characters.Player);
         DialogueCharacter terminal = GetCharacter(DialogueIds.Characters.UFOTerminal);
-
         sequence.entries.Add(Line(player, "Ugh... my head hurts."));
-        sequence.entries.Add(Line(player, "What happened? UFO Terminal, can you hear me?"));
+        sequence.entries.Add(Line(player, "What happened? UFO Terminal, can you hear me?", eventOnEnd: DialogueIds.Events.StartWakeUpFade));
+
         sequence.entries.Add(Line(terminal, "Warning. Warning."));
-        sequence.entries.Add(Line(terminal, "Temporal turbulence detected."));
-        sequence.entries.Add(Line(terminal, "Main system damaged. Emergency landing completed in an unknown area."));
+        sequence.entries.Add(Line(terminal, "Temporal turbulence residue detected."));
+        sequence.entries.Add(Line(terminal, "Mechanical failure confirmed. We have crashed in an unknown area."));
         sequence.entries.Add(Line(terminal, "Backup energy units were scattered during impact."));
         sequence.entries.Add(Line(terminal, "All energy units must be recovered before departure."));
+
         sequence.entries.Add(Line(player, "Thank goodness. At least I can still reach you."));
-        sequence.entries.Add(Line(player, "The energy units could be anywhere."));
-        sequence.entries.Add(Line(player, "Maybe I can use your scouting system to locate them."));
-        sequence.entries.Add(Line(player, "Let me try if this still works.", eventOnEnd: DialogueIds.Events.QuestInvestigateTent));
+        sequence.entries.Add(Line(player, "The energy units could be anywhere..."));
+        sequence.entries.Add(Line(player, "Maybe I can use your scouting system to search for them."));
+
+        sequence.entries.Add(Line(
+            player,
+            "I can tap the Switch icon in the top-right corner to change perspective."
+        ));
+
+        sequence.entries.Add(Line(
+            player,
+            "Let me try if this still works.",
+            eventOnEnd: DialogueIds.Events.ShowSwitchHint
+        ));
+    }
+    private void BuildLevel1FirstUfoView(DialogueSequence sequence)
+    {
+        DialogueCharacter player = GetCharacter(DialogueIds.Characters.Player);
+
+        sequence.entries.Add(Line(player, "Strange..."));
+        sequence.entries.Add(Line(player, "Why does the world look different through the UFO?"));
+        sequence.entries.Add(Line(player, "I still see grassland here, but this view looks ruined."));
+        sequence.entries.Add(Line(
+            player,
+            "That tent stands out. I should investigate it.",
+            eventOnEnd: DialogueIds.Events.ShowAnalyzeTent
+        ));
+    }
+
+    private void BuildLevel1TentAnalyzed(DialogueSequence sequence)
+    {
+        DialogueCharacter terminal = GetCharacter(DialogueIds.Characters.UFOTerminal);
+
+        sequence.entries.Add(Line(terminal, "Energy fluctuation residue detected."));
+        sequence.entries.Add(Line(terminal, "An energy unit once appeared in this target area."));
+        sequence.entries.Add(Line(
+            terminal,
+            "Recommendation: investigate the tent from Player perspective.",
+            eventOnEnd: DialogueIds.Events.QuestSwitchBackToPlayer
+        ));
+    }
+
+    private void BuildLevel1AfterSwitchBackToPlayer(DialogueSequence sequence)
+    {
+        DialogueCharacter player = GetCharacter(DialogueIds.Characters.Player);
+
+        sequence.entries.Add(Line(
+            player,
+            "I should go take a look at that tent.",
+            eventOnEnd: DialogueIds.Events.QuestGoToTent
+        ));
     }
 
     private void BuildVillagerAFirstMeet(
