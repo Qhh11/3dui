@@ -43,6 +43,11 @@ public class SiphonController : MonoBehaviour
     [Header("Beam Visual")]
     [SerializeField] private Transform beamOrigin;
     [SerializeField] private LineRenderer beamLine;
+    
+    [SerializeField] private Image crosshairImage;
+
+    [SerializeField] private Color normalCrosshairColor = Color.white;
+    [SerializeField] private Color targetCrosshairColor = Color.cyan;
 
     private SiphonState state = SiphonState.Disabled;
 
@@ -56,6 +61,7 @@ public class SiphonController : MonoBehaviour
     {
         SetUnlocked(startUnlocked);
         HideBeam();
+        SetCrosshairColor(normalCrosshairColor);
     }
 
     private void Update()
@@ -101,6 +107,14 @@ public class SiphonController : MonoBehaviour
         SetButtonInteractable(unlocked);
         ClearHover();
         HideBeam();
+    }
+    
+    private void SetCrosshairColor(Color color)
+    {
+        if (crosshairImage != null)
+        {
+            crosshairImage.color = color;
+        }
     }
 
     public void OnSiphonButtonClicked()
@@ -309,6 +323,8 @@ public class SiphonController : MonoBehaviour
     private void UpdateHover()
     {
         ClearHover();
+        
+        SetCrosshairColor(normalCrosshairColor);
 
         Camera cam = GetCamera();
         if (cam == null) return;
@@ -323,6 +339,8 @@ public class SiphonController : MonoBehaviour
             {
                 hoveredObject = target;
                 hoveredObject.SetHighlighted(true);
+                
+                SetCrosshairColor(targetCrosshairColor);
             }
         }
     }

@@ -2421,6 +2421,21 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 23864177615755696, guid: 5d1442ad8c11442988e0eca5d8af73f0,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 23921463290005256, guid: 5d1442ad8c11442988e0eca5d8af73f0,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199963352071329394, guid: 5d1442ad8c11442988e0eca5d8af73f0,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3401,6 +3416,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 6079893348031245329, guid: 0c3537d9eb4a4a941abe84656680124c,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3685,8 +3705,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 129442561}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.15577297, y: 0.8441781, z: -0.35771865, w: -0.36760795}
-  m_LocalPosition: {x: 4297.04, y: 6343.5586, z: -2077.5012}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2057.5403, y: 3406.6587, z: -5508.501}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4334,6 +4354,9 @@ MonoBehaviour:
     m_Bits: 4294967295
   beamOrigin: {fileID: 0}
   beamLine: {fileID: 0}
+  crosshairImage: {fileID: 2092577770}
+  normalCrosshairColor: {r: 0, g: 0.65882355, b: 1, a: 1}
+  targetCrosshairColor: {r: 0.2312407, g: 0.9308176, b: 0.23124073, a: 1}
 --- !u!224 &155165599
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15690,6 +15713,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4387678931267766, guid: 1818e1a170ef94c3aacee2ba50057521, type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 23029203783053510, guid: 1818e1a170ef94c3aacee2ba50057521,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 23814069265243434, guid: 1818e1a170ef94c3aacee2ba50057521,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199585147326065124, guid: 1818e1a170ef94c3aacee2ba50057521,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -31618,6 +31656,21 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 23340741358459038, guid: 7e4bfb3c6ba1d4bc4ba31d585abdae0f,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 23793970008372544, guid: 7e4bfb3c6ba1d4bc4ba31d585abdae0f,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199131918321748202, guid: 7e4bfb3c6ba1d4bc4ba31d585abdae0f,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -32528,6 +32581,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4620931210112870, guid: ab152f61198d54532ae39108e616ff59, type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 23277255578292572, guid: ab152f61198d54532ae39108e616ff59,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 23557692965381650, guid: ab152f61198d54532ae39108e616ff59,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199956874217308870, guid: ab152f61198d54532ae39108e616ff59,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -35936,7 +36004,7 @@ PrefabInstance:
     - target: {fileID: 6079893348031245329, guid: 0c3537d9eb4a4a941abe84656680124c,
         type: 3}
       propertyPath: m_RenderingLayerMask
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -54396,6 +54464,21 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 23090388759196626, guid: 300f80108a63f48618cb4a1c8b8c1e86,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 23867915394586346, guid: 300f80108a63f48618cb4a1c8b8c1e86,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199987257424377576, guid: 300f80108a63f48618cb4a1c8b8c1e86,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -58150,11 +58233,13 @@ MonoBehaviour:
   rocketPrefab: {fileID: 7029897005938000182, guid: 87e0cf9a65cf9d64bbcf01b3b4453953,
     type: 3}
   firePoint: {fileID: 660137399}
+  rocketButton: {fileID: 1425761528}
   rocketSpeed: 5000
   maxAimDistance: 50000
   aimMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  fireCooldown: 1
 --- !u!1001 &1805432469
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -58578,6 +58663,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4693579709242440, guid: f9a741bb8762344c6a2a9cb4217ef728, type: 3}
       propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 23811930558839548, guid: f9a741bb8762344c6a2a9cb4217ef728,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 23857910435866848, guid: f9a741bb8762344c6a2a9cb4217ef728,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199940970818216614, guid: f9a741bb8762344c6a2a9cb4217ef728,
+        type: 3}
+      propertyPath: m_RenderingLayerMask
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199940970818216614, guid: f9a741bb8762344c6a2a9cb4217ef728,
+        type: 3}
+      propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

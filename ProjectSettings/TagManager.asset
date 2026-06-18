@@ -56,7 +56,7 @@ TagManager:
   m_RenderingLayers:
   - Default
   - Outline_1
-  - Layer 2
-  - Layer 3
-  - Layer 4
+  - Outline_2
+  - Outline_3
+  - Outline_4
   m_MigratedRenderPipelines: []
