@@ -5,8 +5,10 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Rigidbody))]
 public class SiphonableObject : MonoBehaviour
 {
-    [Header("Highlight")]
-    [SerializeField] private GameObject highlightObject;
+    [Header("Outline")]
+    [SerializeField] private Renderer[] outlineRenderers;
+    
+    [SerializeField] private uint outlineMask = 1u << 1;
 
     [Header("Place")]
     [SerializeField] private float skinWidth = 0.03f;
@@ -18,6 +20,7 @@ public class SiphonableObject : MonoBehaviour
 
     private Rigidbody rb;
     private Transform originalParent;
+    private uint[] originalRenderingLayerMasks;
 
     public float SkinWidth => skinWidth;
     public Rigidbody Rigidbody => rb;
@@ -25,13 +28,50 @@ public class SiphonableObject : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+
+        if (outlineRenderers == null || outlineRenderers.Length == 0)
+        {
+            outlineRenderers = GetComponentsInChildren<Renderer>(true);
+        }
+
+        originalRenderingLayerMasks = new uint[outlineRenderers.Length];
+
+        for (int i = 0; i < outlineRenderers.Length; i++)
+        {
+            if (outlineRenderers[i] != null)
+            {
+                originalRenderingLayerMasks[i] = outlineRenderers[i].renderingLayerMask;
+            }
+        }
+
         SetHighlighted(false);
     }
 
     public void SetHighlighted(bool highlighted)
     {
-        if (highlightObject != null)
-            highlightObject.SetActive(highlighted);
+        if (outlineRenderers == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < outlineRenderers.Length; i++)
+        {
+            Renderer r = outlineRenderers[i];
+
+            if (r == null)
+            {
+                continue;
+            }
+
+            if (highlighted)
+            {
+                r.renderingLayerMask = originalRenderingLayerMasks[i] | outlineMask;
+            }
+            else
+            {
+                r.renderingLayerMask = originalRenderingLayerMasks[i];
+            }
+        }
     }
 
     public void PickUp(Transform holdPoint)

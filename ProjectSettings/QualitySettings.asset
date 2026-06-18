@@ -61,6 +61,7 @@ QualitySettings:
     terrainMaxTrees: 50
     excludedTargetPlatforms:
     - Standalone
+    - Android
   - serializedVersion: 5
     name: Medium
     pixelLightCount: 1
@@ -115,8 +116,8 @@ QualitySettings:
     terrainFadeLength: 5
     terrainMaxTrees: 50
     excludedTargetPlatforms:
-    - Android
     - Standalone
+    - Android
   - serializedVersion: 5
     name: High
     pixelLightCount: 3
@@ -170,11 +171,10 @@ QualitySettings:
     terrainBillboardStart: 50
     terrainFadeLength: 5
     terrainMaxTrees: 50
-    excludedTargetPlatforms:
-    - Android
+    excludedTargetPlatforms: []
   m_TextureMipmapLimitGroupNames: []
   m_PerPlatformDefaultQuality:
-    Android: 0
+    Android: 2
     Nintendo Switch 2: 2
     Standalone: 2
     WebGL: 0
