@@ -14,6 +14,8 @@ TagManager:
   - Mode1Place
   - Del
   - TrackingObject
+  - FxTemporaire
+  - Actors
   layers:
   - Default
   - TransparentFX
@@ -24,7 +26,7 @@ TagManager:
   - 1
   - 2
   - Draggable
-  - 
+  - Siphonable
   - 
   - 
   - 
@@ -53,4 +55,8 @@ TagManager:
     locked: 0
   m_RenderingLayers:
   - Default
+  - Outline_1
+  - Outline_2
+  - Outline_3
+  - Outline_4
   m_MigratedRenderPipelines: []

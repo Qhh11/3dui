@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.cqf.outline": {
+      "version": "https://github.com/CristianQiu/Unity-URP-Outline.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "f7e75b21e88dbcb384a4d44668a0c80adcc0e756"
+    },
     "com.cysharp.unitask": {
       "version": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
       "depth": 0,
