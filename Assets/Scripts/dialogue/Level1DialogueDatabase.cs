@@ -94,6 +94,21 @@ public class Level1DialogueDatabase : MonoBehaviour
         BuildVillagerAFirstMeet(villagerAFirstMeet, villagerAWrongAnswer, villagerACorrectAnswer);
         BuildVillagerAWrongAnswer(villagerAWrongAnswer, villagerAWrongAnswer, villagerACorrectAnswer);
         BuildVillagerACorrectAnswer(villagerACorrectAnswer);
+
+        DialogueSequence wellArrival = NewSequence(DialogueIds.Sequences.WellArrival);
+        DialogueSequence wellUfoView = NewSequence(DialogueIds.Sequences.WellUfoView);
+        DialogueSequence wellEnergyPickup = NewSequence(DialogueIds.Sequences.WellEnergyPickup);
+        BuildWellArrival(wellArrival);
+        BuildWellUfoView(wellUfoView);
+        BuildWellEnergyPickup(wellEnergyPickup);
+
+        // --- Villager B: Well ---
+        DialogueSequence villagerBFirstMeet = NewSequence(DialogueIds.Sequences.VillagerBFirstMeet);
+        DialogueSequence abandonedWellArrival = NewSequence(DialogueIds.Sequences.AbandonedWellArrival);
+        DialogueSequence abandonedWellAfterSiphon = NewSequence(DialogueIds.Sequences.AbandonedWellAfterSiphon);
+        BuildVillagerBFirstMeet(villagerBFirstMeet);
+        BuildAbandonedWellArrival(abandonedWellArrival);
+        BuildAbandonedWellAfterSiphon(abandonedWellAfterSiphon);
     }
 
     private DialogueSequence NewSequence(string sequenceId)
@@ -252,6 +267,204 @@ public class Level1DialogueDatabase : MonoBehaviour
         sequence.entries.Add(Line(villager, "If you are looking for a glowing object, go there."));
         sequence.entries.Add(Line(villager, "But I warn you. Do not bring it back.", eventOnEnd: DialogueIds.Events.QuestGoToWell));
     }
+
+    // 段1: 到达水井,小人发现草太厚 → 触发切UFO视角
+    private void BuildWellArrival(DialogueSequence sequence)
+    {
+        DialogueCharacter player = GetCharacter(DialogueIds.Characters.Player);
+
+        sequence.entries.Add(Line(player, "The grass is too thick."));
+        sequence.entries.Add(Line(player, "UFO, can you see anything from your side?",
+            eventOnEnd: DialogueIds.Events.ActivateWellArea));
+            // activate_well_area: 激活UFO视角下的水井触发区域
+    }
+
+    // 段2: UFO视角下,小人看到能源块 → 触发切回+标记位置
+    private void BuildWellUfoView(DialogueSequence sequence)
+    {
+        DialogueCharacter player = GetCharacter(DialogueIds.Characters.Player);
+
+        sequence.entries.Add(Line(player, "The grass is dead..."));
+        sequence.entries.Add(Line(player, "So the stone is right there.",
+            eventOnEnd: DialogueIds.Events.WellMarkEnergy));
+        // gameplay: 标记能源块位置,切回小人视角,玩家点击草丛拾取
+    }
+
+    // 段3: 拾取后,UFO终端报告解锁虹吸
+    private void BuildWellEnergyPickup(DialogueSequence sequence)
+    {
+        DialogueCharacter player = GetCharacter(DialogueIds.Characters.Player);
+        DialogueCharacter terminal = GetCharacter(DialogueIds.Characters.UFOTerminal);
+
+        sequence.entries.Add(Line(terminal, "Energy unit detected."));
+        sequence.entries.Add(Line(terminal, "Power recharging..."));
+        sequence.entries.Add(Line(terminal, "Basic functions restored."));
+        sequence.entries.Add(Line(terminal, "Siphon function... online.",
+            eventOnStart: DialogueIds.Events.UnlockSiphon));
+
+        sequence.entries.Add(Line(player, "You fixed a function?"));
+
+        sequence.entries.Add(Line(terminal, "Siphon function can extract lightweight objects."));
+        sequence.entries.Add(Line(terminal, "Aim at target and activate."));
+        // gameplay: 之后居民B冲出来,触发 VillagerBFirstMeet
+    }
+
+    // =============================================
+    // VILLAGER B — Water Well
+    // =============================================
+    
+    private void BuildVillagerBFirstMeet(DialogueSequence sequence)
+    {
+        DialogueCharacter player = GetCharacter(DialogueIds.Characters.Player);
+        DialogueCharacter villager = GetCharacter(DialogueIds.Characters.VillagerB);
+
+        sequence.entries.Add(Line(villager, "Hey! What are you doing?",
+            eventOnStart: DialogueIds.Flags.MetVillagerB));
+        sequence.entries.Add(Line(villager, "You cannot pick that up! Drop it! Now!"));
+
+        sequence.entries.Add(Line(player, "Why?"));
+        sequence.entries.Add(Line(player, "It is just a glowing energy block."));
+
+        sequence.entries.Add(Line(villager, "Energy block?"));
+        sequence.entries.Add(Line(villager,
+            "You outsiders always give pretty names to things you should not touch."));
+        sequence.entries.Add(Line(villager, "It is cursed."));
+        sequence.entries.Add(Line(villager,
+            "Whoever touches it gets pulled into strange things."));
+
+        sequence.entries.Add(Line(player, "Sounds like a legend."));
+
+        sequence.entries.Add(Line(villager, "It is not a legend!"));
+        sequence.entries.Add(Line(villager,
+            "I see it near the well every night."));
+        sequence.entries.Add(Line(villager,
+            "I have buried it. Burned it. Thrown it in the river."));
+        sequence.entries.Add(Line(villager,
+            "The next day, it always comes back to the same spot."));
+        sequence.entries.Add(Line(villager,
+            "As if it does not belong here, yet it keeps trying to return."));
+
+        sequence.entries.Add(Line(player,
+            "Maybe someone just put it back."));
+
+        sequence.entries.Add(Line(villager, "You do not believe me?"));
+        sequence.entries.Add(Line(villager,
+            "Then go look at the abandoned well."));
+        sequence.entries.Add(Line(villager,
+            "Last night, I threw one of these down there myself."));
+        sequence.entries.Add(Line(villager,
+            "The well is deep. No one can fish it out."));
+        sequence.entries.Add(Line(villager,
+            "If you can find it down there, then I am not crazy."));
+
+        sequence.entries.Add(Line(player, "Where is the abandoned well?"));
+
+        sequence.entries.Add(Line(villager,
+            "Right behind this well. Hidden by the grass."));
+        sequence.entries.Add(Line(villager, "Do not say I did not warn you."));
+        sequence.entries.Add(Line(villager,
+            "Some things only need to be proven once to regret for a lifetime.",
+            eventOnEnd: DialogueIds.Events.QuestRetrieveFromAbandonedWell));
+    }
+
+
+    // =============================================
+    // 段2: 到达废井,UFO终端提示用虹吸
+    // 触发时机: 玩家走到废井旁
+    // 结束后 → gameplay: 玩家操作虹吸打捞
+    // =============================================
+
+    private void BuildAbandonedWellArrival(DialogueSequence sequence)
+    {
+        DialogueCharacter terminal = GetCharacter(DialogueIds.Characters.UFOTerminal);
+
+        sequence.entries.Add(Line(terminal, "Weak energy signature detected."));
+        sequence.entries.Add(Line(terminal, "Target located at the bottom of the well."));
+        sequence.entries.Add(Line(terminal, "Recommendation: use siphon function.",
+            eventOnEnd: DialogueIds.Events.ActivateAbandonedWellArea));
+        // gameplay: UI提示"切UFO视角,对准井底,启动虹吸"
+        // 玩家操作完成后 → 触发段3
+    }
+
+
+    // =============================================
+    // 段3: 虹吸捞出物体后,平行时空揭示
+    // 触发时机: 虹吸把东西吸出来之后
+    // =============================================
+
+    private void BuildAbandonedWellAfterSiphon(DialogueSequence sequence)
+    {
+        DialogueCharacter player = GetCharacter(DialogueIds.Characters.Player);
+        DialogueCharacter terminal = GetCharacter(DialogueIds.Characters.UFOTerminal);
+        DialogueCharacter villager = GetCharacter(DialogueIds.Characters.VillagerB);
+
+        sequence.entries.Add(Line(player, "...How is this possible?"));
+        sequence.entries.Add(Line(player,
+            "The one we just picked up is still here."));
+        sequence.entries.Add(Line(player,
+            "But there is another one in the well. Identical."));
+
+        sequence.entries.Add(Line(villager, "I told you."));
+        sequence.entries.Add(Line(villager, "It always comes back."));
+        sequence.entries.Add(Line(villager, "Every single time."));
+
+        sequence.entries.Add(Line(terminal, "Scan result: anomaly detected."));
+        sequence.entries.Add(Line(terminal,
+            "This energy unit's core is depleted."));
+        sequence.entries.Add(Line(terminal,
+            "Residual frequency highly matches the active unit."));
+        sequence.entries.Add(Line(terminal,
+            "Possible cause: temporal turbulence."));
+        sequence.entries.Add(Line(terminal,
+            "Local time structure is unstable."));
+        sequence.entries.Add(Line(terminal,
+            "Parallel timeline residue may be present."));
+
+        sequence.entries.Add(Line(player, "Parallel timelines?"));
+        sequence.entries.Add(Line(player,
+            "So this could be the same energy block, but from a different time?"));
+
+        sequence.entries.Add(Line(terminal, "Hypothesis probability rising."));
+        sequence.entries.Add(Line(terminal,
+            "The active unit and the depleted unit may originate from different timelines."));
+        sequence.entries.Add(Line(terminal,
+            "The same object overlapping across multiple timelines."));
+
+        sequence.entries.Add(Line(player, "So what I see is the present."));
+        sequence.entries.Add(Line(player,
+            "What you see might be the future."));
+        sequence.entries.Add(Line(player,
+            "And these energy blocks... may be falling out from different points in time."));
+
+        sequence.entries.Add(Line(terminal, "Reasoning accepted."));
+        sequence.entries.Add(Line(terminal,
+            "Recommendation: continue recovering energy units."));
+        sequence.entries.Add(Line(terminal,
+            "The more recovered, the more stable the temporal signal."));
+
+        sequence.entries.Add(Line(player,
+            "Then we definitely cannot leave them lying around."));
+        sequence.entries.Add(Line(player,
+            "We will collect every single one."));
+        sequence.entries.Add(Line(player,
+            "To fix you, and to find out what is really happening here."));
+
+        // 转向居民B问路
+        sequence.entries.Add(Line(player,
+            "Are there more glowing stones nearby?"));
+
+        sequence.entries.Add(Line(villager, "I do not know."));
+        sequence.entries.Add(Line(villager,
+            "But if you really want to find out, walk deeper into the grassland."));
+        sequence.entries.Add(Line(villager,
+            "The first house there belongs to an old friend of mine."));
+        sequence.entries.Add(Line(villager,
+            "Who lost what, where something strange happened, which paths still work... he remembers everything."));
+        sequence.entries.Add(Line(villager,
+            "If you are looking for things that should not exist, ask him.",
+            eventOnEnd: DialogueIds.Events.QuestGoToFirstHouse));
+    }
+
 
     private DialogueEntry Line(
         DialogueCharacter speaker,

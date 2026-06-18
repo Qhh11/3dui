@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 226e5aa0903ad584a8e6d2d3c93e2f8b
+AssetOrigin:
+  serializedVersion: 1
+  productId: 153933
+  packageName: Cruise Missile PBR (Unity 6)
+  packageVersion: 1.1
+  assetPath: Assets/Sayantan/Props/Small/CruiseMissile/Scenes/Demo_Day_Standard/ReflectionProbe-3.png
+  uploadId: 724327
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -27,15 +34,15 @@ TextureImporter:
   vTOnly: 0
   ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
-  generateCubemap: 5
+  generateCubemap: 6
   cubemapConvolution: 1
-  seamlessCubemap: 0
+  seamlessCubemap: 1
   textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
     filterMode: 2
-    aniso: 2
+    aniso: 0
     mipBias: 0
     wrapU: 1
     wrapV: 1
@@ -69,11 +76,11 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 8192
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
-    compressionQuality: 50
+    compressionQuality: 100
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
@@ -141,10 +148,3 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 153933
-  packageName: Cruise Missile PBR (Unity 6)
-  packageVersion: 1.1
-  assetPath: Assets/Sayantan/Props/Small/CruiseMissile/Scenes/Demo_Day_Standard/ReflectionProbe-3.png
-  uploadId: 724327

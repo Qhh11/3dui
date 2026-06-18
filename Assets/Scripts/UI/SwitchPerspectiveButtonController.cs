@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class SwitchPerspectiveButtonController : MonoBehaviour
 {
     public static SwitchPerspectiveButtonController Instance { get; private set; }
+    public bool IsUfoView { get; set; }
 
     private enum SwitchRequestMode
     {
@@ -172,6 +173,7 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         if (requestMode == SwitchRequestMode.FreeSwitching)
         {
             viewToggleButton.Toggle();
+            IsUfoView = !IsUfoView; 
             SetHighlightVisible(false);
             SetButtonInteractable(true);
             return;
@@ -182,6 +184,7 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
 
     private void HandleSwitchToUfo()
     {
+        IsUfoView = true;
         viewToggleButton.SwitchToUfo();
 
         requestMode = SwitchRequestMode.None;
@@ -197,6 +200,7 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
 
     private void HandleSwitchToPlayer()
     {
+        IsUfoView = false;
         viewToggleButton.SwitchToPlayer();
 
         requestMode = SwitchRequestMode.FreeSwitching;

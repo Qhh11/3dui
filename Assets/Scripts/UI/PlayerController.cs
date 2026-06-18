@@ -28,6 +28,15 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        // Gravity
+        if (controller.isGrounded)
+        {
+            playerVelocity.y = -0.5f; // 小力压住地面,防止浮起
+        }
+        else
+        {
+            playerVelocity.y += Physics.gravity.y * Time.deltaTime;
+        }
         // Read input
         Vector2 movment = inputManager.GetLeftStick();
         Vector3 move = new Vector3(movment.x, 0, movment.y);
