@@ -9,6 +9,15 @@ public static class DialogueIds
         public const string Level1FirstUfoView = "level1_first_ufo_view";
         public const string Level1TentAnalyzed = "level1_tent_analyzed";
         public const string Level1AfterSwitchBackToPlayer = "level1_after_switch_back_to_player";
+
+        public const string WellArrival = "well_arrival";
+        public const string WellUfoView = "well_ufo_view";
+        public const string WellEnergyPickup = "well_energy_pickup";
+        public const string VillagerBFirstMeet       = "villager_b_first_meet";
+        public const string AbandonedWellArrival     = "abandoned_well_arrival";
+        public const string AbandonedWellAfterSiphon = "abandoned_well_after_siphon";
+
+        
     }
 
     public static class Events
@@ -44,6 +53,11 @@ public static class DialogueIds
 
         public const string PlaySignalGlitchLakeBody = "play_signal_glitch_lake_body";
         public const string PlayBridgeFutureGlitch = "play_bridge_future_glitch";
+
+        public const string WellSwitchToUfo = "well_switch_to_ufo";
+        public const string WellSwitchToPlayer = "well_switch_to_player";
+        public const string WellMarkEnergy = "well_mark_energy";
+        public const string WellPickupEnergy = "well_pickup_energy";
     }
 
     public static class Flags
@@ -51,6 +65,8 @@ public static class DialogueIds
         public const string MetVillagerA = "met_villager_a";
         public const string AnsweredTowerMark = "answered_tower_mark";
         public const string SiphonUnlocked = "siphon_unlocked";
+
+        public const string MetVillagerB      = "met_villager_b";
     }
 
     public static class Characters
