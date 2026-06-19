@@ -8,7 +8,9 @@ public class RocketLauncher : MonoBehaviour
     public Camera aimCamera;
     public GameObject rocketPrefab;
     public Transform firePoint;
+
     [SerializeField] private Button rocketButton;
+    [SerializeField] private SiphonController siphonController;
 
     [Header("Settings")]
     public float rocketSpeed = 5000f;
@@ -20,9 +22,19 @@ public class RocketLauncher : MonoBehaviour
 
     private bool isCoolingDown;
 
+    private void Start()
+    {
+        RefreshButtonState();
+    }
+
+    private void Update()
+    {
+        RefreshButtonState();
+    }
+
     public void Fire()
     {
-        if (isCoolingDown)
+        if (!CanFire())
             return;
 
         if (aimCamera == null)
@@ -41,9 +53,13 @@ public class RocketLauncher : MonoBehaviour
         Vector3 targetPoint;
 
         if (Physics.Raycast(ray, out RaycastHit hit, maxAimDistance, aimMask))
+        {
             targetPoint = hit.point;
+        }
         else
+        {
             targetPoint = ray.origin + ray.direction * maxAimDistance;
+        }
 
         Vector3 shootDirection = (targetPoint - firePoint.position).normalized;
 
@@ -56,23 +72,38 @@ public class RocketLauncher : MonoBehaviour
         RocketProjectile projectile = rocket.GetComponent<RocketProjectile>();
 
         if (projectile != null)
+        {
             projectile.Launch(shootDirection, rocketSpeed);
+        }
+    }
+
+    private bool CanFire()
+    {
+        if (isCoolingDown)
+            return false;
+
+        if (siphonController != null && siphonController.IsBusy)
+            return false;
+
+        return true;
     }
 
     private IEnumerator CooldownRoutine()
     {
         isCoolingDown = true;
-        SetButtonInteractable(false);
+        RefreshButtonState();
 
         yield return new WaitForSeconds(fireCooldown);
 
         isCoolingDown = false;
-        SetButtonInteractable(true);
+        RefreshButtonState();
     }
 
-    private void SetButtonInteractable(bool interactable)
+    private void RefreshButtonState()
     {
         if (rocketButton != null)
-            rocketButton.interactable = interactable;
+        {
+            rocketButton.interactable = CanFire();
+        }
     }
 }

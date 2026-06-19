@@ -43,9 +43,9 @@ public class SiphonController : MonoBehaviour
     [Header("Beam Visual")]
     [SerializeField] private Transform beamOrigin;
     [SerializeField] private LineRenderer beamLine;
-    
-    [SerializeField] private Image crosshairImage;
 
+    [Header("Crosshair")]
+    [SerializeField] private Image crosshairImage;
     [SerializeField] private Color normalCrosshairColor = Color.white;
     [SerializeField] private Color targetCrosshairColor = Color.cyan;
 
@@ -57,6 +57,20 @@ public class SiphonController : MonoBehaviour
     private Vector3 targetPlacePosition;
     private Quaternion targetPlaceRotation;
 
+    private bool forceRefreshHoverNextFrame;
+
+    public bool IsBusy =>
+        state == SiphonState.PullingToHold ||
+        state == SiphonState.Holding ||
+        state == SiphonState.Placing;
+
+    public bool IsHoldingObject =>
+        state == SiphonState.Holding && heldObject != null;
+
+    public bool CanSwitchPerspective =>
+        state == SiphonState.Disabled ||
+        state == SiphonState.Idle;
+
     private void Start()
     {
         SetUnlocked(startUnlocked);
@@ -66,11 +80,13 @@ public class SiphonController : MonoBehaviour
 
     private void Update()
     {
-        if (state == SiphonState.Disabled) return;
+        if (state == SiphonState.Disabled)
+            return;
 
         if (state == SiphonState.Idle)
         {
             UpdateHover();
+            forceRefreshHoverNextFrame = false;
             return;
         }
 
@@ -104,22 +120,40 @@ public class SiphonController : MonoBehaviour
         if (siphonButtonRoot != null)
             siphonButtonRoot.SetActive(unlocked);
 
-        SetButtonInteractable(unlocked);
         ClearHover();
         HideBeam();
+        SetCrosshairColor(normalCrosshairColor);
+        SetButtonInteractable(unlocked);
+
+        forceRefreshHoverNextFrame = unlocked;
     }
-    
-    private void SetCrosshairColor(Color color)
+
+    public void ResetForPerspectiveSwitch()
     {
-        if (crosshairImage != null)
+        ClearHover();
+        HideBeam();
+        SetCrosshairColor(normalCrosshairColor);
+
+        if (state == SiphonState.Disabled)
         {
-            crosshairImage.color = color;
+            SetButtonInteractable(false);
+            return;
         }
+
+        if (state == SiphonState.Idle)
+        {
+            SetButtonInteractable(true);
+            forceRefreshHoverNextFrame = true;
+            return;
+        }
+
+        SetButtonInteractable(false);
     }
 
     public void OnSiphonButtonClicked()
     {
-        if (state == SiphonState.Disabled) return;
+        if (state == SiphonState.Disabled)
+            return;
 
         if (state == SiphonState.PullingToHold || state == SiphonState.Placing)
             return;
@@ -143,6 +177,8 @@ public class SiphonController : MonoBehaviour
         if (cam == null || holdPoint == null)
         {
             Debug.LogWarning("SiphonController missing Camera or HoldPoint.");
+            ClearHover();
+            SetCrosshairColor(normalCrosshairColor);
             return;
         }
 
@@ -151,6 +187,8 @@ public class SiphonController : MonoBehaviour
         if (!Physics.Raycast(ray, out RaycastHit hit, pickUpMaxDistance, siphonableMask, QueryTriggerInteraction.Ignore))
         {
             Debug.Log("Siphon pick up failed: hit nothing.");
+            ClearHover();
+            SetCrosshairColor(normalCrosshairColor);
             return;
         }
 
@@ -159,6 +197,8 @@ public class SiphonController : MonoBehaviour
         if (target == null || target.Rigidbody == null)
         {
             Debug.Log("Siphon pick up failed: target missing SiphonableObject or Rigidbody.");
+            ClearHover();
+            SetCrosshairColor(normalCrosshairColor);
             return;
         }
 
@@ -168,17 +208,22 @@ public class SiphonController : MonoBehaviour
         heldObject.PickUp(holdPoint);
 
         state = SiphonState.PullingToHold;
+        SetCrosshairColor(normalCrosshairColor);
         SetButtonInteractable(false);
         ShowBeam();
     }
 
     private void UpdatePullingToHold()
     {
+        SetCrosshairColor(normalCrosshairColor);
+
         if (heldObject == null)
         {
             state = SiphonState.Idle;
             SetButtonInteractable(true);
             HideBeam();
+            SetCrosshairColor(normalCrosshairColor);
+            forceRefreshHoverNextFrame = true;
             return;
         }
 
@@ -205,10 +250,15 @@ public class SiphonController : MonoBehaviour
 
     private void UpdateHolding()
     {
+        SetCrosshairColor(normalCrosshairColor);
+
         if (heldObject == null)
         {
             state = SiphonState.Idle;
             HideBeam();
+            SetCrosshairColor(normalCrosshairColor);
+            SetButtonInteractable(true);
+            forceRefreshHoverNextFrame = true;
             return;
         }
 
@@ -220,17 +270,25 @@ public class SiphonController : MonoBehaviour
 
     private void TryStartPlaceObject()
     {
+        SetCrosshairColor(normalCrosshairColor);
+
         if (heldObject == null)
         {
             state = SiphonState.Idle;
             HideBeam();
+            SetCrosshairColor(normalCrosshairColor);
+            SetButtonInteractable(true);
+            forceRefreshHoverNextFrame = true;
             return;
         }
 
         Camera cam = GetCamera();
 
         if (cam == null)
+        {
+            SetCrosshairColor(normalCrosshairColor);
             return;
+        }
 
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
@@ -238,6 +296,7 @@ public class SiphonController : MonoBehaviour
         {
             Debug.Log("Siphon place failed: no place surface.");
             heldObject.NotifyPlaceFailed();
+            SetCrosshairColor(normalCrosshairColor);
             return;
         }
 
@@ -247,16 +306,21 @@ public class SiphonController : MonoBehaviour
         heldObject.transform.SetParent(null, true);
 
         state = SiphonState.Placing;
+        SetCrosshairColor(normalCrosshairColor);
         SetButtonInteractable(false);
     }
 
     private void UpdatePlacing()
     {
+        SetCrosshairColor(normalCrosshairColor);
+
         if (heldObject == null)
         {
             state = SiphonState.Idle;
             SetButtonInteractable(true);
             HideBeam();
+            SetCrosshairColor(normalCrosshairColor);
+            forceRefreshHoverNextFrame = true;
             return;
         }
 
@@ -304,11 +368,14 @@ public class SiphonController : MonoBehaviour
         state = SiphonState.Idle;
         SetButtonInteractable(true);
         HideBeam();
+        SetCrosshairColor(normalCrosshairColor);
+        forceRefreshHoverNextFrame = true;
     }
 
     private bool IsHeldObjectReady()
     {
-        if (heldObject == null) return false;
+        if (heldObject == null)
+            return false;
 
         float positionError = heldObject.transform.localPosition.magnitude;
         float rotationError = Quaternion.Angle(
@@ -323,11 +390,11 @@ public class SiphonController : MonoBehaviour
     private void UpdateHover()
     {
         ClearHover();
-        
         SetCrosshairColor(normalCrosshairColor);
 
         Camera cam = GetCamera();
-        if (cam == null) return;
+        if (cam == null)
+            return;
 
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
@@ -339,7 +406,6 @@ public class SiphonController : MonoBehaviour
             {
                 hoveredObject = target;
                 hoveredObject.SetHighlighted(true);
-                
                 SetCrosshairColor(targetCrosshairColor);
             }
         }
@@ -373,6 +439,12 @@ public class SiphonController : MonoBehaviour
             siphonButton.interactable = interactable;
     }
 
+    private void SetCrosshairColor(Color color)
+    {
+        if (crosshairImage != null)
+            crosshairImage.color = color;
+    }
+
     private void ShowBeam()
     {
         if (beamLine != null)
@@ -387,7 +459,8 @@ public class SiphonController : MonoBehaviour
 
     private void UpdateBeam(Vector3 targetPosition)
     {
-        if (beamLine == null) return;
+        if (beamLine == null)
+            return;
 
         Vector3 start = beamOrigin != null ? beamOrigin.position : transform.position;
 

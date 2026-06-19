@@ -17,6 +17,7 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private ViewToggleButton viewToggleButton;
+    [SerializeField] private SiphonController siphonController;
 
     [Header("Root")]
     [SerializeField] private GameObject switchUiRoot;
@@ -53,11 +54,21 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
             viewToggleButton = FindObjectOfType<ViewToggleButton>();
         }
 
+        if (siphonController == null)
+        {
+            siphonController = FindObjectOfType<SiphonController>();
+        }
+
         switchVisible = !startHidden;
 
         SetRootVisible(switchVisible);
         SetButtonInteractable(false);
         SetHighlightVisible(false);
+    }
+
+    private void Update()
+    {
+        RefreshSwitchButtonAvailability();
     }
 
     public void NotifyDialogueOpened()
@@ -67,16 +78,7 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
             SetRootVisible(true);
         }
 
-        if (requestMode == SwitchRequestMode.SwitchToUfo || requestMode == SwitchRequestMode.SwitchToPlayer)
-        {
-            SetButtonInteractable(true);
-            SetHighlightVisible(true);
-        }
-        else
-        {
-            SetButtonInteractable(false);
-            SetHighlightVisible(false);
-        }
+        RefreshSwitchButtonAvailability();
     }
 
     public void NotifyDialogueClosed()
@@ -86,22 +88,7 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
             SetRootVisible(true);
         }
 
-        if (requestMode == SwitchRequestMode.FreeSwitching)
-        {
-            SetButtonInteractable(true);
-            SetHighlightVisible(false);
-            return;
-        }
-
-        if (requestMode == SwitchRequestMode.SwitchToUfo || requestMode == SwitchRequestMode.SwitchToPlayer)
-        {
-            SetButtonInteractable(true);
-            SetHighlightVisible(true);
-            return;
-        }
-
-        SetButtonInteractable(false);
-        SetHighlightVisible(false);
+        RefreshSwitchButtonAvailability();
     }
 
     public void ShowSwitchToUfoHint()
@@ -110,8 +97,8 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         requestMode = SwitchRequestMode.SwitchToUfo;
 
         SetRootVisible(true);
-        SetButtonInteractable(true);
         SetHighlightVisible(true);
+        RefreshSwitchButtonAvailability();
 
         DialogueRunner.Instance?.WaitForExternalAction();
     }
@@ -122,8 +109,8 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         requestMode = SwitchRequestMode.SwitchToPlayer;
 
         SetRootVisible(true);
-        SetButtonInteractable(true);
         SetHighlightVisible(true);
+        RefreshSwitchButtonAvailability();
 
         DialogueRunner.Instance?.WaitForExternalAction();
     }
@@ -139,13 +126,20 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         requestMode = SwitchRequestMode.FreeSwitching;
 
         SetRootVisible(true);
-        SetButtonInteractable(true);
         SetHighlightVisible(false);
+        RefreshSwitchButtonAvailability();
     }
 
     public void OnSwitchButtonClicked()
     {
         Debug.Log("Switch button clicked.");
+
+        if (!CanSwitchNow())
+        {
+            Debug.Log("Switch blocked because another interaction is busy.");
+            RefreshSwitchButtonAvailability();
+            return;
+        }
 
         if (viewToggleButton == null)
         {
@@ -174,8 +168,11 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         {
             viewToggleButton.Toggle();
             IsUfoView = !IsUfoView; 
+
+            siphonController?.ResetForPerspectiveSwitch();
+
             SetHighlightVisible(false);
-            SetButtonInteractable(true);
+            RefreshSwitchButtonAvailability();
             return;
         }
 
@@ -187,15 +184,18 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         IsUfoView = true;
         viewToggleButton.SwitchToUfo();
 
+        siphonController?.ResetForPerspectiveSwitch();
+
         requestMode = SwitchRequestMode.None;
         SetHighlightVisible(false);
-        SetButtonInteractable(false);
 
         ObjectivePanelController.Instance?.CompleteCurrentObjective();
 
         DialogueRunner.Instance?.ContinueAfterExternalAction(true);
 
         StartCoroutine(StartDialogueAfterDelay(firstUfoSequenceId, firstUfoDialogueDelay));
+
+        RefreshSwitchButtonAvailability();
     }
 
     private void HandleSwitchToPlayer()
@@ -203,15 +203,18 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         IsUfoView = false;
         viewToggleButton.SwitchToPlayer();
 
+        siphonController?.ResetForPerspectiveSwitch();
+
         requestMode = SwitchRequestMode.FreeSwitching;
         SetHighlightVisible(false);
-        SetButtonInteractable(true);
 
         ObjectivePanelController.Instance?.CompleteCurrentObjective();
 
         DialogueRunner.Instance?.ContinueAfterExternalAction(true);
 
         StartCoroutine(StartDialogueAfterDelay(afterSwitchBackSequenceId, afterSwitchBackDialogueDelay));
+
+        RefreshSwitchButtonAvailability();
     }
 
     private IEnumerator StartDialogueAfterDelay(string sequenceId, float delay)
@@ -227,6 +230,49 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         }
 
         DialogueRunner.Instance.StartDialogue(sequence);
+    }
+
+    private bool CanSwitchNow()
+    {
+        if (siphonController != null && !siphonController.CanSwitchPerspective)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void RefreshSwitchButtonAvailability()
+    {
+        if (switchButton == null)
+            return;
+
+        if (!switchVisible)
+        {
+            SetButtonInteractable(false);
+            return;
+        }
+
+        bool hasSwitchRequest =
+            requestMode == SwitchRequestMode.SwitchToUfo ||
+            requestMode == SwitchRequestMode.SwitchToPlayer ||
+            requestMode == SwitchRequestMode.FreeSwitching;
+
+        bool siphonAllowsSwitch =
+            siphonController == null ||
+            siphonController.CanSwitchPerspective;
+
+        SetButtonInteractable(hasSwitchRequest && siphonAllowsSwitch);
+
+        if (requestMode == SwitchRequestMode.SwitchToUfo ||
+            requestMode == SwitchRequestMode.SwitchToPlayer)
+        {
+            SetHighlightVisible(siphonAllowsSwitch);
+        }
+        else
+        {
+            SetHighlightVisible(false);
+        }
     }
 
     private void SetRootVisible(bool visible)
