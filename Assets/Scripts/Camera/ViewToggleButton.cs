@@ -9,8 +9,8 @@ public class ViewToggleButton : MonoBehaviour
     public CinemachineVirtualCamera secondaryCam;
 
     [Header("Camera Controllers")]
-    public MonoBehaviour firstPersonController;
-    public MonoBehaviour secondaryController;
+    public MonoBehaviour firstPersonController;   // 角色的 GyroFpsController（UFO 时被关）
+    public MonoBehaviour secondaryController;     // AR UFO 不再用陀螺仪环顾 -> 留空
 
     [Header("View Object Roots")]
     public GameObject[] playerViewObjects;
@@ -31,6 +31,7 @@ public class ViewToggleButton : MonoBehaviour
 
     [Header("Optional")]
     public TouchDragger touchDragger;
+    public UfoMovement ufoMovement;   // ← 新增：AR 驱动的 UFO 视角
 
     private bool isFirstPerson;
 
@@ -76,6 +77,7 @@ public class ViewToggleButton : MonoBehaviour
         ApplyCameraPriority();
         ApplyCameraControllers();
         ApplyViewObjects();
+        ApplyUfoMode();        // ← 新增
         UpdateSwitchLabel();
     }
 
@@ -100,6 +102,26 @@ public class ViewToggleButton : MonoBehaviour
         if (touchDragger != null)
         {
             touchDragger.enabled = isFirstPerson;
+        }
+    }
+
+    // 切到 UFO -> EnterUfo()（重置到头顶 + 禁用 PlayerController + 激活 AR 跟踪）
+    // 切回人物 -> ExitUfo()（恢复 PlayerController）
+    private void ApplyUfoMode()
+    {
+        if (ufoMovement == null)
+        {
+            Debug.LogWarning("[UFO] ufoMovement 槽是空的！EnterUfo/ExitUfo 不会被调用。");
+            return;
+        }
+
+        if (isFirstPerson)
+        {
+            ufoMovement.ExitUfo();
+        }
+        else
+        {
+            ufoMovement.EnterUfo();
         }
     }
 

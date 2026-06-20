@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Test Drag.unity
     guid: 0e8aec4365fe559458f70dea28548c6d
-  m_configObjects: {}
+  m_configObjects:
+    UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 4c3ffc4e4cf983d4581dbafb1aa3a233,
+      type: 2}
+    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: c0a93e89b42feb740b31e9b474bbfbaa,
+      type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 42ed7c056201e8b428a273a6f8b08c5a,
+      type: 2}
