@@ -37,6 +37,11 @@ public class TowerFlowController : MonoBehaviour
     [Header("Timing")]
     [SerializeField] private float afterSignalLostDialogueDelay = 0.2f;
 
+    [Header("Level Transition")]
+    [SerializeField] private GameObject level2Root;
+    [SerializeField] private float explosionVfxDelayBeforeSignalLost = 1.0f;
+    [SerializeField] private float level2ActivateDelayAfterSignalLost = 0.1f;
+
     private TowerState state = TowerState.Inactive;
     private bool hasStartedTowerIntro;
     private bool hasPickedEnergyCore;
@@ -54,6 +59,15 @@ public class TowerFlowController : MonoBehaviour
         SetNewPathVisible(false);
         SetRocketUnlocked(false);
         SetSwitchHighlight(false);
+        SetLevel2Visible(false);
+    }
+
+    private void SetLevel2Visible(bool visible)
+    {
+        if (level2Root != null)
+        {
+            level2Root.SetActive(visible);
+        }
     }
 
     private void Update()
@@ -170,16 +184,16 @@ public class TowerFlowController : MonoBehaviour
         );
     }
 
-    public void TryStartBlockedRocksDialogue()
+    public bool TryStartBlockedRocksDialogue()
     {
         if (state != TowerState.WaitingForGoToBlockedRocks)
         {
-            return;
+            return false;
         }
 
         if (hasStartedBlockedRocksDialogue)
         {
-            return;
+            return false;
         }
 
         hasStartedBlockedRocksDialogue = true;
@@ -193,10 +207,11 @@ public class TowerFlowController : MonoBehaviour
         if (sequence == null)
         {
             Debug.LogWarning("Blocked rocks found sequence is missing.");
-            return;
+            return false;
         }
 
         DialogueRunner.Instance.StartDialogue(sequence);
+        return true;
     }
 
     public void ShowSwitchToUfoForBlastObjective()
@@ -236,13 +251,17 @@ public class TowerFlowController : MonoBehaviour
 
     public void OnBlockedRocksDestroyed()
     {
+        Debug.Log("[TowerFlow] OnBlockedRocksDestroyed called. State = " + state);
+
         if (hasDestroyedRocks)
         {
+            Debug.Log("[TowerFlow] Rocks already destroyed. Ignored.");
             return;
         }
 
         if (state != TowerState.WaitingForBlastRocks)
         {
+            Debug.LogWarning("[TowerFlow] Rejected rock destruction because state is not WaitingForBlastRocks.");
             return;
         }
 
@@ -254,23 +273,53 @@ public class TowerFlowController : MonoBehaviour
         SetRocketUnlocked(false);
         SetSwitchHighlight(false);
 
+        StartCoroutine(ExplosionThenSignalLostFlow());
+    }
+
+    private IEnumerator ExplosionThenSignalLostFlow()
+    {
+        Debug.Log("[TowerFlow] Explosion flow started.");
+
+        // Wait for the explosion VFX to finish before showing Signal Lost.
+        if (explosionVfxDelayBeforeSignalLost > 0f)
+        {
+            yield return new WaitForSeconds(explosionVfxDelayBeforeSignalLost);
+        }
+
+        // Hide the blocked rocks after the explosion has had time to play.
         if (blockedRocksRoot != null)
         {
             blockedRocksRoot.SetActive(false);
         }
-
-        SetNewPathVisible(true);
-
-        StartCoroutine(PlaySignalLostThenDialogue());
-    }
-
-    private IEnumerator PlaySignalLostThenDialogue()
-    {
-        if (signalLostOverlay != null)
+        else
         {
-            yield return signalLostOverlay.PlayRoutine();
+            Debug.LogWarning("[TowerFlow] Blocked Rocks Root is not assigned.");
         }
 
+        // Show the newly opened path in Level 1.
+        SetNewPathVisible(true);
+
+        // Play the Signal Lost overlay.
+        if (signalLostOverlay != null)
+        {
+            Debug.Log("[TowerFlow] Playing Signal Lost overlay.");
+            yield return signalLostOverlay.PlayRoutine();
+            Debug.Log("[TowerFlow] Signal Lost overlay finished.");
+        }
+        else
+        {
+            Debug.LogWarning("[TowerFlow] Signal Lost Overlay is not assigned.");
+        }
+
+        // Activate Level 2 objects after Signal Lost.
+        if (level2ActivateDelayAfterSignalLost > 0f)
+        {
+            yield return new WaitForSeconds(level2ActivateDelayAfterSignalLost);
+        }
+
+        SetLevel2Visible(true);
+
+        // Then continue the dialogue.
         yield return new WaitForSeconds(afterSignalLostDialogueDelay);
 
         DialogueSequence sequence = TowerDialogueDatabase.Instance.GetSequence(
@@ -279,12 +328,14 @@ public class TowerFlowController : MonoBehaviour
 
         if (sequence == null)
         {
-            Debug.LogWarning("After rocks destroyed sequence is missing.");
+            Debug.LogWarning("[TowerFlow] After rocks destroyed sequence is missing.");
             yield break;
         }
 
+        Debug.Log("[TowerFlow] Starting after rocks destroyed dialogue.");
         DialogueRunner.Instance.StartDialogue(sequence);
     }
+
 
     public void ShowReturnToPlayerAfterBlastObjective()
     {
@@ -316,15 +367,6 @@ public class TowerFlowController : MonoBehaviour
         SetSwitchHighlight(false);
 
         ObjectivePanelController.Instance?.CompleteAndSetNextObjective(
-            "Follow the newly opened path"
-        );
-    }
-
-    public void ShowFollowNewPathObjective()
-    {
-        state = TowerState.PathOpened;
-
-        ObjectivePanelController.Instance?.SetObjective(
             "Follow the newly opened path"
         );
     }

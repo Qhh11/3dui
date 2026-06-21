@@ -38,7 +38,7 @@ public class TowerDialogueDatabase : MonoBehaviour
             return sequence;
         }
 
-        Debug.LogWarning($"Tower dialogue sequence not found: {sequenceId}");
+        Debug.LogWarning("Tower dialogue sequence not found: " + sequenceId);
         return null;
     }
 
@@ -46,8 +46,19 @@ public class TowerDialogueDatabase : MonoBehaviour
     {
         characters.Clear();
 
-        AddCharacter("player", "Player", "player", Color.white);
-        AddCharacter("ufo_terminal", "UFO Terminal", "ufo_terminal", new Color(0.55f, 0.85f, 1f));
+        AddCharacter(
+            TowerDialogueIds.Characters.Player,
+            "Player",
+            "player",
+            Color.white
+        );
+
+        AddCharacter(
+            TowerDialogueIds.Characters.UFOTerminal,
+            "UFO Terminal",
+            "ufo_terminal",
+            new Color(0.55f, 0.85f, 1f)
+        );
     }
 
     private void AddCharacter(string id, string displayName, string portraitResourceName, Color nameColor)
@@ -58,20 +69,20 @@ public class TowerDialogueDatabase : MonoBehaviour
 
         if (loadPortraitsFromResources)
         {
-            character.portrait = Resources.Load<Sprite>($"Portraits/{portraitResourceName}");
+            character.portrait = Resources.Load<Sprite>("Portraits/" + portraitResourceName);
         }
 
         characters[id] = character;
     }
 
-    private DialogueCharacter GetCharacter(string id)
+    private DialogueCharacter GetCharacter(string characterId)
     {
-        if (characters.TryGetValue(id, out DialogueCharacter character))
+        if (characters.TryGetValue(characterId, out DialogueCharacter character))
         {
             return character;
         }
 
-        Debug.LogWarning($"Tower dialogue character not found: {id}");
+        Debug.LogWarning("Tower dialogue character not found: " + characterId);
         return null;
     }
 
@@ -81,10 +92,12 @@ public class TowerDialogueDatabase : MonoBehaviour
 
         DialogueSequence towerIntro = NewSequence(TowerDialogueIds.Sequences.TowerIntro);
         DialogueSequence blastUnlocked = NewSequence(TowerDialogueIds.Sequences.BlastUnlocked);
+        DialogueSequence blockedRocksFound = NewSequence(TowerDialogueIds.Sequences.BlockedRocksFound);
         DialogueSequence afterRocksDestroyed = NewSequence(TowerDialogueIds.Sequences.AfterRocksDestroyed);
 
         BuildTowerIntro(towerIntro);
         BuildBlastUnlocked(blastUnlocked);
+        BuildBlockedRocksFound(blockedRocksFound);
         BuildAfterRocksDestroyed(afterRocksDestroyed);
     }
 
@@ -100,13 +113,15 @@ public class TowerDialogueDatabase : MonoBehaviour
 
     private void BuildTowerIntro(DialogueSequence sequence)
     {
-        DialogueCharacter player = GetCharacter("player");
-        DialogueCharacter terminal = GetCharacter("ufo_terminal");
+        DialogueCharacter player = GetCharacter(TowerDialogueIds.Characters.Player);
+        DialogueCharacter terminal = GetCharacter(TowerDialogueIds.Characters.UFOTerminal);
 
         sequence.entries.Add(Line(player, "This is the tower."));
         sequence.entries.Add(Line(player, "The entrance is completely sealed."));
+
         sequence.entries.Add(Line(terminal, "Energy residue detected nearby."));
         sequence.entries.Add(Line(terminal, "Signal source is not inside the tower."));
+
         sequence.entries.Add(Line(player, "Nearby?"));
         sequence.entries.Add(Line(
             player,
@@ -117,40 +132,64 @@ public class TowerDialogueDatabase : MonoBehaviour
 
     private void BuildBlastUnlocked(DialogueSequence sequence)
     {
-        DialogueCharacter player = GetCharacter("player");
-        DialogueCharacter terminal = GetCharacter("ufo_terminal");
+        DialogueCharacter player = GetCharacter(TowerDialogueIds.Characters.Player);
+        DialogueCharacter terminal = GetCharacter(TowerDialogueIds.Characters.UFOTerminal);
 
         sequence.entries.Add(Line(terminal, "Energy core recovered."));
         sequence.entries.Add(Line(terminal, "Power restored."));
         sequence.entries.Add(Line(terminal, "Blast function unlocked."));
+
         sequence.entries.Add(Line(player, "Blast function? So now you can shoot?"));
+
         sequence.entries.Add(Line(terminal, "Correct."));
         sequence.entries.Add(Line(terminal, "Blast can destroy unstable obstacles."));
-        sequence.entries.Add(Line(terminal, "Target detected: blocked stone passage."));
+        sequence.entries.Add(Line(terminal, "However, the target must be confirmed first."));
+
         sequence.entries.Add(Line(
             player,
-            "Then let's clear it.",
+            "Then I should go back and check the blocked passage.",
+            eventOnEnd: TowerDialogueIds.Events.QuestReturnToPlayerAfterCore
+        ));
+    }
+
+    private void BuildBlockedRocksFound(DialogueSequence sequence)
+    {
+        DialogueCharacter player = GetCharacter(TowerDialogueIds.Characters.Player);
+        DialogueCharacter terminal = GetCharacter(TowerDialogueIds.Characters.UFOTerminal);
+
+        sequence.entries.Add(Line(player, "This must be the path."));
+        sequence.entries.Add(Line(player, "But the rocks are blocking everything."));
+
+        sequence.entries.Add(Line(terminal, "Unstable obstacle detected."));
+        sequence.entries.Add(Line(terminal, "Blast function can destroy this barrier."));
+
+        sequence.entries.Add(Line(
+            player,
+            "Then we need to use the UFO view.",
             eventOnEnd: TowerDialogueIds.Events.QuestSwitchToUfoForBlast
         ));
     }
 
     private void BuildAfterRocksDestroyed(DialogueSequence sequence)
     {
-        DialogueCharacter player = GetCharacter("player");
-        DialogueCharacter terminal = GetCharacter("ufo_terminal");
+        DialogueCharacter player = GetCharacter(TowerDialogueIds.Characters.Player);
+        DialogueCharacter terminal = GetCharacter(TowerDialogueIds.Characters.UFOTerminal);
 
         sequence.entries.Add(Line(terminal, "Warning."));
         sequence.entries.Add(Line(terminal, "Signal interference increasing."));
+
         sequence.entries.Add(Line(player, "What happened?"));
         sequence.entries.Add(Line(player, "That road... was it always there?"));
+
         sequence.entries.Add(Line(terminal, "Signal unstable."));
         sequence.entries.Add(Line(terminal, "Newly exposed path detected."));
         sequence.entries.Add(Line(terminal, "Destination unknown."));
+
         sequence.entries.Add(Line(player, "If this path just appeared, then it must mean something changed."));
         sequence.entries.Add(Line(
             player,
             "We should follow it.",
-            eventOnEnd: TowerDialogueIds.Events.QuestFollowNewPath
+            eventOnEnd: TowerDialogueIds.Events.QuestReturnToPlayerAfterBlast
         ));
     }
 

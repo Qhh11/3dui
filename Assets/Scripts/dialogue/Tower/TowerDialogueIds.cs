@@ -14,6 +14,11 @@ public static class TowerDialogueIds
         public const string QuestReturnToPlayerAfterCore = "tower_quest_return_to_player_after_core";
         public const string QuestSwitchToUfoForBlast = "tower_quest_switch_to_ufo_for_blast";
         public const string QuestReturnToPlayerAfterBlast = "tower_quest_return_to_player_after_blast";
-        public const string QuestFollowNewPath = "tower_quest_follow_new_path";
+    }
+
+    public static class Characters
+    {
+        public const string Player = "player";
+        public const string UFOTerminal = "ufo_terminal";
     }
 }
