@@ -5,10 +5,20 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Rigidbody))]
 public class SiphonableObject : MonoBehaviour
 {
-    [Header("Outline")]
+    public enum OutlineState
+    {
+        Default,
+        UfoIdle,
+        UfoSelected
+    }
+
+    [Header("Rendering Layer Masks")]
+    [SerializeField] private uint defaultMask = 1u << 0;
+    [SerializeField] private uint ufoIdleMask = 1u << 2;      // Outline_2
+    [SerializeField] private uint ufoSelectedMask = 1u << 1;  // Outline_1
+
+    [Header("Renderers")]
     [SerializeField] private Renderer[] outlineRenderers;
-    
-    [SerializeField] private uint outlineMask = 1u << 1;
 
     [Header("Place")]
     [SerializeField] private float skinWidth = 0.03f;
@@ -20,7 +30,6 @@ public class SiphonableObject : MonoBehaviour
 
     private Rigidbody rb;
     private Transform originalParent;
-    private uint[] originalRenderingLayerMasks;
 
     public float SkinWidth => skinWidth;
     public Rigidbody Rigidbody => rb;
@@ -30,47 +39,37 @@ public class SiphonableObject : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         if (outlineRenderers == null || outlineRenderers.Length == 0)
-        {
             outlineRenderers = GetComponentsInChildren<Renderer>(true);
-        }
 
-        originalRenderingLayerMasks = new uint[outlineRenderers.Length];
-
-        for (int i = 0; i < outlineRenderers.Length; i++)
-        {
-            if (outlineRenderers[i] != null)
-            {
-                originalRenderingLayerMasks[i] = outlineRenderers[i].renderingLayerMask;
-            }
-        }
-
-        SetHighlighted(false);
+        SetOutlineState(OutlineState.Default);
     }
 
-    public void SetHighlighted(bool highlighted)
+    public void SetOutlineState(OutlineState state)
     {
-        if (outlineRenderers == null)
+        uint targetMask = defaultMask;
+
+        switch (state)
         {
-            return;
+            case OutlineState.Default:
+                targetMask = defaultMask;
+                break;
+
+            case OutlineState.UfoIdle:
+                targetMask = ufoIdleMask;
+                break;
+
+            case OutlineState.UfoSelected:
+                targetMask = ufoSelectedMask;
+                break;
         }
 
-        for (int i = 0; i < outlineRenderers.Length; i++)
+        if (outlineRenderers == null)
+            return;
+
+        foreach (Renderer r in outlineRenderers)
         {
-            Renderer r = outlineRenderers[i];
-
-            if (r == null)
-            {
-                continue;
-            }
-
-            if (highlighted)
-            {
-                r.renderingLayerMask = originalRenderingLayerMasks[i] | outlineMask;
-            }
-            else
-            {
-                r.renderingLayerMask = originalRenderingLayerMasks[i];
-            }
+            if (r != null)
+                r.renderingLayerMask = targetMask;
         }
     }
 
@@ -84,7 +83,7 @@ public class SiphonableObject : MonoBehaviour
         rb.isKinematic = true;
 
         transform.SetParent(holdPoint, true);
-        SetHighlighted(false);
+        SetOutlineState(OutlineState.Default);
 
         onPickedUp?.Invoke();
     }
@@ -99,6 +98,7 @@ public class SiphonableObject : MonoBehaviour
 
         rb.useGravity = true;
         rb.isKinematic = false;
+
         StartCoroutine(FreezeAfterSettle(20f));
 
         onPlaced?.Invoke();

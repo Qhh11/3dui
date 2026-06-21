@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class SwitchPerspectiveButtonController : MonoBehaviour
 {
     public static SwitchPerspectiveButtonController Instance { get; private set; }
-    public bool IsUfoView { get; set; }
+    public bool IsUfoView { get; private set; }
 
     private enum SwitchRequestMode
     {
@@ -30,6 +30,7 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
 
     [Header("Start State")]
     [SerializeField] private bool startHidden = true;
+    [SerializeField] private bool startInUfoView = false;
 
     [Header("First UFO Flow")]
     [SerializeField] private string firstUfoSequenceId = "level1_first_ufo_view";
@@ -45,25 +46,24 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        IsUfoView = startInUfoView;
     }
 
     private void Start()
     {
         if (viewToggleButton == null)
-        {
             viewToggleButton = FindObjectOfType<ViewToggleButton>();
-        }
 
         if (siphonController == null)
-        {
             siphonController = FindObjectOfType<SiphonController>();
-        }
 
         switchVisible = !startHidden;
 
         SetRootVisible(switchVisible);
         SetButtonInteractable(false);
         SetHighlightVisible(false);
+
+        siphonController?.OnPerspectiveChanged(IsUfoView);
     }
 
     private void Update()
@@ -74,9 +74,7 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
     public void NotifyDialogueOpened()
     {
         if (switchVisible)
-        {
             SetRootVisible(true);
-        }
 
         RefreshSwitchButtonAvailability();
     }
@@ -84,9 +82,7 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
     public void NotifyDialogueClosed()
     {
         if (switchVisible)
-        {
             SetRootVisible(true);
-        }
 
         RefreshSwitchButtonAvailability();
     }
@@ -142,9 +138,7 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         }
 
         if (viewToggleButton == null)
-        {
             viewToggleButton = FindObjectOfType<ViewToggleButton>();
-        }
 
         if (viewToggleButton == null)
         {
@@ -166,13 +160,7 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
 
         if (requestMode == SwitchRequestMode.FreeSwitching)
         {
-            viewToggleButton.Toggle();
-            IsUfoView = !IsUfoView; 
-
-            siphonController?.ResetForPerspectiveSwitch();
-
-            SetHighlightVisible(false);
-            RefreshSwitchButtonAvailability();
+            HandleFreeSwitch();
             return;
         }
 
@@ -183,8 +171,7 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
     {
         IsUfoView = true;
         viewToggleButton.SwitchToUfo();
-
-        siphonController?.ResetForPerspectiveSwitch();
+        siphonController?.OnPerspectiveChanged(IsUfoView);
 
         requestMode = SwitchRequestMode.None;
         SetHighlightVisible(false);
@@ -202,8 +189,7 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
     {
         IsUfoView = false;
         viewToggleButton.SwitchToPlayer();
-
-        siphonController?.ResetForPerspectiveSwitch();
+        siphonController?.OnPerspectiveChanged(IsUfoView);
 
         requestMode = SwitchRequestMode.FreeSwitching;
         SetHighlightVisible(false);
@@ -214,6 +200,17 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
 
         StartCoroutine(StartDialogueAfterDelay(afterSwitchBackSequenceId, afterSwitchBackDialogueDelay));
 
+        RefreshSwitchButtonAvailability();
+    }
+
+    private void HandleFreeSwitch()
+    {
+        viewToggleButton.Toggle();
+
+        IsUfoView = !IsUfoView;
+        siphonController?.OnPerspectiveChanged(IsUfoView);
+
+        SetHighlightVisible(false);
         RefreshSwitchButtonAvailability();
     }
 
@@ -235,9 +232,7 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
     private bool CanSwitchNow()
     {
         if (siphonController != null && !siphonController.CanSwitchPerspective)
-        {
             return false;
-        }
 
         return true;
     }
@@ -278,24 +273,18 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
     private void SetRootVisible(bool visible)
     {
         if (switchUiRoot != null)
-        {
             switchUiRoot.SetActive(visible);
-        }
     }
 
     private void SetButtonInteractable(bool interactable)
     {
         if (switchButton != null)
-        {
             switchButton.interactable = interactable;
-        }
     }
 
     private void SetHighlightVisible(bool visible)
     {
         if (highlightObject != null)
-        {
             highlightObject.SetActive(visible);
-        }
     }
 }

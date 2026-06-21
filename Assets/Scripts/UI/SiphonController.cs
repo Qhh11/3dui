@@ -51,13 +51,13 @@ public class SiphonController : MonoBehaviour
 
     private SiphonState state = SiphonState.Disabled;
 
+    private bool isUfoView;
     private SiphonableObject hoveredObject;
     private SiphonableObject heldObject;
+    private SiphonableObject[] allSiphonableObjects;
 
     private Vector3 targetPlacePosition;
     private Quaternion targetPlaceRotation;
-
-    private bool forceRefreshHoverNextFrame;
 
     public bool IsBusy =>
         state == SiphonState.PullingToHold ||
@@ -73,9 +73,11 @@ public class SiphonController : MonoBehaviour
 
     private void Start()
     {
+        RefreshSiphonableObjectList();
         SetUnlocked(startUnlocked);
         HideBeam();
         SetCrosshairColor(normalCrosshairColor);
+        ApplyPerspectiveOutlineState();
     }
 
     private void Update()
@@ -83,10 +85,17 @@ public class SiphonController : MonoBehaviour
         if (state == SiphonState.Disabled)
             return;
 
+        if (!isUfoView)
+        {
+            ClearHoverToDefault();
+            SetCrosshairColor(normalCrosshairColor);
+            SetButtonInteractable(false);
+            return;
+        }
+
         if (state == SiphonState.Idle)
         {
             UpdateHover();
-            forceRefreshHoverNextFrame = false;
             return;
         }
 
@@ -120,19 +129,22 @@ public class SiphonController : MonoBehaviour
         if (siphonButtonRoot != null)
             siphonButtonRoot.SetActive(unlocked);
 
-        ClearHover();
+        ClearHoverToDefault();
         HideBeam();
         SetCrosshairColor(normalCrosshairColor);
-        SetButtonInteractable(unlocked);
+        SetButtonInteractable(unlocked && isUfoView);
 
-        forceRefreshHoverNextFrame = unlocked;
+        ApplyPerspectiveOutlineState();
     }
 
-    public void ResetForPerspectiveSwitch()
+    public void OnPerspectiveChanged(bool newIsUfoView)
     {
-        ClearHover();
+        isUfoView = newIsUfoView;
+
+        ClearHoverToDefault();
         HideBeam();
         SetCrosshairColor(normalCrosshairColor);
+        ApplyPerspectiveOutlineState();
 
         if (state == SiphonState.Disabled)
         {
@@ -140,19 +152,30 @@ public class SiphonController : MonoBehaviour
             return;
         }
 
-        if (state == SiphonState.Idle)
+        if (!isUfoView)
         {
-            SetButtonInteractable(true);
-            forceRefreshHoverNextFrame = true;
+            SetButtonInteractable(false);
             return;
         }
 
-        SetButtonInteractable(false);
+        SetButtonInteractable(state == SiphonState.Idle || state == SiphonState.Holding);
+    }
+
+    public void ResetForPerspectiveSwitch()
+    {
+        bool currentIsUfoView =
+            SwitchPerspectiveButtonController.Instance != null &&
+            SwitchPerspectiveButtonController.Instance.IsUfoView;
+
+        OnPerspectiveChanged(currentIsUfoView);
     }
 
     public void OnSiphonButtonClicked()
     {
         if (state == SiphonState.Disabled)
+            return;
+
+        if (!isUfoView)
             return;
 
         if (state == SiphonState.PullingToHold || state == SiphonState.Placing)
@@ -177,7 +200,7 @@ public class SiphonController : MonoBehaviour
         if (cam == null || holdPoint == null)
         {
             Debug.LogWarning("SiphonController missing Camera or HoldPoint.");
-            ClearHover();
+            ClearHoverToIdle();
             SetCrosshairColor(normalCrosshairColor);
             return;
         }
@@ -187,7 +210,7 @@ public class SiphonController : MonoBehaviour
         if (!Physics.Raycast(ray, out RaycastHit hit, pickUpMaxDistance, siphonableMask, QueryTriggerInteraction.Ignore))
         {
             Debug.Log("Siphon pick up failed: hit nothing.");
-            ClearHover();
+            ClearHoverToIdle();
             SetCrosshairColor(normalCrosshairColor);
             return;
         }
@@ -197,12 +220,12 @@ public class SiphonController : MonoBehaviour
         if (target == null || target.Rigidbody == null)
         {
             Debug.Log("Siphon pick up failed: target missing SiphonableObject or Rigidbody.");
-            ClearHover();
+            ClearHoverToIdle();
             SetCrosshairColor(normalCrosshairColor);
             return;
         }
 
-        ClearHover();
+        ClearHoverToIdle();
 
         heldObject = target;
         heldObject.PickUp(holdPoint);
@@ -211,6 +234,8 @@ public class SiphonController : MonoBehaviour
         SetCrosshairColor(normalCrosshairColor);
         SetButtonInteractable(false);
         ShowBeam();
+
+        ApplyPerspectiveOutlineState();
     }
 
     private void UpdatePullingToHold()
@@ -220,10 +245,9 @@ public class SiphonController : MonoBehaviour
         if (heldObject == null)
         {
             state = SiphonState.Idle;
-            SetButtonInteractable(true);
+            SetButtonInteractable(isUfoView);
             HideBeam();
-            SetCrosshairColor(normalCrosshairColor);
-            forceRefreshHoverNextFrame = true;
+            ApplyPerspectiveOutlineState();
             return;
         }
 
@@ -244,7 +268,7 @@ public class SiphonController : MonoBehaviour
         if (IsHeldObjectReady())
         {
             state = SiphonState.Holding;
-            SetButtonInteractable(true);
+            SetButtonInteractable(isUfoView);
         }
     }
 
@@ -256,9 +280,8 @@ public class SiphonController : MonoBehaviour
         {
             state = SiphonState.Idle;
             HideBeam();
-            SetCrosshairColor(normalCrosshairColor);
-            SetButtonInteractable(true);
-            forceRefreshHoverNextFrame = true;
+            SetButtonInteractable(isUfoView);
+            ApplyPerspectiveOutlineState();
             return;
         }
 
@@ -276,19 +299,15 @@ public class SiphonController : MonoBehaviour
         {
             state = SiphonState.Idle;
             HideBeam();
-            SetCrosshairColor(normalCrosshairColor);
-            SetButtonInteractable(true);
-            forceRefreshHoverNextFrame = true;
+            SetButtonInteractable(isUfoView);
+            ApplyPerspectiveOutlineState();
             return;
         }
 
         Camera cam = GetCamera();
 
         if (cam == null)
-        {
-            SetCrosshairColor(normalCrosshairColor);
             return;
-        }
 
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
@@ -296,7 +315,6 @@ public class SiphonController : MonoBehaviour
         {
             Debug.Log("Siphon place failed: no place surface.");
             heldObject.NotifyPlaceFailed();
-            SetCrosshairColor(normalCrosshairColor);
             return;
         }
 
@@ -306,7 +324,6 @@ public class SiphonController : MonoBehaviour
         heldObject.transform.SetParent(null, true);
 
         state = SiphonState.Placing;
-        SetCrosshairColor(normalCrosshairColor);
         SetButtonInteractable(false);
     }
 
@@ -317,10 +334,9 @@ public class SiphonController : MonoBehaviour
         if (heldObject == null)
         {
             state = SiphonState.Idle;
-            SetButtonInteractable(true);
+            SetButtonInteractable(isUfoView);
             HideBeam();
-            SetCrosshairColor(normalCrosshairColor);
-            forceRefreshHoverNextFrame = true;
+            ApplyPerspectiveOutlineState();
             return;
         }
 
@@ -366,10 +382,86 @@ public class SiphonController : MonoBehaviour
         heldObject = null;
 
         state = SiphonState.Idle;
-        SetButtonInteractable(true);
+        SetButtonInteractable(isUfoView);
         HideBeam();
         SetCrosshairColor(normalCrosshairColor);
-        forceRefreshHoverNextFrame = true;
+
+        RefreshSiphonableObjectList();
+        ApplyPerspectiveOutlineState();
+    }
+
+    private void UpdateHover()
+    {
+        ClearHoverToIdle();
+        SetCrosshairColor(normalCrosshairColor);
+
+        Camera cam = GetCamera();
+        if (cam == null)
+            return;
+
+        Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+
+        if (Physics.Raycast(ray, out RaycastHit hit, pickUpMaxDistance, siphonableMask, QueryTriggerInteraction.Ignore))
+        {
+            SiphonableObject target = hit.collider.GetComponentInParent<SiphonableObject>();
+
+            if (target != null && target != heldObject)
+            {
+                hoveredObject = target;
+                hoveredObject.SetOutlineState(SiphonableObject.OutlineState.UfoSelected);
+                SetCrosshairColor(targetCrosshairColor);
+            }
+        }
+    }
+
+    private void ApplyPerspectiveOutlineState()
+    {
+        if (allSiphonableObjects == null || allSiphonableObjects.Length == 0)
+            RefreshSiphonableObjectList();
+
+        SiphonableObject.OutlineState targetState =
+            state != SiphonState.Disabled && isUfoView
+                ? SiphonableObject.OutlineState.UfoIdle
+                : SiphonableObject.OutlineState.Default;
+
+        foreach (SiphonableObject obj in allSiphonableObjects)
+        {
+            if (obj == null)
+                continue;
+
+            if (obj == heldObject)
+                continue;
+
+            obj.SetOutlineState(targetState);
+        }
+    }
+
+    private void RefreshSiphonableObjectList()
+    {
+        allSiphonableObjects = FindObjectsOfType<SiphonableObject>(true);
+    }
+
+    private void ClearHoverToIdle()
+    {
+        if (hoveredObject == null)
+            return;
+
+        hoveredObject.SetOutlineState(
+            isUfoView && state != SiphonState.Disabled
+                ? SiphonableObject.OutlineState.UfoIdle
+                : SiphonableObject.OutlineState.Default
+        );
+
+        hoveredObject = null;
+    }
+
+    private void ClearHoverToDefault()
+    {
+        if (hoveredObject == null)
+            return;
+
+        hoveredObject.SetOutlineState(SiphonableObject.OutlineState.Default);
+        hoveredObject = null;
     }
 
     private bool IsHeldObjectReady()
@@ -387,45 +479,12 @@ public class SiphonController : MonoBehaviour
                rotationError <= readyRotationThreshold;
     }
 
-    private void UpdateHover()
-    {
-        ClearHover();
-        SetCrosshairColor(normalCrosshairColor);
-
-        Camera cam = GetCamera();
-        if (cam == null)
-            return;
-
-        Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-
-        if (Physics.Raycast(ray, out RaycastHit hit, pickUpMaxDistance, siphonableMask, QueryTriggerInteraction.Ignore))
-        {
-            SiphonableObject target = hit.collider.GetComponentInParent<SiphonableObject>();
-
-            if (target != null)
-            {
-                hoveredObject = target;
-                hoveredObject.SetHighlighted(true);
-                SetCrosshairColor(targetCrosshairColor);
-            }
-        }
-    }
-
     private Camera GetCamera()
     {
         if (aimCamera == null)
             aimCamera = Camera.main;
 
         return aimCamera;
-    }
-
-    private void ClearHover()
-    {
-        if (hoveredObject != null)
-        {
-            hoveredObject.SetHighlighted(false);
-            hoveredObject = null;
-        }
     }
 
     private bool IsLayerInMask(int layer, LayerMask mask)
