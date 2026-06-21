@@ -122,6 +122,40 @@ public class SiphonController : MonoBehaviour
         SetUnlocked(true);
     }
 
+    public bool IsHolding(SiphonableObject obj)
+    {
+        return obj != null &&
+               heldObject == obj &&
+               (state == SiphonState.PullingToHold || state == SiphonState.Holding);
+    }
+
+    public void ConsumeHeldObject(SiphonableObject obj, bool deactivateObject)
+    {
+        if (obj == null)
+        {
+            return;
+        }
+
+        if (heldObject != obj)
+        {
+            return;
+        }
+
+        if (deactivateObject)
+        {
+            obj.gameObject.SetActive(false);
+        }
+
+        heldObject = null;
+        state = SiphonState.Idle;
+
+        HideBeam();
+        SetCrosshairColor(normalCrosshairColor);
+        SetButtonInteractable(isUfoView);
+
+        RefreshSiphonableObjectList();
+        ApplyPerspectiveOutlineState();
+    }
     public void SetUnlocked(bool unlocked)
     {
         state = unlocked ? SiphonState.Idle : SiphonState.Disabled;
