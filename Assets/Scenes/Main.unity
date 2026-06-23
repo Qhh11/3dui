@@ -3461,8 +3461,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cf03c47e07f83045857c0a8c9e1ad99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SiphonableObject
+  defaultMask: 1
+  ufoIdleMask: 4
+  ufoSelectedMask: 2
   outlineRenderers: []
-  outlineMask: 2
   skinWidth: 0.03
   onPickedUp:
     m_PersistentCalls:
@@ -36651,6 +36653,62 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - key: quest_move_bridge_second_crossing
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1653943690}
+          m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
+          m_MethodName: Apply
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 2060459679}
+          m_TargetAssemblyTypeName: BridgePlacementGoal, Assembly-CSharp
+          m_MethodName: ActivateGoal
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: quest_go_to_tower
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1447519915}
+          m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
+          m_MethodName: Apply
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: SwitchPerspectiveButtonController, Assembly-CSharp
+          m_MethodName: 
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &1158618834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36880,8 +36938,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cf03c47e07f83045857c0a8c9e1ad99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SiphonableObject
+  defaultMask: 1
+  ufoIdleMask: 4
+  ufoSelectedMask: 2
   outlineRenderers: []
-  outlineMask: 2
   skinWidth: 0.03
   onPickedUp:
     m_PersistentCalls:
@@ -37860,6 +37920,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPCHouse2
       objectReference: {fileID: 0}
+    - target: {fileID: 5226954981596785403, guid: 7d67ac5cfda0b944580afbed7561ec82,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -38084,6 +38149,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Lake
+      objectReference: {fileID: 0}
+    - target: {fileID: 5071296285362736313, guid: 593e0e180426ce14fa1e7f97fe769bc0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5168159829239232145, guid: 593e0e180426ce14fa1e7f97fe769bc0,
         type: 3}
@@ -46295,6 +46365,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1443399081}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1447519915 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6960522370993320624, guid: fef740c046878754f98582d10f6be19f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2060459678}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25b4e25caf740094a8135cf069e62f41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectiveEventAction
 --- !u!1001 &1448250608
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60393,6 +60475,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1647685907}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1653943690 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4788216610620648426, guid: fef740c046878754f98582d10f6be19f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2060459678}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25b4e25caf740094a8135cf069e62f41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectiveEventAction
 --- !u!1 &1655858523
 GameObject:
   m_ObjectHideFlags: 0
@@ -62411,6 +62505,7 @@ MonoBehaviour:
   switchButton: {fileID: 801685500}
   highlightObject: {fileID: 1946528525}
   startHidden: 1
+  startInUfoView: 0
   firstUfoSequenceId: level1_first_ufo_view
   firstUfoDialogueDelay: 3.5
   afterSwitchBackSequenceId: level1_after_switch_back_to_player
@@ -70324,6 +70419,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bridge  (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3075355609481063172, guid: 0c3537d9eb4a4a941abe84656680124c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -71380,6 +71480,92 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2191666470857331508, guid: 8b63f536dcb9512418bb18c53c2565c6,
     type: 3}
   m_PrefabInstance: {fileID: 2048538912}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2060459678
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2332363150357240205, guid: fef740c046878754f98582d10f6be19f,
+        type: 3}
+      propertyPath: m_Name
+      value: LakeHouse_Area
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819899375554714315, guid: fef740c046878754f98582d10f6be19f,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 330
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819899375554714315, guid: fef740c046878754f98582d10f6be19f,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3218
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819899375554714315, guid: fef740c046878754f98582d10f6be19f,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4578
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819899375554714315, guid: fef740c046878754f98582d10f6be19f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819899375554714315, guid: fef740c046878754f98582d10f6be19f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819899375554714315, guid: fef740c046878754f98582d10f6be19f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819899375554714315, guid: fef740c046878754f98582d10f6be19f,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819899375554714315, guid: fef740c046878754f98582d10f6be19f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819899375554714315, guid: fef740c046878754f98582d10f6be19f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2819899375554714315, guid: fef740c046878754f98582d10f6be19f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fef740c046878754f98582d10f6be19f, type: 3}
+--- !u!114 &2060459679 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3461876314963281241, guid: fef740c046878754f98582d10f6be19f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2060459678}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd3df03e913ea344b141172d527836e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgePlacementGoal
+--- !u!4 &2060459681 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6421811148185812009, guid: fef740c046878754f98582d10f6be19f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2060459678}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2064155115
 PrefabInstance:
@@ -72509,6 +72695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   playerSpeed: 100
+  initialRespawnPoint: {fileID: 2060459681}
 --- !u!143 &2112412579
 CharacterController:
   m_ObjectHideFlags: 0
@@ -72530,7 +72717,7 @@ CharacterController:
   m_Height: 1
   m_Radius: 0.5
   m_SlopeLimit: 60
-  m_StepOffset: 0.4
+  m_StepOffset: 40
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
@@ -83405,3 +83592,4 @@ SceneRoots:
   - {fileID: 1404467397}
   - {fileID: 371586313}
   - {fileID: 1676902925}
+  - {fileID: 2060459678}
