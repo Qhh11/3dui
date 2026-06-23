@@ -41,6 +41,7 @@ public class CinemachineGyroMouseLookController : MonoBehaviour
         if (ShouldUseMouseFallback())
         {
             UpdateMouseRotation();
+            //UpdateKeyboardMovement();//测试
             return;
         }
 
@@ -49,6 +50,26 @@ public class CinemachineGyroMouseLookController : MonoBehaviour
             UpdateGyroRotation();
         }
     }
+
+    //测试
+    /*private void UpdateKeyboardMovement()
+    {
+        float speed = 500f;
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
+        float ud = 0f;
+        if (Input.GetKey(KeyCode.Q)) ud = -1f;
+        if (Input.GetKey(KeyCode.E)) ud = 1f;
+
+        Vector3 move = transform.forward * v
+            + transform.right * h
+            + Vector3.up * ud;
+
+        // Move Character (root parent), not just camera
+        Transform character = transform.root;
+        character.position += move * speed * Time.deltaTime;
+    }*/
+    //end
 
     private bool ShouldUseMouseFallback()
     {

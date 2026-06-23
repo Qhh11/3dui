@@ -9,6 +9,7 @@ public class WellEnergyDiscoveryAction : MonoBehaviour
 
     [Header("Energy Block")]
     [SerializeField] private GameObject energyHighlight;
+    [SerializeField] private GameObject outlineEffect;
 
     [Header("Objective")]
     [SerializeField] private string objectiveText = "Switch to UFO view near the well";
@@ -36,9 +37,17 @@ public class WellEnergyDiscoveryAction : MonoBehaviour
         {
             yield return null;
         }
+        // ← 切到UFO后立刻显示球(UFO视角能看到)
+        if (energyHighlight != null)
+            energyHighlight.SetActive(true);
+        if (outlineEffect != null)
+        {
+            outlineEffect.SetActive(true);
+        }
 
         yield return new WaitForSeconds(delayAfterSwitch);
 
+        // 等对话框关闭
         while (DialogueRunner.Instance != null
             && DialogueRunner.Instance.IsDialogueOpen)
         {
@@ -58,8 +67,12 @@ public class WellEnergyDiscoveryAction : MonoBehaviour
             yield return null;
         }
 
-        if (energyHighlight != null)
-            energyHighlight.SetActive(true);
+        if (ObjectivePanelController.Instance != null)
+        {
+            ObjectivePanelController.Instance
+                .CompleteAndSetNextObjective("Energy signature marked. Switch back and investigate.");
+        }
+
     }
 
     private bool IsInUfoView()

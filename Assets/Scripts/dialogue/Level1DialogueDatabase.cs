@@ -29,14 +29,11 @@ public class Level1DialogueDatabase : MonoBehaviour
     {
         if (string.IsNullOrWhiteSpace(sequenceId))
         {
-            Debug.LogWarning("Dialogue sequence id is empty.");
             return null;
         }
 
         if (sequences.TryGetValue(sequenceId, out DialogueSequence sequence))
             return sequence;
-
-        Debug.LogWarning($"Dialogue sequence not found: {sequenceId}");
         return null;
     }
 
@@ -44,8 +41,6 @@ public class Level1DialogueDatabase : MonoBehaviour
     {
         if (characters.TryGetValue(characterId, out DialogueCharacter character))
             return character;
-
-        Debug.LogWarning($"Dialogue character not found: {characterId}");
         return null;
     }
 
@@ -299,14 +294,14 @@ public class Level1DialogueDatabase : MonoBehaviour
         sequence.entries.Add(Line(terminal, "Energy unit detected."));
         sequence.entries.Add(Line(terminal, "Power recharging..."));
         sequence.entries.Add(Line(terminal, "Basic functions restored."));
-        sequence.entries.Add(Line(terminal, "Siphon function... online.",
-            eventOnStart: DialogueIds.Events.UnlockSiphon));
+        sequence.entries.Add(Line(terminal, "Siphon function... online."));
 
         sequence.entries.Add(Line(player, "You fixed a function?"));
 
         sequence.entries.Add(Line(terminal, "Siphon function can extract lightweight objects."));
-        sequence.entries.Add(Line(terminal, "Aim at target and activate."));
-        // gameplay: 之后居民B冲出来,触发 VillagerBFirstMeet
+        sequence.entries.Add(Line(terminal, 
+            "Aim at target and activate.",
+            eventOnEnd: DialogueIds.Events.UnlockSiphon));
     }
 
     // =============================================
