@@ -3285,6 +3285,7 @@ GameObject:
   - component: {fileID: 129442563}
   - component: {fileID: 129442562}
   - component: {fileID: 129442568}
+  - component: {fileID: 129442569}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3494,6 +3495,18 @@ MonoBehaviour:
   thirdPersonRange: 10000
   refreshInterval: 0.1
   autoAddHighlight: 1
+--- !u!114 &129442569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129442561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbcffe6fb6ad65f468b62a7bb5a8b841, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TouchInteraction
 --- !u!1 &132961274
 GameObject:
   m_ObjectHideFlags: 3
@@ -17703,7 +17716,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &667089190
 Transform:
   m_ObjectHideFlags: 0
@@ -17713,7 +17726,7 @@ Transform:
   m_GameObject: {fileID: 667089189}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0013, y: 0.0093, z: -0.0004}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -21808,6 +21821,76 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!1 &728737277
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 728737278}
+  - component: {fileID: 728737280}
+  - component: {fileID: 728737279}
+  m_Layer: 0
+  m_Name: DialogueTriggerZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &728737278
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728737277}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 411658876}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &728737279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728737277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dbd2a7bc82edf441a58c7a9cc6b496b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTriggerById
+  sequenceId: villager_b_first_meet
+  triggerOnlyOnce: 1
+  playerTag: Player
+  dialogueIndicator: {fileID: 1800650168}
+--- !u!65 &728737280
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728737277}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &731954015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22237,144 +22320,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 748596735}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &748951217
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 748951218}
-  - component: {fileID: 748951220}
-  - component: {fileID: 748951219}
-  - component: {fileID: 748951222}
-  - component: {fileID: 748951221}
-  m_Layer: 0
-  m_Name: EnergyGlow
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &748951218
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 748951217}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1114.6, y: -23.5, z: -1507}
-  m_LocalScale: {x: 20, y: 20, z: 20}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1631964476}
-  m_Father: {fileID: 2078020511}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &748951219
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 748951217}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_ForceMeshLod: -1
-  m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: a25848ba11f865c49bec81ccf4f6266a, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_MaskInteraction: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &748951220
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 748951217}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &748951221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 748951217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66762e4e66b658244924d0cdc25bfddf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnergyPickup
-  dialogueSequenceId: well_energy_pickup
-  energyGlow: {fileID: 748951217}
-  energyParticles: {fileID: 0}
-  outlineEffect: {fileID: 0}
-  bigBush: {fileID: 0}
-  leftBush: {fileID: 0}
-  rightBush: {fileID: 0}
-  splitDistance: 150
-  splitDuration: 0.8
-  onPickedUp:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!135 &748951222
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 748951217}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &750850790
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23968,6 +23913,12 @@ PrefabInstance:
 --- !u!4 &787133661 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6421441071783833251, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
+    type: 3}
+  m_PrefabInstance: {fileID: 787133660}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &787133662 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5933028572992582681, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
     type: 3}
   m_PrefabInstance: {fileID: 787133660}
   m_PrefabAsset: {fileID: 0}
@@ -32065,7 +32016,7 @@ PrefabInstance:
     - target: {fileID: 6421441071783833251, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2040.3
+      value: -2023.2
       objectReference: {fileID: 0}
     - target: {fileID: 6421441071783833251, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
         type: 3}
@@ -32075,7 +32026,7 @@ PrefabInstance:
     - target: {fileID: 6421441071783833251, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -956
+      value: -975.7
       objectReference: {fileID: 0}
     - target: {fileID: 6421441071783833251, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
         type: 3}
@@ -32125,6 +32076,12 @@ PrefabInstance:
 --- !u!4 &1058294579 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6421441071783833251, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
+    type: 3}
+  m_PrefabInstance: {fileID: 1058294578}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1058294580 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5933028572992582681, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
     type: 3}
   m_PrefabInstance: {fileID: 1058294578}
   m_PrefabAsset: {fileID: 0}
@@ -34257,7 +34214,12 @@ PrefabInstance:
     - target: {fileID: 3844101992160974051, guid: 544c4cf2a93327b4a839cf37f7923bc2,
         type: 3}
       propertyPath: m_Name
-      value: bush01_well2
+      value: bigbush01_well2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3844101992160974051, guid: 544c4cf2a93327b4a839cf37f7923bc2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4472970297906040409, guid: 544c4cf2a93327b4a839cf37f7923bc2,
         type: 3}
@@ -34287,7 +34249,7 @@ PrefabInstance:
     - target: {fileID: 4472970297906040409, guid: 544c4cf2a93327b4a839cf37f7923bc2,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -995
+      value: -1002.1
       objectReference: {fileID: 0}
     - target: {fileID: 4472970297906040409, guid: 544c4cf2a93327b4a839cf37f7923bc2,
         type: 3}
@@ -36125,17 +36087,17 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: SwitchPerspectiveButtonController, Assembly-CSharp
-          m_MethodName: 
-          m_Mode: 1
+        - m_Target: {fileID: 667089189}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
-            m_BoolArgument: 0
+            m_BoolArgument: 1
           m_CallState: 2
   - key: tower_quest_collect_energy_core
     onTriggered:
@@ -36261,9 +36223,21 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 155165598}
-          m_TargetAssemblyTypeName: SiphonController, Assembly-CSharp
-          m_MethodName: UnlockSiphon
+        - m_Target: {fileID: 411658875}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 2056302140}
+          m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
+          m_MethodName: Apply
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -36271,7 +36245,7 @@ MonoBehaviour:
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
-            m_BoolArgument: 0
+            m_BoolArgument: 1
           m_CallState: 2
   - key: activate_abandoned_well_area
     onTriggered:
@@ -36288,6 +36262,18 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1701912076}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
           m_CallState: 2
   - key: quest_go_to_first_house
     onTriggered:
@@ -48342,7 +48328,7 @@ Transform:
   m_GameObject: {fileID: 1511514368}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1190.6, y: -87.052246, z: -1404.9}
+  m_LocalPosition: {x: -1107.9, y: -8.399902, z: -1508.7676}
   m_LocalScale: {x: 21, y: 21, z: 21}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -52063,7 +52049,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1127.0302, y: 75.9, z: -1508.7676}
-  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_LocalScale: {x: 22, y: 22, z: 22}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2078020511}
@@ -52103,7 +52089,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 10, y: 10, z: 11.362922}
+  m_Size: {x: 10, y: 10, z: 10}
   m_Center: {x: 0, y: 0, z: 0.6814545}
 --- !u!1 &1595371787
 GameObject:
@@ -52811,9 +52797,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WellEnergyDiscoveryAction
   ufoViewSequenceId: well_ufo_view
   delayAfterSwitch: 2
-  energyHighlight: {fileID: 748951217}
-  outlineEffect: {fileID: 0}
-  objectiveText: Find the energy source
+  energyHighlight: {fileID: 1927183719}
+  outlineEffect: {fileID: 1511514368}
+  objectiveText: Switch to UFO view to scan for energy
 --- !u!1 &1614304451
 GameObject:
   m_ObjectHideFlags: 0
@@ -53038,76 +53024,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f06cd4e9a53b8b4aba2d276fe1f9924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueReaction
---- !u!1 &1631964475
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1631964476}
-  - component: {fileID: 1631964478}
-  - component: {fileID: 1631964477}
-  m_Layer: 0
-  m_Name: WellDialogueTrigger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1631964476
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1631964475}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 748951218}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1631964477
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1631964475}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dbd2a7bc82edf441a58c7a9cc6b496b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTriggerById
-  sequenceId: well_arrival
-  triggerOnlyOnce: 1
-  playerTag: Player
-  dialogueIndicator: {fileID: 0}
---- !u!65 &1631964478
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1631964475}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 6, y: 6, z: 6}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1632363729
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57685,7 +57601,7 @@ MonoBehaviour:
   onPickedUp:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 387675392}
         m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
         m_MethodName: Apply
         m_Mode: 1
@@ -57700,7 +57616,7 @@ MonoBehaviour:
   onPlaced:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 920686750}
         m_TargetAssemblyTypeName: DelayedDialogueTrigger, Assembly-CSharp
         m_MethodName: TriggerWithDelay
         m_Mode: 1
@@ -59750,6 +59666,111 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4324183160605158426, guid: 249ebbaae21002c499f1c8a7925c1905,
     type: 3}
   m_PrefabInstance: {fileID: 1798424664}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1800650166
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 411658876}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 9f35ff0476e26794ab07771739e20c19,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9f35ff0476e26794ab07771739e20c19,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9f35ff0476e26794ab07771739e20c19,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10.00994
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9f35ff0476e26794ab07771739e20c19,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9f35ff0476e26794ab07771739e20c19,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9f35ff0476e26794ab07771739e20c19,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9f35ff0476e26794ab07771739e20c19,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.31826755
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9f35ff0476e26794ab07771739e20c19,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.31826755
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9f35ff0476e26794ab07771739e20c19,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.6314316
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9f35ff0476e26794ab07771739e20c19,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.6314316
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9f35ff0476e26794ab07771739e20c19,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9f35ff0476e26794ab07771739e20c19,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 183.5
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9f35ff0476e26794ab07771739e20c19,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -130
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9f35ff0476e26794ab07771739e20c19,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 9f35ff0476e26794ab07771739e20c19,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 3cf1902bc77772b45bc2cdd32e75db1f, type: 2}
+    - target: {fileID: 919132149155446097, guid: 9f35ff0476e26794ab07771739e20c19,
+        type: 3}
+      propertyPath: m_Name
+      value: exclamation
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9f35ff0476e26794ab07771739e20c19, type: 3}
+--- !u!4 &1800650167 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9f35ff0476e26794ab07771739e20c19,
+    type: 3}
+  m_PrefabInstance: {fileID: 1800650166}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1800650168 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 9f35ff0476e26794ab07771739e20c19,
+    type: 3}
+  m_PrefabInstance: {fileID: 1800650166}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1801769682
 GameObject:
@@ -62749,7 +62770,7 @@ PrefabInstance:
     - target: {fileID: 2669372775266760516, guid: 4f9803ed31b25c049b47eaf15bcb0c32,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3332756950553193982, guid: 4f9803ed31b25c049b47eaf15bcb0c32,
         type: 3}
@@ -62828,7 +62849,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3332756950553193982, guid: 4f9803ed31b25c049b47eaf15bcb0c32,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 728737278}
+    - targetCorrespondingSourceObject: {fileID: 3332756950553193982, guid: 4f9803ed31b25c049b47eaf15bcb0c32,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1800650167}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2669372775266760516, guid: 4f9803ed31b25c049b47eaf15bcb0c32,
         type: 3}
@@ -63155,7 +63184,7 @@ Transform:
   m_GameObject: {fileID: 1927183719}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0.000000030908623, z: 0.00000003090861, w: 0.70710677}
-  m_LocalPosition: {x: -1127, y: -8.4, z: -1508.7676}
+  m_LocalPosition: {x: -1107.9, y: -8.4, z: -1508.7676}
   m_LocalScale: {x: 5916.768, y: 5916.767, z: 5916.768}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -63222,11 +63251,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnergyPickup
   dialogueSequenceId: well_energy_pickup
   energyGlow: {fileID: 1927183719}
-  energyParticles: {fileID: 0}
+  energyParticles: {fileID: 2045896363}
   outlineEffect: {fileID: 1511514368}
-  bigBush: {fileID: 0}
-  leftBush: {fileID: 0}
-  rightBush: {fileID: 0}
+  bigBush: {fileID: 250559565}
+  leftBush: {fileID: 787133662}
+  rightBush: {fileID: 1058294580}
   splitDistance: 50
   splitDuration: 0.8
   onPickedUp:
@@ -66775,7 +66804,7 @@ Transform:
   m_GameObject: {fileID: 2045896363}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1995.4302, y: -100.97412, z: -990.7676}
+  m_LocalPosition: {x: -1973.9915, y: -34.743164, z: -1007.43555}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -72437,11 +72466,10 @@ Transform:
   - {fileID: 1197669671}
   - {fileID: 2017616345}
   - {fileID: 488733623095827543}
-  - {fileID: 748951218}
   - {fileID: 1036275306}
-  - {fileID: 1511514371}
   - {fileID: 1595104378}
   - {fileID: 1927183720}
+  - {fileID: 1511514371}
   m_Father: {fileID: 1539175627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2080161115
