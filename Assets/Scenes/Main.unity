@@ -24729,30 +24729,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1162239265}
-        m_TargetAssemblyTypeName: UIToggleFade, Assembly-CSharp
-        m_MethodName: ToggleUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 432332539}
-        m_TargetAssemblyTypeName: UIToggleFade, Assembly-CSharp
-        m_MethodName: ToggleUI
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &801685501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28453,6 +28429,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DelayedDialogueTrigger
   sequenceId: abandoned_well_after_siphon
   delay: 1
+  triggerOnlyOnce: 1
 --- !u!1001 &921946969
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45930,7 +45907,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1414511966}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b67ecf416fc6284b9c26fd4a10e0cb0, type: 3}
   m_Name: 
@@ -52669,7 +52646,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25b4e25caf740094a8135cf069e62f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectiveEventAction
-  objectiveText: Go to the well
+  objectiveText: Investigate the glowing light near the well
   wayfindingTarget: {fileID: 0}
   completePreviousObjective: 1
 --- !u!1 &1582671813
@@ -58768,6 +58745,8 @@ MonoBehaviour:
   siphonController: {fileID: 155165598}
   markController: {fileID: 755441420}
   rocketLauncher: {fileID: 1801769684}
+  playerViewFade: {fileID: 1162239265}
+  ufoViewFade: {fileID: 432332539}
   switchUiRoot: {fileID: 1703834556}
   switchButton: {fileID: 801685500}
   highlightObject: {fileID: 1946528525}

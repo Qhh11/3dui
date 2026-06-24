@@ -7,59 +7,97 @@ public class UIToggleFade : MonoBehaviour
     public float fadeDuration = 0.3f;
     public bool interactImmediatelyWhenShowing = true;
 
-    Coroutine fadeCoroutine;
+    private Coroutine fadeCoroutine;
+    private bool targetVisible;
+
+    private void Awake()
+    {
+        if (canvasGroup == null)
+            return;
+
+        targetVisible = canvasGroup.alpha > 0.5f;
+        SetInteraction(targetVisible);
+    }
 
     public void ToggleUI()
     {
-        float targetAlpha = canvasGroup.alpha > 0.5f ? 0f : 1f;
+        SetVisible(!targetVisible);
+    }
+
+    public void SetVisible(bool visible)
+    {
+        if (canvasGroup == null)
+            return;
+
+        targetVisible = visible;
 
         if (fadeCoroutine != null)
             StopCoroutine(fadeCoroutine);
 
-        fadeCoroutine = StartCoroutine(FadeTo(targetAlpha));
-    }
-
-    IEnumerator FadeTo(float targetAlpha)
-    {
-        float startAlpha = canvasGroup.alpha;
-        float time = 0f;
+        if (fadeDuration <= 0f)
+        {
+            SetVisibleImmediate(visible);
+            return;
+        }
 
         canvasGroup.gameObject.SetActive(true);
+        fadeCoroutine = StartCoroutine(FadeTo(visible));
+    }
 
-        if (targetAlpha == 0f)
+    public void SetVisibleImmediate(bool visible)
+    {
+        if (canvasGroup == null)
+            return;
+
+        targetVisible = visible;
+
+        if (fadeCoroutine != null)
         {
-            canvasGroup.interactable = false;
-            canvasGroup.blocksRaycasts = false;
+            StopCoroutine(fadeCoroutine);
+            fadeCoroutine = null;
+        }
+
+        canvasGroup.gameObject.SetActive(true);
+        canvasGroup.alpha = visible ? 1f : 0f;
+        SetInteraction(visible);
+    }
+
+    private IEnumerator FadeTo(bool visible)
+    {
+        float startAlpha = canvasGroup.alpha;
+        float targetAlpha = visible ? 1f : 0f;
+        float time = 0f;
+
+        if (!visible)
+        {
+            SetInteraction(false);
         }
         else if (interactImmediatelyWhenShowing)
         {
-            canvasGroup.interactable = true;
-            canvasGroup.blocksRaycasts = true;
+            SetInteraction(true);
         }
 
         while (time < fadeDuration)
         {
-            time += Time.deltaTime;
-            canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, time / fadeDuration);
+            time += Time.unscaledDeltaTime;
+
+            canvasGroup.alpha = Mathf.Lerp(
+                startAlpha,
+                targetAlpha,
+                time / fadeDuration
+            );
+
             yield return null;
         }
 
         canvasGroup.alpha = targetAlpha;
-
-        bool visible = targetAlpha > 0.9f;
-
-        if (visible && !interactImmediatelyWhenShowing)
-        {
-            canvasGroup.interactable = true;
-            canvasGroup.blocksRaycasts = true;
-        }
-
-        if (!visible)
-        {
-            canvasGroup.interactable = false;
-            canvasGroup.blocksRaycasts = false;
-        }
-
+        SetInteraction(visible);
         fadeCoroutine = null;
+    }
+
+    private void SetInteraction(bool interactable)
+    {
+        canvasGroup.interactable = interactable;
+        canvasGroup.blocksRaycasts = interactable;
     }
 }

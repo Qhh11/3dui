@@ -30,6 +30,10 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
     [SerializeField] private MarkController markController;
     [SerializeField] private RocketLauncher rocketLauncher;
 
+    [Header("View UI")]
+    [SerializeField] private UIToggleFade playerViewFade;
+    [SerializeField] private UIToggleFade ufoViewFade;
+
     [Header("Root")]
     [SerializeField] private GameObject switchUiRoot;
 
@@ -95,6 +99,8 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
             siphonController =
                 FindObjectOfType<SiphonController>();
         }
+
+        ApplyViewUiImmediate();
 
         switchVisible = !startHidden;
 
@@ -194,8 +200,10 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
 
     private void HandleSwitchToUfo()
     {
-        IsUfoView = true;
         viewToggleButton.SwitchToUfo();
+        IsUfoView = viewToggleButton.IsUfoView();
+
+        ApplyViewUi();
 
         siphonController?.OnPerspectiveChanged(IsUfoView);
 
@@ -220,8 +228,10 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
 
     private void HandleSwitchToPlayer()
     {
-        IsUfoView = false;
         viewToggleButton.SwitchToPlayer();
+        IsUfoView = viewToggleButton.IsUfoView();
+
+        ApplyViewUi();
 
         siphonController?.OnPerspectiveChanged(IsUfoView);
 
@@ -247,8 +257,9 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
     private void HandleFreeSwitch()
     {
         viewToggleButton.Toggle();
+        IsUfoView = viewToggleButton.IsUfoView();
 
-        IsUfoView = !IsUfoView;
+        ApplyViewUi();
 
         siphonController?.OnPerspectiveChanged(IsUfoView);
 
@@ -333,6 +344,18 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
             guidedRequest &&
             canSwitch
         );
+    }
+
+    private void ApplyViewUi()
+    {
+        playerViewFade?.SetVisible(!IsUfoView);
+        ufoViewFade?.SetVisible(IsUfoView);
+    }
+
+    private void ApplyViewUiImmediate()
+    {
+        playerViewFade?.SetVisibleImmediate(!IsUfoView);
+        ufoViewFade?.SetVisibleImmediate(IsUfoView);
     }
 
     private void SetRootVisible(bool visible)
