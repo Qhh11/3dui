@@ -115,7 +115,7 @@ Transform:
   m_GameObject: {fileID: 1043820902386709754}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 100, y: -200, z: 400}
+  m_LocalPosition: {x: 100, y: -170, z: 400}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -147,7 +147,7 @@ Transform:
   m_GameObject: {fileID: 1927598840748020522}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -100, y: -200, z: 400}
+  m_LocalPosition: {x: -100, y: -170, z: 400}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -179,7 +179,7 @@ Transform:
   m_GameObject: {fileID: 2619463541473123304}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -200, z: 400}
+  m_LocalPosition: {x: 0, y: -170, z: 400}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -241,9 +241,14 @@ MonoBehaviour:
   selectorLayerName: MarkSelector3D
   deployedLayerName: UfoMark
   transitLayerName: Ignore Raycast
-  unselectedAlpha: 0.7
+  unselectedAlpha: 0.35
   selectedAlpha: 1
-  selectedScale: 1.1
+  selectedScale: 1
+  deployedAlpha: 0.4
+  aimedAlpha: 1
+  idleBreathMinAlpha: 0.2
+  idleBreathMaxAlpha: 0.5
+  idleBreathCyclesPerSecond: 0.75
 --- !u!135 &9010353860350466541
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -410,9 +415,14 @@ MonoBehaviour:
   selectorLayerName: MarkSelector3D
   deployedLayerName: UfoMark
   transitLayerName: Ignore Raycast
-  unselectedAlpha: 0.7
+  unselectedAlpha: 0.35
   selectedAlpha: 1
-  selectedScale: 1.1
+  selectedScale: 1
+  deployedAlpha: 0.4
+  aimedAlpha: 1
+  idleBreathMinAlpha: 0.2
+  idleBreathMaxAlpha: 0.5
+  idleBreathCyclesPerSecond: 0.75
 --- !u!135 &3763549342701473963
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -489,9 +499,14 @@ MonoBehaviour:
   selectorLayerName: MarkSelector3D
   deployedLayerName: UfoMark
   transitLayerName: Ignore Raycast
-  unselectedAlpha: 0.7
+  unselectedAlpha: 0.35
   selectedAlpha: 1
-  selectedScale: 1.1
+  selectedScale: 1
+  deployedAlpha: 0.4
+  aimedAlpha: 1
+  idleBreathMinAlpha: 0.2
+  idleBreathMaxAlpha: 0.5
+  idleBreathCyclesPerSecond: 0.75
 --- !u!135 &8902559754935115636
 SphereCollider:
   m_ObjectHideFlags: 0

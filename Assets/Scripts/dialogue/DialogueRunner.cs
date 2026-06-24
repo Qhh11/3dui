@@ -13,6 +13,10 @@ public class DialogueRunner : MonoBehaviour
     // Keep this for compatibility with older scripts.
     public bool IsOpen => IsDialogueOpen;
 
+    public bool IsGameplayInputBlocked =>
+        IsDialogueOpen ||
+        externalGameplayLocked;
+
     [Header("Dialogue UI")]
     [SerializeField] private CanvasGroup dialogueCanvasGroup;
     [SerializeField] private Image portraitImage;
@@ -47,6 +51,10 @@ public class DialogueRunner : MonoBehaviour
     private bool isTyping;
     private bool waitingForChoice;
     private bool isWaitingForExternalAction;
+
+    private bool externalGameplayLocked;
+    private bool gameplayAvailabilityInitialized;
+    private bool gameplayControlsEnabled;
 
     private void Awake()
     {
@@ -89,7 +97,8 @@ public class DialogueRunner : MonoBehaviour
 
     private bool TryGetAdvanceInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Space) ||
+            Input.GetKeyDown(KeyCode.Return))
         {
             return true;
         }
@@ -131,10 +140,12 @@ public class DialogueRunner : MonoBehaviour
 
         if (pointerId >= 0)
         {
-            return EventSystem.current.IsPointerOverGameObject(pointerId);
+            return EventSystem.current
+                .IsPointerOverGameObject(pointerId);
         }
 
-        return EventSystem.current.IsPointerOverGameObject();
+        return EventSystem.current
+            .IsPointerOverGameObject();
     }
 
     public void WaitForExternalAction()
@@ -142,7 +153,26 @@ public class DialogueRunner : MonoBehaviour
         isWaitingForExternalAction = true;
     }
 
-    public void ContinueAfterExternalAction(bool endDialogue)
+    public void ResumeAfterExternalAction()
+    {
+        isWaitingForExternalAction = false;
+    }
+
+    public void SetExternalGameplayLock(
+        bool locked)
+    {
+        if (externalGameplayLocked == locked)
+        {
+            return;
+        }
+
+        externalGameplayLocked = locked;
+
+        RefreshGameplayAvailability();
+    }
+
+    public void ContinueAfterExternalAction(
+        bool endDialogue)
     {
         if (!isWaitingForExternalAction)
         {
@@ -161,11 +191,15 @@ public class DialogueRunner : MonoBehaviour
         }
     }
 
-    public void StartDialogue(DialogueSequence sequence)
+    public void StartDialogue(
+        DialogueSequence sequence)
     {
         if (sequence == null)
         {
-            Debug.LogWarning("Cannot start dialogue: sequence is null.");
+            Debug.LogWarning(
+                "Cannot start dialogue: sequence is null."
+            );
+
             return;
         }
 
@@ -174,10 +208,11 @@ public class DialogueRunner : MonoBehaviour
         IsDialogueOpen = true;
 
         SetDialogueVisible(true);
-        SetInGameUiVisible(false);
-        SetControlsEnabled(false);
+        RefreshGameplayAvailability();
 
-        SwitchPerspectiveButtonController.Instance?.NotifyDialogueOpened();
+        SwitchPerspectiveButtonController
+            .Instance
+            ?.NotifyDialogueOpened();
 
         ClearChoices();
         ShowCurrentEntry();
@@ -185,7 +220,8 @@ public class DialogueRunner : MonoBehaviour
 
     public void Advance()
     {
-        if (!IsDialogueOpen || waitingForChoice)
+        if (!IsDialogueOpen ||
+            waitingForChoice)
         {
             return;
         }
@@ -198,7 +234,9 @@ public class DialogueRunner : MonoBehaviour
 
         currentIndex++;
 
-        if (currentSequence == null || currentIndex >= currentSequence.entries.Count)
+        if (currentSequence == null ||
+            currentIndex >=
+                currentSequence.entries.Count)
         {
             EndDialogue();
             return;
@@ -211,35 +249,47 @@ public class DialogueRunner : MonoBehaviour
     {
         ClearChoices();
 
-        if (currentSequence == null || currentIndex < 0 || currentIndex >= currentSequence.entries.Count)
+        if (currentSequence == null ||
+            currentIndex < 0 ||
+            currentIndex >=
+                currentSequence.entries.Count)
         {
             EndDialogue();
             return;
         }
 
-        DialogueEntry entry = currentSequence.entries[currentIndex];
+        DialogueEntry entry =
+            currentSequence.entries[currentIndex];
 
-        DialogueEventRouter.Instance?.Trigger(entry.eventOnStart);
+        DialogueEventRouter.Instance
+            ?.Trigger(entry.eventOnStart);
 
         if (entry.speaker != null)
         {
             if (speakerNameText != null)
             {
-                speakerNameText.text = entry.speaker.displayName;
-                speakerNameText.color = entry.speaker.nameColor;
+                speakerNameText.text =
+                    entry.speaker.displayName;
+
+                speakerNameText.color =
+                    entry.speaker.nameColor;
             }
 
             if (portraitImage != null)
             {
-                portraitImage.sprite = entry.speaker.portrait;
-                portraitImage.enabled = entry.speaker.portrait != null;
+                portraitImage.sprite =
+                    entry.speaker.portrait;
+
+                portraitImage.enabled =
+                    entry.speaker.portrait != null;
             }
         }
         else
         {
             if (speakerNameText != null)
             {
-                speakerNameText.text = string.Empty;
+                speakerNameText.text =
+                    string.Empty;
             }
 
             if (portraitImage != null)
@@ -248,17 +298,20 @@ public class DialogueRunner : MonoBehaviour
             }
         }
 
-        fullCurrentText = entry.text ?? string.Empty;
+        fullCurrentText =
+            entry.text ?? string.Empty;
 
         if (typingCoroutine != null)
         {
             StopCoroutine(typingCoroutine);
         }
 
-        typingCoroutine = StartCoroutine(TypeLine(entry));
+        typingCoroutine =
+            StartCoroutine(TypeLine(entry));
     }
 
-    private IEnumerator TypeLine(DialogueEntry entry)
+    private IEnumerator TypeLine(
+        DialogueEntry entry)
     {
         isTyping = true;
 
@@ -267,18 +320,25 @@ public class DialogueRunner : MonoBehaviour
             bodyText.text = string.Empty;
         }
 
-        float delay = charactersPerSecond <= 0f ? 0f : 1f / charactersPerSecond;
+        float delay =
+            charactersPerSecond <= 0f
+                ? 0f
+                : 1f / charactersPerSecond;
 
-        for (int i = 0; i < fullCurrentText.Length; i++)
+        for (int i = 0;
+             i < fullCurrentText.Length;
+             i++)
         {
             if (bodyText != null)
             {
-                bodyText.text += fullCurrentText[i];
+                bodyText.text +=
+                    fullCurrentText[i];
             }
 
             if (delay > 0f)
             {
-                yield return new WaitForSeconds(delay);
+                yield return
+                    new WaitForSeconds(delay);
             }
             else
             {
@@ -299,33 +359,43 @@ public class DialogueRunner : MonoBehaviour
 
         if (bodyText != null)
         {
-            bodyText.text = fullCurrentText;
+            bodyText.text =
+                fullCurrentText;
         }
 
-        if (currentSequence == null || currentIndex < 0 || currentIndex >= currentSequence.entries.Count)
+        if (currentSequence == null ||
+            currentIndex < 0 ||
+            currentIndex >=
+                currentSequence.entries.Count)
         {
             EndDialogue();
             return;
         }
 
-        DialogueEntry entry = currentSequence.entries[currentIndex];
+        DialogueEntry entry =
+            currentSequence.entries[currentIndex];
+
         CompleteCurrentEntry(entry);
     }
 
-    private void CompleteCurrentEntry(DialogueEntry entry)
+    private void CompleteCurrentEntry(
+        DialogueEntry entry)
     {
         isTyping = false;
         typingCoroutine = null;
 
-        DialogueEventRouter.Instance?.Trigger(entry.eventOnEnd);
+        DialogueEventRouter.Instance
+            ?.Trigger(entry.eventOnEnd);
 
-        if (entry.choices != null && entry.choices.Count > 0)
+        if (entry.choices != null &&
+            entry.choices.Count > 0)
         {
             ShowChoices(entry);
         }
     }
 
-    private void ShowChoices(DialogueEntry entry)
+    private void ShowChoices(
+        DialogueEntry entry)
     {
         waitingForChoice = true;
 
@@ -334,59 +404,92 @@ public class DialogueRunner : MonoBehaviour
             choicesRoot.SetActive(true);
         }
 
-        if (choiceButtons == null || choiceButtons.Length == 0)
+        if (choiceButtons == null ||
+            choiceButtons.Length == 0)
         {
-            Debug.LogWarning("No choice buttons assigned on DialogueRunner.");
+            Debug.LogWarning(
+                "No choice buttons assigned " +
+                "on DialogueRunner."
+            );
+
             return;
         }
 
-        for (int i = 0; i < choiceButtons.Length; i++)
+        for (int i = 0;
+             i < choiceButtons.Length;
+             i++)
         {
-            Button button = choiceButtons[i];
+            Button button =
+                choiceButtons[i];
 
             if (button == null)
             {
                 continue;
             }
 
-            button.onClick.RemoveAllListeners();
+            button.onClick
+                .RemoveAllListeners();
 
-            bool hasChoice = i < entry.choices.Count;
-            button.gameObject.SetActive(hasChoice);
+            bool hasChoice =
+                i < entry.choices.Count;
+
+            button.gameObject
+                .SetActive(hasChoice);
 
             if (!hasChoice)
             {
                 continue;
             }
 
-            DialogueChoice choice = entry.choices[i];
+            DialogueChoice choice =
+                entry.choices[i];
 
-            TMP_Text label = button.GetComponentInChildren<TMP_Text>(true);
+            TMP_Text label =
+                button.GetComponentInChildren<
+                    TMP_Text
+                >(true);
+
             if (label != null)
             {
                 label.text = choice.text;
             }
 
-            DialogueChoice capturedChoice = choice;
-            button.onClick.AddListener(() => SelectChoice(capturedChoice));
+            DialogueChoice capturedChoice =
+                choice;
+
+            button.onClick.AddListener(
+                () => SelectChoice(
+                    capturedChoice
+                )
+            );
         }
     }
 
-    private void SelectChoice(DialogueChoice choice)
+    private void SelectChoice(
+        DialogueChoice choice)
     {
         waitingForChoice = false;
         ClearChoices();
 
-        if (!string.IsNullOrWhiteSpace(choice.setFlagOnSelect))
+        if (!string.IsNullOrWhiteSpace(
+                choice.setFlagOnSelect))
         {
-            GameStateManager.Instance?.SetFlag(choice.setFlagOnSelect, true);
+            GameStateManager.Instance
+                ?.SetFlag(
+                    choice.setFlagOnSelect,
+                    true
+                );
         }
 
-        DialogueEventRouter.Instance?.Trigger(choice.eventOnSelect);
+        DialogueEventRouter.Instance
+            ?.Trigger(choice.eventOnSelect);
 
         if (choice.nextSequence != null)
         {
-            StartDialogue(choice.nextSequence);
+            StartDialogue(
+                choice.nextSequence
+            );
+
             return;
         }
 
@@ -399,15 +502,19 @@ public class DialogueRunner : MonoBehaviour
 
         if (choiceButtons != null)
         {
-            foreach (Button button in choiceButtons)
+            foreach (Button button
+                     in choiceButtons)
             {
                 if (button == null)
                 {
                     continue;
                 }
 
-                button.onClick.RemoveAllListeners();
-                button.gameObject.SetActive(false);
+                button.onClick
+                    .RemoveAllListeners();
+
+                button.gameObject
+                    .SetActive(false);
             }
         }
 
@@ -441,64 +548,109 @@ public class DialogueRunner : MonoBehaviour
         }
 
         SetDialogueVisible(false);
-        SetInGameUiVisible(true);
-        SetControlsEnabled(true);
+        RefreshGameplayAvailability();
 
-        SwitchPerspectiveButtonController.Instance?.NotifyDialogueClosed();
+        SwitchPerspectiveButtonController
+            .Instance
+            ?.NotifyDialogueClosed();
     }
 
-    private void SetDialogueVisible(bool visible)
+    private void RefreshGameplayAvailability()
+    {
+        bool controlsEnabled =
+            !IsGameplayInputBlocked;
+
+        if (gameplayAvailabilityInitialized &&
+            gameplayControlsEnabled ==
+                controlsEnabled)
+        {
+            return;
+        }
+
+        gameplayAvailabilityInitialized = true;
+        gameplayControlsEnabled =
+            controlsEnabled;
+
+        SetInGameUiVisible(
+            controlsEnabled
+        );
+
+        SetControlsEnabled(
+            controlsEnabled
+        );
+    }
+
+    private void SetDialogueVisible(
+        bool visible)
     {
         if (dialogueCanvasGroup == null)
         {
             return;
         }
 
-        dialogueCanvasGroup.alpha = visible ? 1f : 0f;
-        dialogueCanvasGroup.interactable = visible;
-        dialogueCanvasGroup.blocksRaycasts = visible;
+        dialogueCanvasGroup.alpha =
+            visible ? 1f : 0f;
+
+        dialogueCanvasGroup.interactable =
+            visible;
+
+        dialogueCanvasGroup.blocksRaycasts =
+            visible;
     }
 
-    private void SetInGameUiVisible(bool visible)
+    private void SetInGameUiVisible(
+        bool visible)
     {
         if (inGameUiCanvasGroups == null)
         {
             return;
         }
 
-        foreach (CanvasGroup canvasGroup in inGameUiCanvasGroups)
+        foreach (CanvasGroup canvasGroup
+                 in inGameUiCanvasGroups)
         {
             if (canvasGroup == null)
             {
                 continue;
             }
 
-            canvasGroup.alpha = visible ? 1f : 0f;
-            canvasGroup.interactable = visible;
-            canvasGroup.blocksRaycasts = visible;
+            canvasGroup.alpha =
+                visible ? 1f : 0f;
+
+            canvasGroup.interactable =
+                visible;
+
+            canvasGroup.blocksRaycasts =
+                visible;
         }
     }
 
-    private void SetControlsEnabled(bool enabled)
+    private void SetControlsEnabled(
+        bool enabled)
     {
         if (behavioursToDisableWhileOpen != null)
         {
-            foreach (MonoBehaviour behaviour in behavioursToDisableWhileOpen)
+            foreach (MonoBehaviour behaviour
+                     in behavioursToDisableWhileOpen)
             {
                 if (behaviour != null)
                 {
-                    behaviour.enabled = enabled;
+                    behaviour.enabled =
+                        enabled;
                 }
             }
         }
 
         if (controlLockGroups != null)
         {
-            foreach (ControlLockGroup group in controlLockGroups)
+            foreach (ControlLockGroup group
+                     in controlLockGroups)
             {
                 if (group != null)
                 {
-                    group.SetControlsEnabled(enabled);
+                    group.SetControlsEnabled(
+                        enabled
+                    );
                 }
             }
         }

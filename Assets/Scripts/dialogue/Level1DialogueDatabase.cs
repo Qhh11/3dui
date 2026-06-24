@@ -484,7 +484,11 @@ public class Level1DialogueDatabase : MonoBehaviour
         sequence.entries.Add(Line(villager, "But the tower keeper came and took it away."));
         sequence.entries.Add(Line(player, "So the energy unit is at the tower?"));
         sequence.entries.Add(Line(villager, "Probably. But you need to cross the river first."));
-        sequence.entries.Add(Line(villager, "The only bridge is on the wrong side now."));
+        sequence.entries.Add(Line(
+            villager,
+            "The only bridge is on the wrong side now.",
+            eventOnStart: "focus_lake_bridge"
+        ));
         sequence.entries.Add(Line(
             player,
             "Then we need to move the bridge.",

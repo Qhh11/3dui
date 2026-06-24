@@ -67,7 +67,7 @@ MonoBehaviour:
   launchSpeed: 3000
   returnSpeed: 3000
   visualTransitionDuration: 0.08
-  aimedScale: 1.12
+  aimedScale: 1
   compassElementPrefab: {fileID: 0}
   compassElementParent: {fileID: 0}
   compassSoftMaskMaterial: {fileID: 0}

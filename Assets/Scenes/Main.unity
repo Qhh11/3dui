@@ -3714,8 +3714,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 129442561}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2057.5403, y: 3406.6587, z: -5508.501}
+  m_LocalRotation: {x: -0.15577297, y: 0.8441781, z: -0.35771865, w: -0.36760795}
+  m_LocalPosition: {x: 4297.04, y: 6343.5586, z: -2077.5012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5471,7 +5471,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Button
+  m_text: 'Marker
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8882,8 +8884,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 401, y: 191}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 242, y: 143}
+  m_SizeDelta: {x: 200, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &284400133
 MonoBehaviour:
@@ -31808,7 +31810,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1022020690}
   - component: {fileID: 1022020695}
-  - component: {fileID: 1022020694}
   - component: {fileID: 1022020693}
   - component: {fileID: 1022020692}
   - component: {fileID: 1022020691}
@@ -31998,14 +31999,6 @@ MonoBehaviour:
   m_LightEstimation: 0
   m_FacingDirection: 1
   m_RenderMode: 0
---- !u!81 &1022020694
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1022020689}
-  m_Enabled: 1
 --- !u!20 &1022020695
 Camera:
   m_ObjectHideFlags: 0
@@ -35447,6 +35440,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1128820335}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1136598560 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7514410705676524395, guid: fef740c046878754f98582d10f6be19f,
+    type: 3}
+  m_PrefabInstance: {fileID: 2060459678}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56c055f3f8048d14a92220ffbe1d0581, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BridgeDialogueCameraFocus
 --- !u!1001 &1136767800
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36988,9 +36993,25 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: SwitchPerspectiveButtonController, Assembly-CSharp
-          m_MethodName: 
+        - m_Target: {fileID: 2060459679}
+          m_TargetAssemblyTypeName: BridgePlacementGoal, Assembly-CSharp
+          m_MethodName: DeactivateGoal
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: focus_lake_bridge
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1136598560}
+          m_TargetAssemblyTypeName: BridgeDialogueCameraFocus, Assembly-CSharp
+          m_MethodName: BeginFocus
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -71844,6 +71865,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7514410705676524395, guid: fef740c046878754f98582d10f6be19f,
+        type: 3}
+      propertyPath: switchUiCanvasGroup
+      value: 
+      objectReference: {fileID: 1703834559}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -80451,36 +80477,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2591290716498472835, guid: 419f68672a088d440b24d47a924e3c98,
-        type: 3}
-      propertyPath: aimCamera
-      value: 
-      objectReference: {fileID: 129442566}
-    - target: {fileID: 2591290716498472835, guid: 419f68672a088d440b24d47a924e3c98,
-        type: 3}
-      propertyPath: markButton
-      value: 
-      objectReference: {fileID: 284400135}
-    - target: {fileID: 2591290716498472835, guid: 419f68672a088d440b24d47a924e3c98,
-        type: 3}
-      propertyPath: rocketLauncher
-      value: 
-      objectReference: {fileID: 1801769684}
-    - target: {fileID: 2591290716498472835, guid: 419f68672a088d440b24d47a924e3c98,
-        type: 3}
-      propertyPath: siphonController
-      value: 
-      objectReference: {fileID: 155165598}
-    - target: {fileID: 2591290716498472835, guid: 419f68672a088d440b24d47a924e3c98,
-        type: 3}
-      propertyPath: viewToggleButton
-      value: 
-      objectReference: {fileID: 1241590202}
-    - target: {fileID: 2591290716498472835, guid: 419f68672a088d440b24d47a924e3c98,
-        type: 3}
-      propertyPath: compassElementParent
-      value: 
-      objectReference: {fileID: 686518943}
     - target: {fileID: 5710011652870317695, guid: 419f68672a088d440b24d47a924e3c98,
         type: 3}
       propertyPath: m_Name

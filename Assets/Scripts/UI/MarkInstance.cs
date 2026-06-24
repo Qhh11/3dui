@@ -43,6 +43,29 @@ public class MarkInstance :
     [SerializeField] private float selectedScale =
         1.1f;
 
+    [Header("Deployed Visual")]
+    [Range(0f, 1f)]
+    [SerializeField] private float deployedAlpha =
+        0.8f;
+
+    [Range(0f, 1f)]
+    [SerializeField] private float aimedAlpha =
+        1f;
+
+    [Header("Idle Breath")]
+    [Range(0f, 1f)]
+    [SerializeField] private float idleBreathMinAlpha =
+        0.55f;
+
+    [Range(0f, 1f)]
+    [SerializeField] private float idleBreathMaxAlpha =
+        0.8f;
+
+    [Min(0f)]
+    [SerializeField]
+    private float idleBreathCyclesPerSecond =
+        0.75f;
+
     private MarkController controller;
     private int slotIndex;
     private Color markColor = Color.white;
@@ -72,6 +95,7 @@ public class MarkInstance :
 
     private float currentAlpha = 0.7f;
     private float currentScale = 1f;
+    private float breathBlend;
 
     private MaterialPropertyBlock propertyBlock;
 
@@ -114,6 +138,14 @@ public class MarkInstance :
         selected = false;
         aimed = false;
         attachedTarget = null;
+
+        currentAlpha =
+            Mathf.Clamp01(
+                unselectedAlpha
+            );
+
+        currentScale = 1f;
+        breathBlend = 0f;
 
         ReturnToHomeImmediately();
         SetLayerRecursively(selectorLayerName);
@@ -174,8 +206,6 @@ public class MarkInstance :
         selected = false;
         aimed = false;
 
-        // Keep the current world position. The Sphere starts flying
-        // directly from its screen-bottom selector position.
         transform.SetParent(null, true);
 
         state = MarkState.Launching;
@@ -284,12 +314,14 @@ public class MarkInstance :
                 Vector3.MoveTowards(
                     transform.position,
                     launchTargetPosition,
-                    launchSpeed * Time.deltaTime
+                    launchSpeed *
+                    Time.deltaTime
                 );
 
             if (Vector3.Distance(
                     transform.position,
-                    launchTargetPosition) <= 0.01f)
+                    launchTargetPosition) <=
+                0.01f)
             {
                 transform.position =
                     launchTargetPosition;
@@ -342,12 +374,14 @@ public class MarkInstance :
                 Vector3.MoveTowards(
                     transform.position,
                     targetPosition,
-                    returnSpeed * Time.deltaTime
+                    returnSpeed *
+                    Time.deltaTime
                 );
 
             if (Vector3.Distance(
                     transform.position,
-                    targetPosition) <= 0.01f)
+                    targetPosition) <=
+                0.01f)
             {
                 CompleteReturn();
             }
@@ -411,9 +445,19 @@ public class MarkInstance :
                     ? selectedScale
                     : 1f;
         }
+        else if (state == MarkState.Launching)
+        {
+            targetAlpha =
+                deployedAlpha;
+
+            targetScale = 1f;
+        }
         else if (state == MarkState.Deployed)
         {
-            targetAlpha = 1f;
+            targetAlpha =
+                aimed
+                    ? aimedAlpha
+                    : deployedAlpha;
 
             targetScale =
                 aimed
@@ -434,13 +478,25 @@ public class MarkInstance :
         }
 
         float alphaDistance =
-            Mathf.Abs(
-                selectedAlpha -
-                unselectedAlpha
+            Mathf.Max(
+                0.0001f,
+                Mathf.Abs(
+                    selectedAlpha -
+                    unselectedAlpha
+                ),
+                Mathf.Abs(
+                    aimedAlpha -
+                    deployedAlpha
+                ),
+                Mathf.Abs(
+                    deployedAlpha -
+                    unselectedAlpha
+                )
             );
 
         float scaleDistance =
             Mathf.Max(
+                0.0001f,
                 Mathf.Abs(
                     selectedScale - 1f
                 ),
@@ -449,31 +505,126 @@ public class MarkInstance :
                 )
             );
 
-        float alphaSpeed =
-            transitionDuration <= 0f
-                ? float.MaxValue
-                : alphaDistance /
-                  transitionDuration;
+        if (transitionDuration <= 0f)
+        {
+            currentAlpha = targetAlpha;
+            currentScale = targetScale;
+        }
+        else
+        {
+            float alphaSpeed =
+                alphaDistance /
+                transitionDuration;
 
-        float scaleSpeed =
-            transitionDuration <= 0f
-                ? float.MaxValue
-                : scaleDistance /
-                  transitionDuration;
+            float scaleSpeed =
+                scaleDistance /
+                transitionDuration;
 
-        currentAlpha = Mathf.MoveTowards(
-            currentAlpha,
-            targetAlpha,
-            alphaSpeed * Time.unscaledDeltaTime
-        );
+            currentAlpha =
+                Mathf.MoveTowards(
+                    currentAlpha,
+                    targetAlpha,
+                    alphaSpeed *
+                    Time.unscaledDeltaTime
+                );
 
-        currentScale = Mathf.MoveTowards(
-            currentScale,
-            targetScale,
-            scaleSpeed * Time.unscaledDeltaTime
-        );
+            currentScale =
+                Mathf.MoveTowards(
+                    currentScale,
+                    targetScale,
+                    scaleSpeed *
+                    Time.unscaledDeltaTime
+                );
+        }
 
+        UpdateBreathBlend();
         ApplyVisual();
+    }
+
+    private void UpdateBreathBlend()
+    {
+        bool shouldBreathe =
+            state == MarkState.Selector &&
+            !selected;
+
+        float targetBlend =
+            shouldBreathe ? 1f : 0f;
+
+        if (transitionDuration <= 0f)
+        {
+            breathBlend = targetBlend;
+            return;
+        }
+
+        breathBlend =
+            Mathf.MoveTowards(
+                breathBlend,
+                targetBlend,
+                Time.unscaledDeltaTime /
+                transitionDuration
+            );
+    }
+
+    private float GetDisplayedAlpha()
+    {
+        if (breathBlend <= 0f)
+        {
+            return Mathf.Clamp01(
+                currentAlpha
+            );
+        }
+
+        float minAlpha =
+            Mathf.Clamp01(
+                Mathf.Min(
+                    idleBreathMinAlpha,
+                    idleBreathMaxAlpha
+                )
+            );
+
+        float maxAlpha =
+            Mathf.Clamp01(
+                Mathf.Max(
+                    idleBreathMinAlpha,
+                    idleBreathMaxAlpha
+                )
+            );
+
+        float wave = 0.5f;
+
+        if (idleBreathCyclesPerSecond > 0f)
+        {
+            float phaseCycles =
+                Mathf.Repeat(
+                    Time.unscaledTime *
+                    idleBreathCyclesPerSecond,
+                    1f
+                );
+
+            wave =
+                0.5f +
+                0.5f *
+                Mathf.Sin(
+                    phaseCycles *
+                    Mathf.PI *
+                    2f
+                );
+        }
+
+        float breathAlpha =
+            Mathf.Lerp(
+                minAlpha,
+                maxAlpha,
+                wave
+            );
+
+        return Mathf.Clamp01(
+            Mathf.Lerp(
+                currentAlpha,
+                breathAlpha,
+                breathBlend
+            )
+        );
     }
 
     private void ApplyVisual()
@@ -489,7 +640,9 @@ public class MarkInstance :
             return;
 
         Color appliedColor = markColor;
-        appliedColor.a = currentAlpha;
+
+        appliedColor.a =
+            GetDisplayedAlpha();
 
         foreach (Renderer targetRenderer
                  in markRenderers)
@@ -527,9 +680,12 @@ public class MarkInstance :
 
         bool shouldReceiveInput =
             state == MarkState.Deployed ||
-            (state == MarkState.Selector &&
-             selectorVisible &&
-             selectorInputEnabled);
+            (
+                state ==
+                    MarkState.Selector &&
+                selectorVisible &&
+                selectorInputEnabled
+            );
 
         SetRenderersEnabled(
             shouldRender
@@ -550,7 +706,10 @@ public class MarkInstance :
                  in markRenderers)
         {
             if (targetRenderer != null)
-                targetRenderer.enabled = value;
+            {
+                targetRenderer.enabled =
+                    value;
+            }
         }
     }
 
@@ -564,7 +723,10 @@ public class MarkInstance :
                  in markColliders)
         {
             if (targetCollider != null)
-                targetCollider.enabled = value;
+            {
+                targetCollider.enabled =
+                    value;
+            }
         }
     }
 
@@ -572,7 +734,9 @@ public class MarkInstance :
         string layerName)
     {
         int layer =
-            LayerMask.NameToLayer(layerName);
+            LayerMask.NameToLayer(
+                layerName
+            );
 
         if (layer < 0)
         {
