@@ -5,6 +5,7 @@ public class Level1DialogueDatabase : MonoBehaviour
 {
     public static Level1DialogueDatabase Instance { get; private set; }
     public const string Level1FirstUfoView = "level1_first_ufo_view";
+    public const string VillagerDFirstMeet = "villager_d_first_meet";
 
     [Header("Optional portraits loaded from Resources/Portraits")]
     [SerializeField] private bool loadPortraitsFromResources = true;
@@ -110,6 +111,12 @@ public class Level1DialogueDatabase : MonoBehaviour
         DialogueSequence villagerCAfterBeams = NewSequence(DialogueIds.Sequences.VillagerCFirstHouseAfterBeams);
         BuildVillagerCFirstHouseIntro(villagerCIntro);
         BuildVillagerCFirstHouseAfterBeams(villagerCAfterBeams);
+        
+        // --- Villager D: LakeHouse ---
+        DialogueSequence villagerDFirstMeet =
+            NewSequence(VillagerDFirstMeet);
+
+        BuildVillagerDFirstMeet(villagerDFirstMeet);
     }
 
     private DialogueSequence NewSequence(string sequenceId)
@@ -521,13 +528,42 @@ private void BuildVillagerCFirstHouseAfterBeams(DialogueSequence sequence)
 
     sequence.entries.Add(Line(player, "The second house, further in?"));
 
-    sequence.entries.Add(Line(villager, "That's right."));
-    sequence.entries.Add(Line(villager, "But you'll have to cross the river."));
-    sequence.entries.Add(Line(villager, "There is only one bridge, and lately it keeps wandering off on its own."));
-    sequence.entries.Add(Line(villager, "If the bridge isn't on the path, find a way to move it across."));
+    sequence.entries.Add(Line(villager,
+        "That's right. His house stands beside the river."));
+
+    sequence.entries.Add(Line(villager,
+        "The bridge nearby has been wandering lately, so the path may look wrong."));
+
+    sequence.entries.Add(Line(villager,
+        "Find the house first and ask the resident there. He knows that crossing better than I do."));
+
     sequence.entries.Add(Line(villager,
         "Nothing on this grassland stays where it belongs anymore.",
         eventOnEnd: DialogueIds.Events.QuestGoToSecondHouse));
+}
+
+// 湖泊中心house对话
+private void BuildVillagerDFirstMeet(DialogueSequence sequence)
+{
+    DialogueCharacter player = GetCharacter(DialogueIds.Characters.Player);
+    DialogueCharacter villager = GetCharacter(DialogueIds.Characters.VillagerD);
+
+    sequence.entries.Add(Line(villager, "If you are asking about the glowing stone, you are too late."));
+    sequence.entries.Add(Line(player, "You really found one?"));
+    sequence.entries.Add(Line(villager, "A few days ago. I hung it by the window."));
+    sequence.entries.Add(Line(villager, "But the tower keeper came and took it away."));
+    sequence.entries.Add(Line(player, "So the energy unit is at the tower?"));
+    sequence.entries.Add(Line(villager, "Probably. But you need to cross the river first."));
+    sequence.entries.Add(Line(
+        villager,
+        "The only bridge is on the wrong side now.",
+        eventOnStart: "focus_lake_bridge"
+    ));
+    sequence.entries.Add(Line(
+        player,
+        "Then we need to move the bridge.",
+        eventOnEnd: DialogueIds.Events.QuestMoveBridgeSecondCrossing
+    ));
 }
 
     private DialogueEntry Line(

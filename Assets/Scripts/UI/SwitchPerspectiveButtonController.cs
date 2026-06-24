@@ -4,8 +4,17 @@ using UnityEngine.UI;
 
 public class SwitchPerspectiveButtonController : MonoBehaviour
 {
-    public static SwitchPerspectiveButtonController Instance { get; private set; }
-    public bool IsUfoView { get; private set; }
+    public static SwitchPerspectiveButtonController Instance
+    {
+        get;
+        private set;
+    }
+
+    public bool IsUfoView
+    {
+        get;
+        private set;
+    }
 
     private enum SwitchRequestMode
     {
@@ -18,6 +27,8 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
     [Header("References")]
     [SerializeField] private ViewToggleButton viewToggleButton;
     [SerializeField] private SiphonController siphonController;
+    [SerializeField] private MarkController markController;
+    [SerializeField] private RocketLauncher rocketLauncher;
 
     [Header("Root")]
     [SerializeField] private GameObject switchUiRoot;
@@ -33,29 +44,57 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
     [SerializeField] private bool startInUfoView = false;
 
     [Header("First UFO Flow")]
-    [SerializeField] private string firstUfoSequenceId = "level1_first_ufo_view";
+    [SerializeField] private string firstUfoSequenceId =
+        "level1_first_ufo_view";
+
     [SerializeField] private float firstUfoDialogueDelay = 5f;
 
     [Header("Return Player Flow")]
-    [SerializeField] private string afterSwitchBackSequenceId = "level1_after_switch_back_to_player";
+    [SerializeField] private string afterSwitchBackSequenceId =
+        "level1_after_switch_back_to_player";
+
     [SerializeField] private float afterSwitchBackDialogueDelay = 0.2f;
 
-    private SwitchRequestMode requestMode = SwitchRequestMode.None;
+    private SwitchRequestMode requestMode =
+        SwitchRequestMode.None;
+
     private bool switchVisible;
+    private CanvasGroup switchUiCanvasGroup;
 
     private void Awake()
     {
         Instance = this;
         IsUfoView = startInUfoView;
+
+        switchUiCanvasGroup =
+            GetComponent<CanvasGroup>();
     }
 
     private void Start()
     {
+        if (markController == null)
+        {
+            markController =
+                FindObjectOfType<MarkController>();
+        }
+
+        if (rocketLauncher == null)
+        {
+            rocketLauncher =
+                FindObjectOfType<RocketLauncher>();
+        }
+
         if (viewToggleButton == null)
-            viewToggleButton = FindObjectOfType<ViewToggleButton>();
+        {
+            viewToggleButton =
+                FindObjectOfType<ViewToggleButton>();
+        }
 
         if (siphonController == null)
-            siphonController = FindObjectOfType<SiphonController>();
+        {
+            siphonController =
+                FindObjectOfType<SiphonController>();
+        }
 
         switchVisible = !startHidden;
 
@@ -93,7 +132,6 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         requestMode = SwitchRequestMode.SwitchToUfo;
 
         SetRootVisible(true);
-        SetHighlightVisible(true);
         RefreshSwitchButtonAvailability();
 
         DialogueRunner.Instance?.WaitForExternalAction();
@@ -105,7 +143,6 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         requestMode = SwitchRequestMode.SwitchToPlayer;
 
         SetRootVisible(true);
-        SetHighlightVisible(true);
         RefreshSwitchButtonAvailability();
 
         DialogueRunner.Instance?.WaitForExternalAction();
@@ -122,7 +159,6 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         requestMode = SwitchRequestMode.FreeSwitching;
 
         SetRootVisible(true);
-        SetHighlightVisible(false);
         RefreshSwitchButtonAvailability();
     }
 
@@ -132,17 +168,11 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
 
         if (!CanSwitchNow())
         {
-            Debug.Log("Switch blocked because another interaction is busy.");
+            Debug.Log(
+                "Switch blocked because another interaction is busy."
+            );
+
             RefreshSwitchButtonAvailability();
-            return;
-        }
-
-        if (viewToggleButton == null)
-            viewToggleButton = FindObjectOfType<ViewToggleButton>();
-
-        if (viewToggleButton == null)
-        {
-            Debug.LogWarning("ViewToggleButton is not assigned.");
             return;
         }
 
@@ -159,28 +189,31 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         }
 
         if (requestMode == SwitchRequestMode.FreeSwitching)
-        {
             HandleFreeSwitch();
-            return;
-        }
-
-        Debug.Log("Switch button ignored because no switch request is active.");
     }
 
     private void HandleSwitchToUfo()
     {
         IsUfoView = true;
         viewToggleButton.SwitchToUfo();
+
         siphonController?.OnPerspectiveChanged(IsUfoView);
 
         requestMode = SwitchRequestMode.None;
         SetHighlightVisible(false);
 
-        ObjectivePanelController.Instance?.CompleteCurrentObjective();
+        ObjectivePanelController.Instance
+            ?.CompleteCurrentObjective();
 
-        DialogueRunner.Instance?.ContinueAfterExternalAction(true);
+        DialogueRunner.Instance
+            ?.ContinueAfterExternalAction(true);
 
-        StartCoroutine(StartDialogueAfterDelay(firstUfoSequenceId, firstUfoDialogueDelay));
+        StartCoroutine(
+            StartDialogueAfterDelay(
+                firstUfoSequenceId,
+                firstUfoDialogueDelay
+            )
+        );
 
         RefreshSwitchButtonAvailability();
     }
@@ -189,16 +222,24 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
     {
         IsUfoView = false;
         viewToggleButton.SwitchToPlayer();
+
         siphonController?.OnPerspectiveChanged(IsUfoView);
 
         requestMode = SwitchRequestMode.FreeSwitching;
         SetHighlightVisible(false);
 
-        ObjectivePanelController.Instance?.CompleteCurrentObjective();
+        ObjectivePanelController.Instance
+            ?.CompleteCurrentObjective();
 
-        DialogueRunner.Instance?.ContinueAfterExternalAction(true);
+        DialogueRunner.Instance
+            ?.ContinueAfterExternalAction(true);
 
-        StartCoroutine(StartDialogueAfterDelay(afterSwitchBackSequenceId, afterSwitchBackDialogueDelay));
+        StartCoroutine(
+            StartDialogueAfterDelay(
+                afterSwitchBackSequenceId,
+                afterSwitchBackDialogueDelay
+            )
+        );
 
         RefreshSwitchButtonAvailability();
     }
@@ -208,21 +249,28 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         viewToggleButton.Toggle();
 
         IsUfoView = !IsUfoView;
+
         siphonController?.OnPerspectiveChanged(IsUfoView);
 
         SetHighlightVisible(false);
         RefreshSwitchButtonAvailability();
     }
 
-    private IEnumerator StartDialogueAfterDelay(string sequenceId, float delay)
+    private IEnumerator StartDialogueAfterDelay(
+        string sequenceId,
+        float delay)
     {
         yield return new WaitForSeconds(delay);
 
-        DialogueSequence sequence = Level1DialogueDatabase.Instance.GetSequence(sequenceId);
+        DialogueSequence sequence =
+            Level1DialogueDatabase.Instance
+                .GetSequence(sequenceId);
 
         if (sequence == null)
         {
-            Debug.LogWarning($"Dialogue sequence not found: {sequenceId}");
+            Debug.LogWarning(
+                $"Dialogue sequence not found: {sequenceId}"
+            );
             yield break;
         }
 
@@ -231,8 +279,39 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
 
     private bool CanSwitchNow()
     {
-        if (siphonController != null && !siphonController.CanSwitchPerspective)
+        if (!switchVisible)
             return false;
+
+        if (requestMode == SwitchRequestMode.None)
+            return false;
+
+        if (viewToggleButton == null)
+            return false;
+
+        if (switchUiCanvasGroup != null &&
+            !switchUiCanvasGroup.interactable)
+        {
+            return false;
+        }
+
+        if (siphonController != null &&
+            !siphonController.CanSwitchPerspective)
+        {
+            return false;
+        }
+
+        if (markController != null &&
+            (markController.IsBusy ||
+             markController.ActedThisFrame))
+        {
+            return false;
+        }
+
+        if (rocketLauncher != null &&
+            rocketLauncher.FiredThisFrame)
+        {
+            return false;
+        }
 
         return true;
     }
@@ -242,32 +321,18 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         if (switchButton == null)
             return;
 
-        if (!switchVisible)
-        {
-            SetButtonInteractable(false);
-            return;
-        }
+        bool canSwitch = CanSwitchNow();
 
-        bool hasSwitchRequest =
+        SetButtonInteractable(canSwitch);
+
+        bool guidedRequest =
             requestMode == SwitchRequestMode.SwitchToUfo ||
-            requestMode == SwitchRequestMode.SwitchToPlayer ||
-            requestMode == SwitchRequestMode.FreeSwitching;
+            requestMode == SwitchRequestMode.SwitchToPlayer;
 
-        bool siphonAllowsSwitch =
-            siphonController == null ||
-            siphonController.CanSwitchPerspective;
-
-        SetButtonInteractable(hasSwitchRequest && siphonAllowsSwitch);
-
-        if (requestMode == SwitchRequestMode.SwitchToUfo ||
-            requestMode == SwitchRequestMode.SwitchToPlayer)
-        {
-            SetHighlightVisible(siphonAllowsSwitch);
-        }
-        else
-        {
-            SetHighlightVisible(false);
-        }
+        SetHighlightVisible(
+            guidedRequest &&
+            canSwitch
+        );
     }
 
     private void SetRootVisible(bool visible)

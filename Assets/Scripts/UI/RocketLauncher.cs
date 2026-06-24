@@ -11,6 +11,7 @@ public class RocketLauncher : MonoBehaviour
 
     [SerializeField] private Button rocketButton;
     [SerializeField] private SiphonController siphonController;
+    [SerializeField] private MarkController markController;
 
     [Header("Settings")]
     public float rocketSpeed = 5000f;
@@ -21,6 +22,10 @@ public class RocketLauncher : MonoBehaviour
     public float fireCooldown = 1f;
 
     private bool isCoolingDown;
+    
+    private int lastFireFrame = -1;
+
+    public bool FiredThisFrame => lastFireFrame == Time.frameCount;
 
     private void Start()
     {
@@ -45,6 +50,8 @@ public class RocketLauncher : MonoBehaviour
             Debug.LogWarning("RocketLauncher missing reference.");
             return;
         }
+        
+        lastFireFrame = Time.frameCount;
 
         StartCoroutine(CooldownRoutine());
 
@@ -82,8 +89,24 @@ public class RocketLauncher : MonoBehaviour
         if (isCoolingDown)
             return false;
 
-        if (siphonController != null && siphonController.IsBusy)
+        if (siphonController != null &&
+            siphonController.IsBusy)
+        {
             return false;
+        }
+
+        if (markController != null &&
+            (markController.IsBusy ||
+             markController.ActedThisFrame))
+        {
+            return false;
+        }
+
+        if (DialogueRunner.Instance != null &&
+            DialogueRunner.Instance.IsDialogueOpen)
+        {
+            return false;
+        }
 
         return true;
     }
