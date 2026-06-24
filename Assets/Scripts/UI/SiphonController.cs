@@ -48,6 +48,9 @@ public class SiphonController : MonoBehaviour
     [SerializeField] private Image crosshairImage;
     [SerializeField] private Color normalCrosshairColor = Color.white;
     [SerializeField] private Color targetCrosshairColor = Color.cyan;
+    
+    [SerializeField] private MarkController markController;
+    [SerializeField] private RocketLauncher rocketLauncher;
 
     private SiphonState state = SiphonState.Disabled;
 
@@ -84,6 +87,23 @@ public class SiphonController : MonoBehaviour
     {
         if (state == SiphonState.Disabled)
             return;
+        
+        bool externalInputBlocked =
+            (markController != null &&
+             (markController.IsBusy ||
+              markController.ActedThisFrame)) ||
+            (rocketLauncher != null &&
+             rocketLauncher.FiredThisFrame) ||
+            (DialogueRunner.Instance != null &&
+             DialogueRunner.Instance.IsDialogueOpen);
+
+        if (state == SiphonState.Idle && externalInputBlocked)
+        {
+            ClearHoverToIdle();
+            SetCrosshairColor(normalCrosshairColor);
+            SetButtonInteractable(false);
+            return;
+        }
 
         if (!isUfoView)
         {
@@ -95,6 +115,7 @@ public class SiphonController : MonoBehaviour
 
         if (state == SiphonState.Idle)
         {
+            SetButtonInteractable(isUfoView);
             UpdateHover();
             return;
         }
@@ -172,6 +193,25 @@ public class SiphonController : MonoBehaviour
 
     public void OnSiphonButtonClicked()
     {
+        if (markController != null &&
+            (markController.IsBusy ||
+             markController.ActedThisFrame))
+        {
+            return;
+        }
+
+        if (rocketLauncher != null &&
+            rocketLauncher.FiredThisFrame)
+        {
+            return;
+        }
+
+        if (DialogueRunner.Instance != null &&
+            DialogueRunner.Instance.IsDialogueOpen)
+        {
+            return;
+        }
+        
         if (state == SiphonState.Disabled)
             return;
 

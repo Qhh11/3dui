@@ -18,6 +18,8 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
     [Header("References")]
     [SerializeField] private ViewToggleButton viewToggleButton;
     [SerializeField] private SiphonController siphonController;
+    [SerializeField] private MarkController markController;
+    [SerializeField] private RocketLauncher rocketLauncher;
 
     [Header("Root")]
     [SerializeField] private GameObject switchUiRoot;
@@ -51,6 +53,12 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
 
     private void Start()
     {
+        if (markController == null)
+            markController = FindObjectOfType<MarkController>();
+        
+        if (rocketLauncher == null)
+            rocketLauncher = FindObjectOfType<RocketLauncher>();
+        
         if (viewToggleButton == null)
             viewToggleButton = FindObjectOfType<ViewToggleButton>();
 
@@ -231,8 +239,24 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
 
     private bool CanSwitchNow()
     {
-        if (siphonController != null && !siphonController.CanSwitchPerspective)
+        if (siphonController != null &&
+            !siphonController.CanSwitchPerspective)
+        {
             return false;
+        }
+
+        if (markController != null &&
+            (markController.IsBusy ||
+             markController.ActedThisFrame))
+        {
+            return false;
+        }
+
+        if (rocketLauncher != null &&
+            rocketLauncher.FiredThisFrame)
+        {
+            return false;
+        }
 
         return true;
     }
@@ -256,13 +280,31 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         bool siphonAllowsSwitch =
             siphonController == null ||
             siphonController.CanSwitchPerspective;
+        
+        bool markAllowsSwitch =
+            markController == null ||
+            (!markController.IsBusy &&
+             !markController.ActedThisFrame);
 
-        SetButtonInteractable(hasSwitchRequest && siphonAllowsSwitch);
+        bool rocketAllowsSwitch =
+            rocketLauncher == null ||
+            !rocketLauncher.FiredThisFrame;
+
+        SetButtonInteractable(
+            hasSwitchRequest &&
+            siphonAllowsSwitch &&
+            markAllowsSwitch &&
+            rocketAllowsSwitch
+        );
 
         if (requestMode == SwitchRequestMode.SwitchToUfo ||
             requestMode == SwitchRequestMode.SwitchToPlayer)
         {
-            SetHighlightVisible(siphonAllowsSwitch);
+            SetHighlightVisible(
+                siphonAllowsSwitch &&
+                markAllowsSwitch &&
+                rocketAllowsSwitch
+            );
         }
         else
         {
