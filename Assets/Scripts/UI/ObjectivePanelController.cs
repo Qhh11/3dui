@@ -68,6 +68,7 @@ public class ObjectivePanelController : MonoBehaviour
 
     public void CompleteAndSetNextObjective(string nextObjective)
     {
+        gameObject.SetActive(true);
         if (currentRoutine != null)
         {
             StopCoroutine(currentRoutine);

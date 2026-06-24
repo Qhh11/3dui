@@ -17,7 +17,8 @@ public static class DialogueIds
         public const string AbandonedWellArrival     = "abandoned_well_arrival";
         public const string AbandonedWellAfterSiphon = "abandoned_well_after_siphon";
 
-        
+        public const string VillagerCFirstHouseIntro      = "villager_c_first_house_intro";
+        public const string VillagerCFirstHouseAfterBeams = "villager_c_first_house_after_beams";
     }
 
     public static class Events

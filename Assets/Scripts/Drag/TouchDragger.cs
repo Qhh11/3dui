@@ -10,6 +10,9 @@ using UnityEngine.EventSystems;
 /// 用法：可拖拽物体放到单独 Layer(如 Draggable)、加 Collider(要掉落再加 Rigidbody)；
 /// 脚本挂 Main Camera 或玩家上，draggableMask 选该层，obstacleMask 选会挡路的环境层；
 /// 只在第一人称视角启用。需要场景里有 EventSystem，点 UI 时不会误触发。
+///
+/// [新增] 实现 IDragNotify 的物体会在拾取/松手时收到回调；
+///        ForceRelease() 供外部(如自动吸附)强制松手。
 /// </summary>
 public class TouchDragger : MonoBehaviour
 {
@@ -33,6 +36,7 @@ public class TouchDragger : MonoBehaviour
 
     private Transform dragging;
     private Rigidbody draggingRb;
+    private IDragNotify draggingNotify;   // [新增]
     private bool rbWasKinematic;
     private float grabDistance;   // 球面半径 = 拾取时物体到相机的距离
     private float holdRadius;     // 物体近似半径，给 SphereCast 防穿插
@@ -69,6 +73,10 @@ public class TouchDragger : MonoBehaviour
             rbWasKinematic = draggingRb.isKinematic;
             draggingRb.isKinematic = true;   // 拖拽时关物理
         }
+
+        // [新增] 通知物体它被拾起了
+        draggingNotify = dragging.GetComponentInParent<IDragNotify>();
+        draggingNotify?.OnDragPickedUp();
 
         // 球面半径 = 拾取瞬间物体到相机的距离
         grabDistance = Vector3.Distance(cam.transform.position, dragging.position);
@@ -108,8 +116,26 @@ public class TouchDragger : MonoBehaviour
     {
         if (dragging == null) return;
         if (draggingRb != null) draggingRb.isKinematic = rbWasKinematic; // 恢复物理
+
+        // [新增] 先清状态，再通知，避免回调里重置物理时被覆盖
+        IDragNotify notify = draggingNotify;
         dragging = null;
         draggingRb = null;
+        draggingNotify = null;
+        notify?.OnDragReleased();
+    }
+
+    /// <summary>
+    /// [新增] 外部强制松手(木梁自动吸附时调用)。不触发 IDragNotify.OnDragReleased，
+    /// 因为吸附逻辑由调用方自己处理，避免重复。
+    /// </summary>
+    public void ForceRelease()
+    {
+        if (dragging == null) return;
+        if (draggingRb != null) draggingRb.isKinematic = rbWasKinematic;
+        dragging = null;
+        draggingRb = null;
+        draggingNotify = null;
     }
 
     private void GetPointer(out bool down, out bool held, out bool up, out Vector2 pos, out int finger)

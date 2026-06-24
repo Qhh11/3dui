@@ -104,6 +104,12 @@ public class Level1DialogueDatabase : MonoBehaviour
         BuildVillagerBFirstMeet(villagerBFirstMeet);
         BuildAbandonedWellArrival(abandonedWellArrival);
         BuildAbandonedWellAfterSiphon(abandonedWellAfterSiphon);
+
+        // --- Villager C: First House (wood beams) ---
+        DialogueSequence villagerCIntro      = NewSequence(DialogueIds.Sequences.VillagerCFirstHouseIntro);
+        DialogueSequence villagerCAfterBeams = NewSequence(DialogueIds.Sequences.VillagerCFirstHouseAfterBeams);
+        BuildVillagerCFirstHouseIntro(villagerCIntro);
+        BuildVillagerCFirstHouseAfterBeams(villagerCAfterBeams);
     }
 
     private DialogueSequence NewSequence(string sequenceId)
@@ -460,6 +466,69 @@ public class Level1DialogueDatabase : MonoBehaviour
             eventOnEnd: DialogueIds.Events.QuestGoToFirstHouse));
     }
 
+// =============================================
+// 居民C — 草原深处第一户 (intro，触发木梁玩法)
+// 触发时机: 玩家点击居民C对话
+// 结束后 → gameplay: 拖拽清理三根木梁
+// =============================================
+private void BuildVillagerCFirstHouseIntro(DialogueSequence sequence)
+{
+    DialogueCharacter player   = GetCharacter(DialogueIds.Characters.Player);
+    DialogueCharacter villager = GetCharacter(DialogueIds.Characters.VillagerC);
+
+    sequence.entries.Add(Line(villager, "You came at just the right time."));
+    sequence.entries.Add(Line(villager, "Last night the ground shook, and half my house caved in."));
+    sequence.entries.Add(Line(villager, "Fallen beams are blocking the door, and my family is still trapped inside."));
+
+    sequence.entries.Add(Line(player, "The ground shook?"));
+    sequence.entries.Add(Line(player, "Does that happen often here?"));
+
+    sequence.entries.Add(Line(villager, "Only recently."));
+    sequence.entries.Add(Line(villager, "Sometimes I hear a rumble at night, and by morning the paths have changed."));
+    sequence.entries.Add(Line(villager, "The bridge moves. The cracks in the houses move too."));
+    sequence.entries.Add(Line(villager, "As if someone stitched different grasslands together."));
+
+    sequence.entries.Add(Line(player, "We'll help you move the beams."));
+
+    sequence.entries.Add(Line(villager, "Really?"));
+    sequence.entries.Add(Line(villager, "That would be a relief."));
+    sequence.entries.Add(Line(villager,
+        "Just clear those beams away from the door. Careful not to drop them on anyone.",
+        eventOnEnd: DialogueIds.Events.QuestClearWoodBeams));
+}
+
+// =============================================
+// 居民C — 清理木梁之后 (指向第二户)
+// 触发时机: 三根木梁全部归位后，由 WoodBeamPuzzle 自动播放
+// 结束后 → objective: 前往第二户人家
+// =============================================
+private void BuildVillagerCFirstHouseAfterBeams(DialogueSequence sequence)
+{
+    DialogueCharacter player   = GetCharacter(DialogueIds.Characters.Player);
+    DialogueCharacter villager = GetCharacter(DialogueIds.Characters.VillagerC);
+
+    sequence.entries.Add(Line(villager, "Thank you so much."));
+    sequence.entries.Add(Line(villager, "If not for you, I wouldn't have known what to do."));
+
+    sequence.entries.Add(Line(player, "Don't mention it."));
+    sequence.entries.Add(Line(player, "By the way, we're looking for a kind of glowing stone. Have you seen one?"));
+
+    sequence.entries.Add(Line(villager, "A glowing stone?"));
+    sequence.entries.Add(Line(villager, "Not here, I'm afraid."));
+    sequence.entries.Add(Line(villager, "But the next house deeper in — I remember something bright hanging by his window."));
+    sequence.entries.Add(Line(villager, "He says it glows on its own at night, and throws shadows that aren't quite right."));
+    sequence.entries.Add(Line(villager, "You could go and ask him."));
+
+    sequence.entries.Add(Line(player, "The second house, further in?"));
+
+    sequence.entries.Add(Line(villager, "That's right."));
+    sequence.entries.Add(Line(villager, "But you'll have to cross the river."));
+    sequence.entries.Add(Line(villager, "There is only one bridge, and lately it keeps wandering off on its own."));
+    sequence.entries.Add(Line(villager, "If the bridge isn't on the path, find a way to move it across."));
+    sequence.entries.Add(Line(villager,
+        "Nothing on this grassland stays where it belongs anymore.",
+        eventOnEnd: DialogueIds.Events.QuestGoToSecondHouse));
+}
 
     private DialogueEntry Line(
         DialogueCharacter speaker,
