@@ -3576,10 +3576,11 @@ MonoBehaviour:
     m_Bits: 256
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 769
+  solverIterations: 4
+  skinWidth: 0.01
   pickRange: 300
   followSmooth: 15
-  collisionPadding: 0.02
   minDistance: 0.3
 --- !u!114 &129442563
 MonoBehaviour:
