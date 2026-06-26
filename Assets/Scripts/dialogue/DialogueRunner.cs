@@ -14,8 +14,7 @@ public class DialogueRunner : MonoBehaviour
     public bool IsOpen => IsDialogueOpen;
 
     public bool IsGameplayInputBlocked =>
-        IsDialogueOpen ||
-        externalGameplayLocked;
+        GameplayInputLockService.IsBlocked;
 
     [Header("Dialogue UI")]
     [SerializeField] private CanvasGroup dialogueCanvasGroup;
@@ -52,7 +51,12 @@ public class DialogueRunner : MonoBehaviour
     private bool waitingForChoice;
     private bool isWaitingForExternalAction;
 
-    private bool externalGameplayLocked;
+    private int nextExternalWaitToken = 1;
+    private int activeExternalWaitToken;
+
+    private GameplayInputLockService.LockHandle dialogueGameplayLockHandle;
+    private GameplayInputLockService.LockHandle externalGameplayLockHandle;
+
     private bool gameplayAvailabilityInitialized;
     private bool gameplayControlsEnabled;
 
@@ -75,24 +79,16 @@ public class DialogueRunner : MonoBehaviour
     private void Update()
     {
         if (!IsDialogueOpen)
-        {
             return;
-        }
 
         if (waitingForChoice)
-        {
             return;
-        }
 
         if (isWaitingForExternalAction)
-        {
             return;
-        }
 
         if (TryGetAdvanceInput())
-        {
             Advance();
-        }
     }
 
     private bool TryGetAdvanceInput()
@@ -106,9 +102,7 @@ public class DialogueRunner : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             if (IsPointerOverUi(-1))
-            {
                 return false;
-            }
 
             return true;
         }
@@ -120,9 +114,7 @@ public class DialogueRunner : MonoBehaviour
             if (touch.phase == TouchPhase.Began)
             {
                 if (IsPointerOverUi(touch.fingerId))
-                {
                     return false;
-                }
 
                 return true;
             }
@@ -134,9 +126,7 @@ public class DialogueRunner : MonoBehaviour
     private bool IsPointerOverUi(int pointerId)
     {
         if (EventSystem.current == null)
-        {
             return false;
-        }
 
         if (pointerId >= 0)
         {
@@ -148,51 +138,93 @@ public class DialogueRunner : MonoBehaviour
             .IsPointerOverGameObject();
     }
 
-    public void WaitForExternalAction()
+    public int WaitForExternalAction(string reason = null)
     {
+        int token = nextExternalWaitToken++;
+
+        if (nextExternalWaitToken == int.MaxValue)
+            nextExternalWaitToken = 1;
+
+        activeExternalWaitToken = token;
         isWaitingForExternalAction = true;
+
+        return token;
     }
 
-    public void ResumeAfterExternalAction()
+    public void ResumeAfterExternalAction(int token)
     {
-        isWaitingForExternalAction = false;
-    }
-
-    public void SetExternalGameplayLock(
-        bool locked)
-    {
-        if (externalGameplayLocked == locked)
+        if (token == 0 ||
+            token != activeExternalWaitToken)
         {
             return;
         }
 
-        externalGameplayLocked = locked;
+        ClearExternalWait();
+    }
+
+    // Legacy API. Keep temporarily for old scene bindings/scripts.
+    public void ResumeAfterExternalAction()
+    {
+        ClearExternalWait();
+    }
+
+    public void SetExternalGameplayLock(bool locked)
+    {
+        if (locked)
+        {
+            if (!externalGameplayLockHandle.IsValid)
+            {
+                externalGameplayLockHandle =
+                    GameplayInputLockService.Acquire(
+                        "DialogueRunner external gameplay lock"
+                    );
+            }
+        }
+        else
+        {
+            GameplayInputLockService.Release(
+                externalGameplayLockHandle
+            );
+
+            externalGameplayLockHandle = default;
+        }
 
         RefreshGameplayAvailability();
     }
 
     public void ContinueAfterExternalAction(
+        int token,
         bool endDialogue)
     {
-        if (!isWaitingForExternalAction)
+        if (token == 0 ||
+            token != activeExternalWaitToken)
         {
             return;
         }
 
-        isWaitingForExternalAction = false;
+        ClearExternalWait();
 
         if (endDialogue)
-        {
             EndDialogue();
-        }
         else
-        {
             Advance();
-        }
     }
 
-    public void StartDialogue(
-        DialogueSequence sequence)
+    // Legacy API. Keep temporarily for old scene bindings/scripts.
+    public void ContinueAfterExternalAction(bool endDialogue)
+    {
+        if (!isWaitingForExternalAction)
+            return;
+
+        ClearExternalWait();
+
+        if (endDialogue)
+            EndDialogue();
+        else
+            Advance();
+    }
+
+    public void StartDialogue(DialogueSequence sequence)
     {
         if (sequence == null)
         {
@@ -203,10 +235,15 @@ public class DialogueRunner : MonoBehaviour
             return;
         }
 
+        StopTypingCoroutine();
+        ClearChoices();
+        ClearExternalWait();
+
         currentSequence = sequence;
         currentIndex = 0;
         IsDialogueOpen = true;
 
+        AcquireDialogueGameplayLock();
         SetDialogueVisible(true);
         RefreshGameplayAvailability();
 
@@ -214,7 +251,6 @@ public class DialogueRunner : MonoBehaviour
             .Instance
             ?.NotifyDialogueOpened();
 
-        ClearChoices();
         ShowCurrentEntry();
     }
 
@@ -235,8 +271,7 @@ public class DialogueRunner : MonoBehaviour
         currentIndex++;
 
         if (currentSequence == null ||
-            currentIndex >=
-                currentSequence.entries.Count)
+            currentIndex >= currentSequence.entries.Count)
         {
             EndDialogue();
             return;
@@ -251,8 +286,7 @@ public class DialogueRunner : MonoBehaviour
 
         if (currentSequence == null ||
             currentIndex < 0 ||
-            currentIndex >=
-                currentSequence.entries.Count)
+            currentIndex >= currentSequence.entries.Count)
         {
             EndDialogue();
             return;
@@ -287,38 +321,27 @@ public class DialogueRunner : MonoBehaviour
         else
         {
             if (speakerNameText != null)
-            {
-                speakerNameText.text =
-                    string.Empty;
-            }
+                speakerNameText.text = string.Empty;
 
             if (portraitImage != null)
-            {
                 portraitImage.enabled = false;
-            }
         }
 
         fullCurrentText =
             entry.text ?? string.Empty;
 
-        if (typingCoroutine != null)
-        {
-            StopCoroutine(typingCoroutine);
-        }
+        StopTypingCoroutine();
 
         typingCoroutine =
             StartCoroutine(TypeLine(entry));
     }
 
-    private IEnumerator TypeLine(
-        DialogueEntry entry)
+    private IEnumerator TypeLine(DialogueEntry entry)
     {
         isTyping = true;
 
         if (bodyText != null)
-        {
             bodyText.text = string.Empty;
-        }
 
         float delay =
             charactersPerSecond <= 0f
@@ -330,20 +353,12 @@ public class DialogueRunner : MonoBehaviour
              i++)
         {
             if (bodyText != null)
-            {
-                bodyText.text +=
-                    fullCurrentText[i];
-            }
+                bodyText.text += fullCurrentText[i];
 
             if (delay > 0f)
-            {
-                yield return
-                    new WaitForSeconds(delay);
-            }
+                yield return new WaitForSeconds(delay);
             else
-            {
                 yield return null;
-            }
         }
 
         CompleteCurrentEntry(entry);
@@ -351,22 +366,14 @@ public class DialogueRunner : MonoBehaviour
 
     private void FinishTypingImmediately()
     {
-        if (typingCoroutine != null)
-        {
-            StopCoroutine(typingCoroutine);
-            typingCoroutine = null;
-        }
+        StopTypingCoroutine();
 
         if (bodyText != null)
-        {
-            bodyText.text =
-                fullCurrentText;
-        }
+            bodyText.text = fullCurrentText;
 
         if (currentSequence == null ||
             currentIndex < 0 ||
-            currentIndex >=
-                currentSequence.entries.Count)
+            currentIndex >= currentSequence.entries.Count)
         {
             EndDialogue();
             return;
@@ -378,8 +385,7 @@ public class DialogueRunner : MonoBehaviour
         CompleteCurrentEntry(entry);
     }
 
-    private void CompleteCurrentEntry(
-        DialogueEntry entry)
+    private void CompleteCurrentEntry(DialogueEntry entry)
     {
         isTyping = false;
         typingCoroutine = null;
@@ -394,22 +400,18 @@ public class DialogueRunner : MonoBehaviour
         }
     }
 
-    private void ShowChoices(
-        DialogueEntry entry)
+    private void ShowChoices(DialogueEntry entry)
     {
         waitingForChoice = true;
 
         if (choicesRoot != null)
-        {
             choicesRoot.SetActive(true);
-        }
 
         if (choiceButtons == null ||
             choiceButtons.Length == 0)
         {
             Debug.LogWarning(
-                "No choice buttons assigned " +
-                "on DialogueRunner."
+                "No choice buttons assigned on DialogueRunner."
             );
 
             return;
@@ -419,54 +421,39 @@ public class DialogueRunner : MonoBehaviour
              i < choiceButtons.Length;
              i++)
         {
-            Button button =
-                choiceButtons[i];
+            Button button = choiceButtons[i];
 
             if (button == null)
-            {
                 continue;
-            }
 
-            button.onClick
-                .RemoveAllListeners();
+            button.onClick.RemoveAllListeners();
 
             bool hasChoice =
                 i < entry.choices.Count;
 
-            button.gameObject
-                .SetActive(hasChoice);
+            button.gameObject.SetActive(hasChoice);
 
             if (!hasChoice)
-            {
                 continue;
-            }
 
             DialogueChoice choice =
                 entry.choices[i];
 
             TMP_Text label =
-                button.GetComponentInChildren<
-                    TMP_Text
-                >(true);
+                button.GetComponentInChildren<TMP_Text>(true);
 
             if (label != null)
-            {
                 label.text = choice.text;
-            }
 
-            DialogueChoice capturedChoice =
-                choice;
+            DialogueChoice capturedChoice = choice;
 
             button.onClick.AddListener(
-                () => SelectChoice(
-                    capturedChoice
-                )
+                () => SelectChoice(capturedChoice)
             );
         }
     }
 
-    private void SelectChoice(
-        DialogueChoice choice)
+    private void SelectChoice(DialogueChoice choice)
     {
         waitingForChoice = false;
         ClearChoices();
@@ -486,10 +473,7 @@ public class DialogueRunner : MonoBehaviour
 
         if (choice.nextSequence != null)
         {
-            StartDialogue(
-                choice.nextSequence
-            );
-
+            StartDialogue(choice.nextSequence);
             return;
         }
 
@@ -502,26 +486,18 @@ public class DialogueRunner : MonoBehaviour
 
         if (choiceButtons != null)
         {
-            foreach (Button button
-                     in choiceButtons)
+            foreach (Button button in choiceButtons)
             {
                 if (button == null)
-                {
                     continue;
-                }
 
-                button.onClick
-                    .RemoveAllListeners();
-
-                button.gameObject
-                    .SetActive(false);
+                button.onClick.RemoveAllListeners();
+                button.gameObject.SetActive(false);
             }
         }
 
         if (choicesRoot != null)
-        {
             choicesRoot.SetActive(false);
-        }
     }
 
     public void EndDialogue()
@@ -533,7 +509,8 @@ public class DialogueRunner : MonoBehaviour
     private void CloseImmediate()
     {
         IsDialogueOpen = false;
-        isWaitingForExternalAction = false;
+        ClearExternalWait();
+        ReleaseDialogueGameplayLock();
 
         currentSequence = null;
         currentIndex = 0;
@@ -541,11 +518,7 @@ public class DialogueRunner : MonoBehaviour
         waitingForChoice = false;
         fullCurrentText = string.Empty;
 
-        if (typingCoroutine != null)
-        {
-            StopCoroutine(typingCoroutine);
-            typingCoroutine = null;
-        }
+        StopTypingCoroutine();
 
         SetDialogueVisible(false);
         RefreshGameplayAvailability();
@@ -555,38 +528,28 @@ public class DialogueRunner : MonoBehaviour
             ?.NotifyDialogueClosed();
     }
 
-    private void RefreshGameplayAvailability()
+    public void RefreshGameplayAvailability()
     {
         bool controlsEnabled =
             !IsGameplayInputBlocked;
 
         if (gameplayAvailabilityInitialized &&
-            gameplayControlsEnabled ==
-                controlsEnabled)
+            gameplayControlsEnabled == controlsEnabled)
         {
             return;
         }
 
         gameplayAvailabilityInitialized = true;
-        gameplayControlsEnabled =
-            controlsEnabled;
+        gameplayControlsEnabled = controlsEnabled;
 
-        SetInGameUiVisible(
-            controlsEnabled
-        );
-
-        SetControlsEnabled(
-            controlsEnabled
-        );
+        SetInGameUiVisible(controlsEnabled);
+        SetControlsEnabled(controlsEnabled);
     }
 
-    private void SetDialogueVisible(
-        bool visible)
+    private void SetDialogueVisible(bool visible)
     {
         if (dialogueCanvasGroup == null)
-        {
             return;
-        }
 
         dialogueCanvasGroup.alpha =
             visible ? 1f : 0f;
@@ -598,21 +561,16 @@ public class DialogueRunner : MonoBehaviour
             visible;
     }
 
-    private void SetInGameUiVisible(
-        bool visible)
+    private void SetInGameUiVisible(bool visible)
     {
         if (inGameUiCanvasGroups == null)
-        {
             return;
-        }
 
         foreach (CanvasGroup canvasGroup
                  in inGameUiCanvasGroups)
         {
             if (canvasGroup == null)
-            {
                 continue;
-            }
 
             canvasGroup.alpha =
                 visible ? 1f : 0f;
@@ -625,8 +583,7 @@ public class DialogueRunner : MonoBehaviour
         }
     }
 
-    private void SetControlsEnabled(
-        bool enabled)
+    private void SetControlsEnabled(bool enabled)
     {
         if (behavioursToDisableWhileOpen != null)
         {
@@ -634,10 +591,7 @@ public class DialogueRunner : MonoBehaviour
                      in behavioursToDisableWhileOpen)
             {
                 if (behaviour != null)
-                {
-                    behaviour.enabled =
-                        enabled;
-                }
+                    behaviour.enabled = enabled;
             }
         }
 
@@ -647,12 +601,47 @@ public class DialogueRunner : MonoBehaviour
                      in controlLockGroups)
             {
                 if (group != null)
-                {
-                    group.SetControlsEnabled(
-                        enabled
-                    );
-                }
+                    group.SetControlsEnabled(enabled);
             }
         }
+    }
+
+    private void StopTypingCoroutine()
+    {
+        if (typingCoroutine == null)
+            return;
+
+        StopCoroutine(typingCoroutine);
+        typingCoroutine = null;
+        isTyping = false;
+    }
+
+    private void ClearExternalWait()
+    {
+        activeExternalWaitToken = 0;
+        isWaitingForExternalAction = false;
+    }
+
+    private void AcquireDialogueGameplayLock()
+    {
+        if (dialogueGameplayLockHandle.IsValid)
+            return;
+
+        dialogueGameplayLockHandle =
+            GameplayInputLockService.Acquire(
+                "Dialogue open"
+            );
+    }
+
+    private void ReleaseDialogueGameplayLock()
+    {
+        if (!dialogueGameplayLockHandle.IsValid)
+            return;
+
+        GameplayInputLockService.Release(
+            dialogueGameplayLockHandle
+        );
+
+        dialogueGameplayLockHandle = default;
     }
 }

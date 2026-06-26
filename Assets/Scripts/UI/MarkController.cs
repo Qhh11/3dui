@@ -278,14 +278,12 @@ public class MarkController : MonoBehaviour
 
     private void RefreshSelectorStates()
     {
-        bool dialogueOpen =
-            DialogueRunner.Instance != null &&
-            DialogueRunner.Instance
-                .IsDialogueOpen;
+        bool gameplayInputBlocked =
+            GameplayInputLockService.IsBlocked;
 
         bool selectorVisible =
             IsUfoView() &&
-            !dialogueOpen;
+            !gameplayInputBlocked;
 
         bool selectorInputEnabled =
             selectorVisible &&
@@ -388,9 +386,7 @@ public class MarkController : MonoBehaviour
         if (!IsUfoView())
             return false;
 
-        if (DialogueRunner.Instance != null &&
-            DialogueRunner.Instance
-                .IsDialogueOpen)
+        if (GameplayInputLockService.IsBlocked)
         {
             return false;
         }

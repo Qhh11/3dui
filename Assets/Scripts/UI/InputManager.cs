@@ -43,6 +43,11 @@ public class InputManager : MonoBehaviour
 
     public Vector2 GetLeftStick()
     {
+        if (GameplayInputLockService.IsBlocked)
+        {
+            return Vector2.zero;
+        }
+
         return playerControls.Player.Movement.ReadValue<Vector2>();
     }
 }

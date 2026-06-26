@@ -102,8 +102,7 @@ public class RocketLauncher : MonoBehaviour
             return false;
         }
 
-        if (DialogueRunner.Instance != null &&
-            DialogueRunner.Instance.IsDialogueOpen)
+        if (GameplayInputLockService.IsBlocked)
         {
             return false;
         }

@@ -31,6 +31,13 @@ public class UfoMovement : MonoBehaviour
     private float yawOffset;     // 把设备朝向水平偏到锚点朝向的角度
     private bool active;
     private float logTimer;
+    private bool playerControllerWasEnabled;
+    private bool pendingPlayerControllerRestore;
+
+    void Update()
+    {
+        TryRestorePlayerControllerAfterLock();
+    }
 
     void LateUpdate()
     {
@@ -67,7 +74,14 @@ public class UfoMovement : MonoBehaviour
             return;
         }
 
-        if (playerController != null) playerController.enabled = false;
+        if (playerController != null)
+        {
+            if (!active)
+                playerControllerWasEnabled = playerController.enabled;
+
+            pendingPlayerControllerRestore = false;
+            playerController.enabled = false;
+        }
 
         Transform h = head != null ? head : (Camera.main != null ? Camera.main.transform : cam);
         anchorPos = h.position + headOffset;
@@ -83,7 +97,38 @@ public class UfoMovement : MonoBehaviour
     public void ExitUfo()
     {
         active = false;
-        if (playerController != null) playerController.enabled = true;
+
+        if (playerController == null ||
+            !playerControllerWasEnabled)
+        {
+            playerControllerWasEnabled = false;
+            pendingPlayerControllerRestore = false;
+            return;
+        }
+
+        if (GameplayInputLockService.IsBlocked)
+        {
+            pendingPlayerControllerRestore = true;
+            return;
+        }
+
+        playerController.enabled = true;
+        playerControllerWasEnabled = false;
+        pendingPlayerControllerRestore = false;
+    }
+
+    private void TryRestorePlayerControllerAfterLock()
+    {
+        if (!pendingPlayerControllerRestore ||
+            playerController == null ||
+            GameplayInputLockService.IsBlocked)
+        {
+            return;
+        }
+
+        playerController.enabled = true;
+        playerControllerWasEnabled = false;
+        pendingPlayerControllerRestore = false;
     }
 
     /// <summary>设备水平朝向（度）。优先用右轴（与俯仰无关、垂直时也稳），右轴近竖直时退用前向投影。</summary>

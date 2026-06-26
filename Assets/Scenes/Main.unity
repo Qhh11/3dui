@@ -36469,9 +36469,9 @@ MonoBehaviour:
     onTriggered:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1241590202}
-          m_TargetAssemblyTypeName: ViewToggleButton, Assembly-CSharp
-          m_MethodName: SwitchToUfo
+        - m_Target: {fileID: 1703834558}
+          m_TargetAssemblyTypeName: SwitchPerspectiveButtonController, Assembly-CSharp
+          m_MethodName: ForceSwitchToUfo
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -36485,9 +36485,9 @@ MonoBehaviour:
     onTriggered:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1241590202}
-          m_TargetAssemblyTypeName: ViewToggleButton, Assembly-CSharp
-          m_MethodName: SwitchToPlayer
+        - m_Target: {fileID: 1703834558}
+          m_TargetAssemblyTypeName: SwitchPerspectiveButtonController, Assembly-CSharp
+          m_MethodName: ForceSwitchToPlayer
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

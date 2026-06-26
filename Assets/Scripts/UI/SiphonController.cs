@@ -275,9 +275,7 @@ public class SiphonController : MonoBehaviour
             return true;
         }
 
-        return
-            DialogueRunner.Instance != null &&
-            DialogueRunner.Instance.IsDialogueOpen;
+        return GameplayInputLockService.IsBlocked;
     }
 
     private bool TryGetPickUpTarget(

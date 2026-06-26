@@ -51,6 +51,12 @@ public class TouchDragger : MonoBehaviour
     {
         if (cam == null) return;
 
+        if (GameplayInputLockService.IsBlocked)
+        {
+            ForceRelease();
+            return;
+        }
+
         GetPointer(out bool down, out bool held, out bool up, out Vector2 sp, out int finger);
 
         if (down && !PointerOverUI(finger)) TryPick(sp);
@@ -136,6 +142,11 @@ public class TouchDragger : MonoBehaviour
         dragging = null;
         draggingRb = null;
         draggingNotify = null;
+    }
+
+    private void OnDisable()
+    {
+        ForceRelease();
     }
 
     private void GetPointer(out bool down, out bool held, out bool up, out Vector2 pos, out int finger)

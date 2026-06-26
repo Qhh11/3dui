@@ -94,11 +94,31 @@ namespace DyrdaDev.TouchControls
             ResetStick();
         }
 
+        private void Update()
+        {
+            if (!GameplayInputLockService.IsBlocked)
+            {
+                return;
+            }
+
+            if (_mInternalValue != Vector2.zero ||
+                knob.anchoredPosition != Vector2.zero)
+            {
+                ResetStick();
+            }
+        }
+
         public void OnPointerDown(PointerEventData eventData)
         {
             if (eventData == null)
             {
                 throw new ArgumentNullException(nameof(eventData));
+            }
+
+            if (GameplayInputLockService.IsBlocked)
+            {
+                ResetStick();
+                return;
             }
             
             UpdateVisibility(true);
@@ -117,6 +137,12 @@ namespace DyrdaDev.TouchControls
             if (eventData == null)
             {
                 throw new ArgumentNullException(nameof(eventData));
+            }
+
+            if (GameplayInputLockService.IsBlocked)
+            {
+                ResetStick();
+                return;
             }
             
             var referencePosition = _stickBehavior == StickBehavior.fixSocketAndCenterAsReference ? new Vector2(0,0) : m_PointerDownPos;

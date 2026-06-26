@@ -64,6 +64,9 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
 
     private bool switchVisible;
     private CanvasGroup switchUiCanvasGroup;
+    private int switchWaitToken;
+    private Coroutine pendingDialogueCoroutine;
+    private int delayedDialogueVersion;
 
     private void Awake()
     {
@@ -140,7 +143,13 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         SetRootVisible(true);
         RefreshSwitchButtonAvailability();
 
-        DialogueRunner.Instance?.WaitForExternalAction();
+        switchWaitToken =
+            DialogueRunner.Instance != null
+                ? DialogueRunner.Instance
+                    .WaitForExternalAction(
+                        "Switch to UFO hint"
+                    )
+                : 0;
     }
 
     public void ShowSwitchToPlayerHint()
@@ -151,7 +160,13 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         SetRootVisible(true);
         RefreshSwitchButtonAvailability();
 
-        DialogueRunner.Instance?.WaitForExternalAction();
+        switchWaitToken =
+            DialogueRunner.Instance != null
+                ? DialogueRunner.Instance
+                    .WaitForExternalAction(
+                        "Switch to player hint"
+                    )
+                : 0;
     }
 
     public void ShowSwitchHint()
@@ -214,13 +229,16 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
             ?.CompleteCurrentObjective();
 
         DialogueRunner.Instance
-            ?.ContinueAfterExternalAction(true);
+            ?.ContinueAfterExternalAction(
+                switchWaitToken,
+                true
+            );
 
-        StartCoroutine(
-            StartDialogueAfterDelay(
-                firstUfoSequenceId,
-                firstUfoDialogueDelay
-            )
+        switchWaitToken = 0;
+
+        StartDelayedDialogue(
+            firstUfoSequenceId,
+            firstUfoDialogueDelay
         );
 
         RefreshSwitchButtonAvailability();
@@ -242,13 +260,16 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
             ?.CompleteCurrentObjective();
 
         DialogueRunner.Instance
-            ?.ContinueAfterExternalAction(true);
+            ?.ContinueAfterExternalAction(
+                switchWaitToken,
+                true
+            );
 
-        StartCoroutine(
-            StartDialogueAfterDelay(
-                afterSwitchBackSequenceId,
-                afterSwitchBackDialogueDelay
-            )
+        switchWaitToken = 0;
+
+        StartDelayedDialogue(
+            afterSwitchBackSequenceId,
+            afterSwitchBackDialogueDelay
         );
 
         RefreshSwitchButtonAvailability();
@@ -267,11 +288,62 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         RefreshSwitchButtonAvailability();
     }
 
-    private IEnumerator StartDialogueAfterDelay(
+    public void ForceSwitchToUfo()
+    {
+        if (viewToggleButton == null)
+            return;
+
+        viewToggleButton.SwitchToUfo();
+        SyncAfterPerspectiveChanged();
+    }
+
+    public void ForceSwitchToPlayer()
+    {
+        if (viewToggleButton == null)
+            return;
+
+        viewToggleButton.SwitchToPlayer();
+        SyncAfterPerspectiveChanged();
+    }
+
+    private void StartDelayedDialogue(
         string sequenceId,
         float delay)
     {
-        yield return new WaitForSeconds(delay);
+        delayedDialogueVersion++;
+
+        if (pendingDialogueCoroutine != null)
+        {
+            StopCoroutine(pendingDialogueCoroutine);
+        }
+
+        pendingDialogueCoroutine =
+            StartCoroutine(
+                StartDialogueAfterDelay(
+                    sequenceId,
+                    delay,
+                    delayedDialogueVersion
+                )
+            );
+    }
+
+    private IEnumerator StartDialogueAfterDelay(
+        string sequenceId,
+        float delay,
+        int version)
+    {
+        yield return new WaitForSecondsRealtime(delay);
+
+        if (version != delayedDialogueVersion)
+            yield break;
+
+        pendingDialogueCoroutine = null;
+
+        if (DialogueRunner.Instance != null &&
+            DialogueRunner.Instance.IsDialogueOpen)
+        {
+            yield break;
+        }
 
         DialogueSequence sequence =
             Level1DialogueDatabase.Instance
@@ -285,7 +357,7 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
             yield break;
         }
 
-        DialogueRunner.Instance.StartDialogue(sequence);
+        DialogueRunner.Instance?.StartDialogue(sequence);
     }
 
     private bool CanSwitchNow()
@@ -295,6 +367,12 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
 
         if (requestMode == SwitchRequestMode.None)
             return false;
+
+        if (requestMode == SwitchRequestMode.FreeSwitching &&
+            GameplayInputLockService.IsBlocked)
+        {
+            return false;
+        }
 
         if (viewToggleButton == null)
             return false;
@@ -356,6 +434,18 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
     {
         playerViewFade?.SetVisibleImmediate(!IsUfoView);
         ufoViewFade?.SetVisibleImmediate(IsUfoView);
+    }
+
+    private void SyncAfterPerspectiveChanged()
+    {
+        IsUfoView = viewToggleButton.IsUfoView();
+
+        ApplyViewUi();
+
+        siphonController?.OnPerspectiveChanged(IsUfoView);
+
+        SetHighlightVisible(false);
+        RefreshSwitchButtonAvailability();
     }
 
     private void SetRootVisible(bool visible)

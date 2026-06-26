@@ -57,7 +57,12 @@ public sealed class BridgeDialogueCameraFocus :
     private float returnStartedTime;
 
     private DialogueRunner advanceLockedRunner;
-    private DialogueRunner gameplayLockedRunner;
+    private int advanceWaitToken;
+
+    private GameplayInputLockService.LockHandle gameplayLockHandle;
+
+    private int previousFocusPriority;
+    private bool focusPriorityCaptured;
 
     private void Awake()
     {
@@ -146,6 +151,8 @@ public sealed class BridgeDialogueCameraFocus :
 
         EnforceSwitchLock();
 
+        CaptureFocusCameraPriority();
+
         focusCamera.Priority =
             activePriority;
     }
@@ -156,11 +163,7 @@ public sealed class BridgeDialogueCameraFocus :
 
         if (state == FocusState.Idle)
         {
-            if (focusCamera != null)
-            {
-                focusCamera.Priority =
-                    inactivePriority;
-            }
+            RestoreFocusCameraPriority();
 
             return;
         }
@@ -170,11 +173,7 @@ public sealed class BridgeDialogueCameraFocus :
         waitingForForwardBlend = false;
         forwardBlendStartedFrame = -1;
 
-        if (focusCamera != null)
-        {
-            focusCamera.Priority =
-                inactivePriority;
-        }
+        RestoreFocusCameraPriority();
 
         state = FocusState.Returning;
 
@@ -202,7 +201,12 @@ public sealed class BridgeDialogueCameraFocus :
 
         if (brain != null)
         {
-            if (brain.IsBlending)
+            float elapsed =
+                Time.unscaledTime -
+                forwardBlendStartedTime;
+
+            if (brain.IsBlending &&
+                elapsed < fallbackReturnLockDuration)
             {
                 return;
             }
@@ -236,7 +240,12 @@ public sealed class BridgeDialogueCameraFocus :
 
         if (brain != null)
         {
-            if (brain.IsBlending)
+            float elapsed =
+                Time.unscaledTime -
+                returnStartedTime;
+
+            if (brain.IsBlending &&
+                elapsed < fallbackReturnLockDuration)
             {
                 return;
             }
@@ -272,11 +281,7 @@ public sealed class BridgeDialogueCameraFocus :
 
     private void CancelFocusImmediate()
     {
-        if (focusCamera != null)
-        {
-            focusCamera.Priority =
-                inactivePriority;
-        }
+        RestoreFocusCameraPriority();
 
         state = FocusState.Idle;
 
@@ -299,8 +304,13 @@ public sealed class BridgeDialogueCameraFocus :
         advanceLockedRunner =
             DialogueRunner.Instance;
 
-        advanceLockedRunner
-            ?.WaitForExternalAction();
+        if (advanceLockedRunner != null)
+        {
+            advanceWaitToken =
+                advanceLockedRunner.WaitForExternalAction(
+                    "Bridge camera focus"
+                );
+        }
     }
 
     private void ReleaseDialogueAdvanceLock()
@@ -311,36 +321,45 @@ public sealed class BridgeDialogueCameraFocus :
         }
 
         advanceLockedRunner
-            .ResumeAfterExternalAction();
+            .ResumeAfterExternalAction(
+                advanceWaitToken
+            );
 
         advanceLockedRunner = null;
+        advanceWaitToken = 0;
     }
 
     private void AcquireGameplayLock()
     {
-        if (gameplayLockedRunner != null)
+        if (gameplayLockHandle.IsValid)
         {
             return;
         }
 
-        gameplayLockedRunner =
-            DialogueRunner.Instance;
+        gameplayLockHandle =
+            GameplayInputLockService.Acquire(
+                "Bridge camera focus"
+            );
 
-        gameplayLockedRunner
-            ?.SetExternalGameplayLock(true);
+        DialogueRunner.Instance
+            ?.RefreshGameplayAvailability();
     }
 
     private void ReleaseGameplayLock()
     {
-        if (gameplayLockedRunner == null)
+        if (!gameplayLockHandle.IsValid)
         {
             return;
         }
 
-        gameplayLockedRunner
-            .SetExternalGameplayLock(false);
+        GameplayInputLockService.Release(
+            gameplayLockHandle
+        );
 
-        gameplayLockedRunner = null;
+        gameplayLockHandle = default;
+
+        DialogueRunner.Instance
+            ?.RefreshGameplayAvailability();
     }
 
     private void ResolveSceneReferences()
@@ -434,5 +453,34 @@ public sealed class BridgeDialogueCameraFocus :
             previousSwitchBlocksRaycasts;
 
         switchStateCaptured = false;
+    }
+
+    private void CaptureFocusCameraPriority()
+    {
+        if (focusCamera == null ||
+            focusPriorityCaptured)
+        {
+            return;
+        }
+
+        previousFocusPriority =
+            focusCamera.Priority;
+
+        focusPriorityCaptured = true;
+    }
+
+    private void RestoreFocusCameraPriority()
+    {
+        if (focusCamera == null)
+        {
+            return;
+        }
+
+        focusCamera.Priority =
+            focusPriorityCaptured
+                ? previousFocusPriority
+                : inactivePriority;
+
+        focusPriorityCaptured = false;
     }
 }

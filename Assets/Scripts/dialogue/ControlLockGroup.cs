@@ -9,63 +9,99 @@ public class ControlLockGroup : MonoBehaviour
     [Header("Options")]
     [SerializeField] private bool includeChildren = false;
 
-    private readonly Dictionary<Behaviour, bool> previousStates = new Dictionary<Behaviour, bool>();
+    private sealed class SharedState
+    {
+        public bool PreviousEnabled;
+        public int LockCount;
+    }
+
+    private static readonly Dictionary<Behaviour, SharedState>
+        sharedStates = new Dictionary<Behaviour, SharedState>();
+
+    private readonly HashSet<Behaviour> locallyLocked =
+        new HashSet<Behaviour>();
 
     public void SetControlsEnabled(bool enabled)
     {
         if (enabled)
-        {
             RestorePreviousStates();
-        }
         else
-        {
             DisableTargetBehaviours();
-        }
     }
 
     private void DisableTargetBehaviours()
     {
-        previousStates.Clear();
-
-        foreach (GameObject targetObject in targetObjects)
+        foreach (Behaviour behaviour in EnumerateTargets())
         {
-            if (targetObject == null)
-            {
+            if (behaviour == null)
                 continue;
-            }
 
-            Behaviour[] behaviours = includeChildren
-                ? targetObject.GetComponentsInChildren<Behaviour>(true)
-                : targetObject.GetComponents<Behaviour>();
+            if (behaviour is ControlLockGroup)
+                continue;
 
-            foreach (Behaviour behaviour in behaviours)
+            if (!sharedStates.TryGetValue(
+                    behaviour,
+                    out SharedState state))
             {
-                if (behaviour == null)
+                state = new SharedState
                 {
-                    continue;
-                }
+                    PreviousEnabled = behaviour.enabled,
+                    LockCount = 0
+                };
 
-                if (behaviour == this)
-                {
-                    continue;
-                }
-
-                previousStates[behaviour] = behaviour.enabled;
-                behaviour.enabled = false;
+                sharedStates.Add(behaviour, state);
             }
+
+            if (locallyLocked.Add(behaviour))
+                state.LockCount++;
+
+            behaviour.enabled = false;
         }
     }
 
     private void RestorePreviousStates()
     {
-        foreach (KeyValuePair<Behaviour, bool> state in previousStates)
+        foreach (Behaviour behaviour in locallyLocked)
         {
-            if (state.Key != null)
+            if (behaviour == null)
+                continue;
+
+            if (!sharedStates.TryGetValue(
+                    behaviour,
+                    out SharedState state))
             {
-                state.Key.enabled = state.Value;
+                continue;
+            }
+
+            state.LockCount--;
+
+            if (state.LockCount <= 0)
+            {
+                behaviour.enabled = state.PreviousEnabled;
+                sharedStates.Remove(behaviour);
             }
         }
 
-        previousStates.Clear();
+        locallyLocked.Clear();
+    }
+
+    private IEnumerable<Behaviour> EnumerateTargets()
+    {
+        if (targetObjects == null)
+            yield break;
+
+        foreach (GameObject targetObject in targetObjects)
+        {
+            if (targetObject == null)
+                continue;
+
+            Behaviour[] behaviours =
+                includeChildren
+                    ? targetObject.GetComponentsInChildren<Behaviour>(true)
+                    : targetObject.GetComponents<Behaviour>();
+
+            foreach (Behaviour behaviour in behaviours)
+                yield return behaviour;
+        }
     }
 }
