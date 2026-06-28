@@ -371,7 +371,12 @@ public class SiphonController : MonoBehaviour
         ClearHoverToIdle();
 
         heldObject = target;
-        heldObject.PickUp(holdPoint);
+        if (!heldObject.PickUp(holdPoint))
+        {
+            heldObject = null;  // 被挡住了，清掉
+            return;
+        }
+        //heldObject.PickUp(holdPoint);
 
         state = SiphonState.PullingToHold;
         SetCrosshairColor(normalCrosshairColor);

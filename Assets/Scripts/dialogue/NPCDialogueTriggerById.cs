@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class NPCDialogueTriggerById : MonoBehaviour
 {
+    [SerializeField] private MonoBehaviour dialogueDatabase;
+
     [Header("Dialogue")]
     [SerializeField] private string sequenceId = "villager_a_first_meet";
     [SerializeField] private bool triggerOnlyOnce = true;
@@ -18,10 +20,23 @@ public class NPCDialogueTriggerById : MonoBehaviour
     [Header("3D Dialogue Indicator")]
     [SerializeField] private GameObject dialogueIndicator;
 
+    private IDialogueDatabase database;
+
     private bool hasTriggered;
 
     private void Start()
     {
+        database = dialogueDatabase as IDialogueDatabase;
+
+        // 如果 cast 失败，尝试从同一个 GameObject 上找
+        if (database == null && dialogueDatabase != null)
+            database = dialogueDatabase.GetComponent<IDialogueDatabase>() as IDialogueDatabase;
+
+
+        if (database == null)
+        {
+            Debug.LogError($"{name}: Dialogue Database not assigned or doesn't implement IDialogueDatabase.");
+        }
         RefreshIndicator();
     }
 
@@ -48,8 +63,8 @@ public class NPCDialogueTriggerById : MonoBehaviour
             return;
         }
 
-        DialogueSequence sequence = Level1DialogueDatabase.Instance.GetSequence(sequenceId);
-
+        DialogueSequence sequence = database?.GetSequence(sequenceId);
+        
         if (sequence == null)
         {
             Debug.LogWarning($"Dialogue sequence not found: {sequenceId}");

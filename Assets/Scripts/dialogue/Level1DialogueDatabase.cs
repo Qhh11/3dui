@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Level1DialogueDatabase : MonoBehaviour
+public class Level1DialogueDatabase : MonoBehaviour, IDialogueDatabase
 {
     public static Level1DialogueDatabase Instance { get; private set; }
     public const string Level1FirstUfoView = "level1_first_ufo_view";

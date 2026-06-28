@@ -4051,6 +4051,11 @@ MonoBehaviour:
   ufoSelectedMask: 2
   outlineRenderers: []
   skinWidth: 0.03
+  isBlocked: 0
+  blockingObject: {fileID: 0}
+  onPickUpBlocked:
+    m_PersistentCalls:
+      m_Calls: []
   onPickedUp:
     m_PersistentCalls:
       m_Calls: []
@@ -4302,7 +4307,7 @@ Transform:
   m_GameObject: {fileID: 129442561}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5130.04, y: 3411.5586, z: -1072.5012}
+  m_LocalPosition: {x: -620.9597, y: 3411.5586, z: -3478.5012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5978,6 +5983,7 @@ GameObject:
   - component: {fileID: 202353718}
   - component: {fileID: 202353720}
   - component: {fileID: 202353719}
+  - component: {fileID: 202353721}
   m_Layer: 0
   m_Name: Isle_01 (10)
   m_TagString: Untagged
@@ -6057,6 +6063,28 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 202353717}
   m_Mesh: {fileID: 2515467331933360955, guid: be1f2ac837436934e976aae78b7c36f6, type: 3}
+--- !u!64 &202353721
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 202353717}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2515467331933360955, guid: be1f2ac837436934e976aae78b7c36f6, type: 3}
 --- !u!1 &208516970
 GameObject:
   m_ObjectHideFlags: 0
@@ -6068,6 +6096,7 @@ GameObject:
   - component: {fileID: 208516971}
   - component: {fileID: 208516973}
   - component: {fileID: 208516972}
+  - component: {fileID: 208516974}
   m_Layer: 0
   m_Name: Isle_01 (8)
   m_TagString: Untagged
@@ -6146,6 +6175,28 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 208516970}
+  m_Mesh: {fileID: 2515467331933360955, guid: be1f2ac837436934e976aae78b7c36f6, type: 3}
+--- !u!64 &208516974
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 208516970}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: 2515467331933360955, guid: be1f2ac837436934e976aae78b7c36f6, type: 3}
 --- !u!1001 &208569653
 PrefabInstance:
@@ -10240,6 +10291,8 @@ GameObject:
   - component: {fileID: 379232493}
   - component: {fileID: 379232495}
   - component: {fileID: 379232494}
+  - component: {fileID: 379232497}
+  - component: {fileID: 379232498}
   m_Layer: 0
   m_Name: roots_02 (6)
   m_TagString: Untagged
@@ -10255,12 +10308,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 379232492}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.009402777, y: 0.88616276, z: 0.051825926, w: 0.46037093}
-  m_LocalPosition: {x: 2.5, y: 5.9, z: -22.7}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0.031923205, y: 0.3231582, z: -0.004697911, w: -0.9457947}
+  m_LocalPosition: {x: 1361.4146, y: 28.41504, z: 3096.4858}
+  m_LocalScale: {x: 60.000023, y: 60, z: 60.00003}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 9123940552177601}
+  m_Father: {fileID: 1714640026}
   m_LocalEulerAnglesHint: {x: 3.6360002, y: 317.173, z: -0.674}
 --- !u!23 &379232494
 MeshRenderer:
@@ -10319,6 +10372,40 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 379232492}
   m_Mesh: {fileID: 6936483740770965330, guid: a609af68e9150fe44aa3a3713417f827, type: 3}
+--- !u!114 &379232497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379232492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b26a86302795df2479153567a018e3cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BlastBlockedRootTarget
+  destroyOnlyOnce: 1
+--- !u!65 &379232498
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379232492}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 11.205886, y: 1.4886566, z: 13.155657}
+  m_Center: {x: -1.0136302, y: -0.46814916, z: 1.0748289}
 --- !u!1 &380569151
 GameObject:
   m_ObjectHideFlags: 0
@@ -14699,7 +14786,7 @@ Transform:
   m_GameObject: {fileID: 535016456}
   serializedVersion: 2
   m_LocalRotation: {x: -0.15577297, y: 0.8441781, z: -0.35771865, w: -0.36760795}
-  m_LocalPosition: {x: 3282, y: 5738, z: -2057}
+  m_LocalPosition: {x: 3177, y: 5877, z: -2155}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -17764,6 +17851,11 @@ MonoBehaviour:
   ufoSelectedMask: 2
   outlineRenderers: []
   skinWidth: 0.03
+  isBlocked: 0
+  blockingObject: {fileID: 0}
+  onPickUpBlocked:
+    m_PersistentCalls:
+      m_Calls: []
   onPickedUp:
     m_PersistentCalls:
       m_Calls: []
@@ -18234,6 +18326,79 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 633104965}
   m_Mesh: {fileID: -5170781021013428831, guid: bc98a350d584ef64995c531529593f19, type: 3}
+--- !u!1 &633475161
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 633475162}
+  - component: {fileID: 633475164}
+  - component: {fileID: 633475163}
+  m_Layer: 0
+  m_Name: Level2APreludeTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &633475162
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633475161}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1059, y: 0.09008789, z: 961}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1714640026}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &633475163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633475161}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dbd2a7bc82edf441a58c7a9cc6b496b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTriggerById
+  dialogueDatabase: {fileID: 1182721970}
+  sequenceId: level2a_prelude
+  triggerOnlyOnce: 1
+  requiredFlag: 
+  blockedByFlag: 
+  playerTag: Player
+  dialogueIndicator: {fileID: 0}
+--- !u!65 &633475164
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 633475161}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1500, y: 500, z: 700}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &634214353
 GameObject:
   m_ObjectHideFlags: 0
@@ -19306,6 +19471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dbd2a7bc82edf441a58c7a9cc6b496b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTriggerById
+  dialogueDatabase: {fileID: 1158618835}
   sequenceId: abandoned_well_arrival
   triggerOnlyOnce: 1
   requiredFlag: NPCWell_met
@@ -22498,9 +22664,38 @@ MonoBehaviour:
   ufoSelectedMask: 2
   outlineRenderers: []
   skinWidth: 0.03
+  isBlocked: 1
+  blockingObject: {fileID: 379232492}
+  onPickUpBlocked:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1182721971}
+        m_TargetAssemblyTypeName: Level2AFlowController, Assembly-CSharp
+        m_MethodName: OnSiphonAttemptFailed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onPickedUp:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1182721971}
+        m_TargetAssemblyTypeName: Level2AFlowController, Assembly-CSharp
+        m_MethodName: OnEnergyCollected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onPlaced:
     m_PersistentCalls:
       m_Calls: []
@@ -23970,6 +24165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dbd2a7bc82edf441a58c7a9cc6b496b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTriggerById
+  dialogueDatabase: {fileID: 1158618835}
   sequenceId: villager_b_first_meet
   triggerOnlyOnce: 1
   requiredFlag: grass_checked
@@ -34496,6 +34692,7 @@ GameObject:
   - component: {fileID: 1032658869}
   - component: {fileID: 1032658871}
   - component: {fileID: 1032658870}
+  - component: {fileID: 1032658872}
   m_Layer: 0
   m_Name: Isle_01 (13)
   m_TagString: Untagged
@@ -34574,6 +34771,28 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1032658868}
+  m_Mesh: {fileID: 2515467331933360955, guid: be1f2ac837436934e976aae78b7c36f6, type: 3}
+--- !u!64 &1032658872
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1032658868}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: 2515467331933360955, guid: be1f2ac837436934e976aae78b7c36f6, type: 3}
 --- !u!1001 &1033449290
 PrefabInstance:
@@ -39499,6 +39718,7 @@ Transform:
   - {fileID: 364029088}
   - {fileID: 823372947}
   - {fileID: 866015659}
+  - {fileID: 1182721969}
   m_Father: {fileID: 1662953824}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1158618832
@@ -40126,6 +40346,118 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - key: level2a_quest_explore_ufo
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1182721971}
+          m_TargetAssemblyTypeName: Level2AFlowController, Assembly-CSharp
+          m_MethodName: OnQuestExploreUfo
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: level2a_quest_siphon_energy
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1182721971}
+          m_TargetAssemblyTypeName: Level2AFlowController, Assembly-CSharp
+          m_MethodName: OnQuestSiphonEnergy
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: level2a_quest_shoot_roots
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1182721971}
+          m_TargetAssemblyTypeName: Level2AFlowController, Assembly-CSharp
+          m_MethodName: OnQuestShootRoots
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: level2a_quest_siphon_after_roots
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1182721971}
+          m_TargetAssemblyTypeName: Level2AFlowController, Assembly-CSharp
+          m_MethodName: OnQuestSiphonAfterRoots
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: level2a_play_signal_lost
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1182721971}
+          m_TargetAssemblyTypeName: Level2AFlowController, Assembly-CSharp
+          m_MethodName: PlaySignalLost
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: level2a_quest_go_to_portal
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1182721971}
+          m_TargetAssemblyTypeName: Level2AFlowController, Assembly-CSharp
+          m_MethodName: OnQuestGoToPortal
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: level2a_show_switch_hint
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1182721971}
+          m_TargetAssemblyTypeName: Level2AFlowController, Assembly-CSharp
+          m_MethodName: OnShowSwitchHint
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &1158618834
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40377,6 +40709,11 @@ MonoBehaviour:
   ufoSelectedMask: 2
   outlineRenderers: []
   skinWidth: 0.03
+  isBlocked: 0
+  blockingObject: {fileID: 0}
+  onPickUpBlocked:
+    m_PersistentCalls:
+      m_Calls: []
   onPickedUp:
     m_PersistentCalls:
       m_Calls: []
@@ -40802,6 +41139,73 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1180707830}
   m_Mesh: {fileID: 7809187558685852524, guid: d1483e5761aa23d4aa7bfd706e5a38b1, type: 3}
+--- !u!1 &1182721968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1182721969}
+  - component: {fileID: 1182721970}
+  - component: {fileID: 1182721971}
+  m_Layer: 0
+  m_Name: level2aDialogue
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1182721969
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182721968}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1158618831}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1182721970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182721968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b0fd6551d5df40438a1e4d6f38948ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Level2ADialogueDatabase
+  loadPortraitsFromResources: 1
+--- !u!114 &1182721971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1182721968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 954bd45e4507a7641a843a8f55fc8e0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Level2AFlowController
+  viewToggleButton: {fileID: 1241590202}
+  siphonController: {fileID: 155165598}
+  signalLostOverlay: {fileID: 487256373}
+  energyBlock: {fileID: 694461537}
+  treeRoots: {fileID: 379232492}
+  energyTrigger: {fileID: 0}
+  preludeTrigger: {fileID: 633475161}
+  shootingButtonRoot: {fileID: 1559507111}
+  afterSignalLostDialogueDelay: 0.2
 --- !u!1 &1191771111
 GameObject:
   m_ObjectHideFlags: 0
@@ -49722,7 +50126,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1414511966}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5575d2a300f9aae429cd56bf421c14b6, type: 3}
   m_Name: 
@@ -57740,6 +58144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dbd2a7bc82edf441a58c7a9cc6b496b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTriggerById
+  dialogueDatabase: {fileID: 1158618835}
   sequenceId: well_arrival
   triggerOnlyOnce: 1
   requiredFlag: well_unlocked
@@ -58280,6 +58685,7 @@ GameObject:
   - component: {fileID: 1602222676}
   - component: {fileID: 1602222678}
   - component: {fileID: 1602222677}
+  - component: {fileID: 1602222679}
   m_Layer: 0
   m_Name: Isle_01 (11)
   m_TagString: Untagged
@@ -58358,6 +58764,28 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1602222675}
+  m_Mesh: {fileID: 2515467331933360955, guid: be1f2ac837436934e976aae78b7c36f6, type: 3}
+--- !u!64 &1602222679
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602222675}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: 2515467331933360955, guid: be1f2ac837436934e976aae78b7c36f6, type: 3}
 --- !u!1001 &1602442779
 PrefabInstance:
@@ -63761,6 +64189,11 @@ MonoBehaviour:
   ufoSelectedMask: 2
   outlineRenderers: []
   skinWidth: 0.03
+  isBlocked: 0
+  blockingObject: {fileID: 0}
+  onPickUpBlocked:
+    m_PersistentCalls:
+      m_Calls: []
   onPickedUp:
     m_PersistentCalls:
       m_Calls:
@@ -64371,6 +64804,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1714640026}
+  - component: {fileID: 1714640027}
   m_Layer: 0
   m_Name: interactable
   m_TagString: Untagged
@@ -64391,12 +64825,35 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 379232493}
   - {fileID: 2353486474550976762}
   - {fileID: 543450653558580499}
   - {fileID: 694461538}
   - {fileID: 360610689}
+  - {fileID: 633475162}
   m_Father: {fileID: 1942718039}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1714640027
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714640025}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1723283652 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7563290209130424531, guid: b88f413c35149204e800c28eb0a673cd,
@@ -67808,6 +68265,7 @@ GameObject:
   - component: {fileID: 1833231586}
   - component: {fileID: 1833231588}
   - component: {fileID: 1833231587}
+  - component: {fileID: 1833231589}
   m_Layer: 0
   m_Name: Isle_01 (15)
   m_TagString: Untagged
@@ -67886,6 +68344,28 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1833231585}
+  m_Mesh: {fileID: 2515467331933360955, guid: be1f2ac837436934e976aae78b7c36f6, type: 3}
+--- !u!64 &1833231589
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833231585}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: 2515467331933360955, guid: be1f2ac837436934e976aae78b7c36f6, type: 3}
 --- !u!1001 &1834160402
 PrefabInstance:
@@ -71777,6 +72257,7 @@ GameObject:
   - component: {fileID: 1960829256}
   - component: {fileID: 1960829258}
   - component: {fileID: 1960829257}
+  - component: {fileID: 1960829259}
   m_Layer: 0
   m_Name: Isle_01 (9)
   m_TagString: Untagged
@@ -71855,6 +72336,28 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1960829255}
+  m_Mesh: {fileID: 2515467331933360955, guid: be1f2ac837436934e976aae78b7c36f6, type: 3}
+--- !u!64 &1960829259
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960829255}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: 2515467331933360955, guid: be1f2ac837436934e976aae78b7c36f6, type: 3}
 --- !u!1001 &1961815771
 PrefabInstance:
@@ -81191,7 +81694,7 @@ Transform:
   m_GameObject: {fileID: 2112412576}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4115, y: 2756, z: -1052}
+  m_LocalPosition: {x: -1636, y: 2756, z: -3458}
   m_LocalScale: {x: 50, y: 100, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -84573,7 +85076,6 @@ Transform:
   - {fileID: 244424966}
   - {fileID: 2014789256}
   - {fileID: 7007057154252007357}
-  - {fileID: 379232493}
   - {fileID: 341090476}
   - {fileID: 1657064096}
   - {fileID: 4797877556025874453}
@@ -86500,6 +87002,7 @@ GameObject:
   - component: {fileID: 5000355261764939150}
   - component: {fileID: 2074900871346154095}
   - component: {fileID: 5378608125282869558}
+  - component: {fileID: 5378608125282869559}
   m_Layer: 0
   m_Name: Isle_01 (5)
   m_TagString: Untagged
@@ -87481,6 +87984,7 @@ GameObject:
   - component: {fileID: 8337853330872990554}
   - component: {fileID: 8781625095827474988}
   - component: {fileID: 7905567301130393970}
+  - component: {fileID: 8781625095827474989}
   m_Layer: 0
   m_Name: Isle_01 (6)
   m_TagString: Untagged
@@ -87686,6 +88190,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5378608125282869559
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3557567720701873106}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2515467331933360955, guid: be1f2ac837436934e976aae78b7c36f6, type: 3}
 --- !u!4 &5472878049750441851
 Transform:
   m_ObjectHideFlags: 0
@@ -88998,6 +89524,28 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5190788095380465951}
+  m_Mesh: {fileID: 2515467331933360955, guid: be1f2ac837436934e976aae78b7c36f6, type: 3}
+--- !u!64 &8781625095827474989
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5190788095380465951}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: 2515467331933360955, guid: be1f2ac837436934e976aae78b7c36f6, type: 3}
 --- !u!1 &8834194519325047857
 GameObject:
