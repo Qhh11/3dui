@@ -18057,6 +18057,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTriggerById
   sequenceId: abandoned_well_arrival
   triggerOnlyOnce: 1
+  requiredFlag: NPCWell_met
+  blockedByFlag: 
   playerTag: Player
   dialogueIndicator: {fileID: 0}
 --- !u!65 &667089192
@@ -22187,6 +22189,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTriggerById
   sequenceId: villager_b_first_meet
   triggerOnlyOnce: 1
+  requiredFlag: grass_checked
+  blockedByFlag: 
   playerTag: Player
   dialogueIndicator: {fileID: 1800650168}
 --- !u!65 &728737280
@@ -28677,6 +28681,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   sequenceId: villager_a_first_meet
   triggerOnlyOnce: 1
+  requiredFlag: 
+  blockedByFlag: 
   playerTag: Player
   dialogueIndicator: {fileID: 1988671168}
 --- !u!1 &930315782
@@ -36287,6 +36293,7 @@ GameObject:
   - component: {fileID: 1158618832}
   - component: {fileID: 1158618835}
   - component: {fileID: 1158618834}
+  - component: {fileID: 1158618836}
   m_Layer: 0
   m_Name: Dialogue
   m_TagString: Untagged
@@ -36384,6 +36391,22 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - key: start_wake_up_fade
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 120156504}
+          m_TargetAssemblyTypeName: ScreenFadeAction, Assembly-CSharp
+          m_MethodName: PlayWakeUpFade
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   - key: show_switch_hint
     onTriggered:
       m_PersistentCalls:
@@ -36403,22 +36426,6 @@ MonoBehaviour:
         - m_Target: {fileID: 1710830440}
           m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
           m_MethodName: Apply
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - key: start_wake_up_fade
-    onTriggered:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 120156504}
-          m_TargetAssemblyTypeName: ScreenFadeAction, Assembly-CSharp
-          m_MethodName: PlayWakeUpFade
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -36516,16 +36523,16 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: SwitchPerspectiveButtonController, Assembly-CSharp
-          m_MethodName: 
-          m_Mode: 1
+        - m_Target: {fileID: 1158618836}
+          m_TargetAssemblyTypeName: ProgressFlagSetter, Assembly-CSharp
+          m_MethodName: SetFlag
+          m_Mode: 5
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: 
+            m_StringArgument: well_unlocked
             m_BoolArgument: 0
           m_CallState: 2
   - key: activate_well_area
@@ -36544,9 +36551,25 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: SwitchPerspectiveButtonController, Assembly-CSharp
-          m_MethodName: 
+        - m_Target: {fileID: 1158618836}
+          m_TargetAssemblyTypeName: ProgressFlagSetter, Assembly-CSharp
+          m_MethodName: SetFlag
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: grass_checked
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: unlock_siphon
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 155165598}
+          m_TargetAssemblyTypeName: SiphonController, Assembly-CSharp
+          m_MethodName: UnlockSiphon
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -36555,6 +36578,30 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 411658875}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 2056302140}
+          m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
+          m_MethodName: Apply
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
           m_CallState: 2
   - key: quest_retrieve_from_abandoned_well
     onTriggered:
@@ -36583,6 +36630,106 @@ MonoBehaviour:
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 1158618836}
+          m_TargetAssemblyTypeName: ProgressFlagSetter, Assembly-CSharp
+          m_MethodName: SetFlag
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: NPCWell_met
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: activate_abandoned_well_area
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1943398925}
+          m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
+          m_MethodName: Apply
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1701912076}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - key: quest_go_to_first_house
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 380569153}
+          m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
+          m_MethodName: Apply
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1158618836}
+          m_TargetAssemblyTypeName: ProgressFlagSetter, Assembly-CSharp
+          m_MethodName: SetFlag
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Energy_siphoned
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: quest_clear_wood_beams
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2002831370}
+          m_TargetAssemblyTypeName: WoodBeamPuzzle, Assembly-CSharp
+          m_MethodName: BeginPuzzle
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: quest_go_to_second_house
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2094606929}
+          m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
+          m_MethodName: Apply
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
           m_CallState: 2
   - key: tower_quest_collect_energy_core
     onTriggered:
@@ -36692,122 +36839,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - key: unlock_siphon
-    onTriggered:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 155165598}
-          m_TargetAssemblyTypeName: SiphonController, Assembly-CSharp
-          m_MethodName: UnlockSiphon
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 411658875}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-        - m_Target: {fileID: 2056302140}
-          m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
-          m_MethodName: Apply
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-  - key: activate_abandoned_well_area
-    onTriggered:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1943398925}
-          m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
-          m_MethodName: Apply
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1701912076}
-          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_MethodName: SetActive
-          m_Mode: 6
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 1
-          m_CallState: 2
-  - key: quest_go_to_first_house
-    onTriggered:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 380569153}
-          m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
-          m_MethodName: Apply
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - key: quest_go_to_second_house
-    onTriggered:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 2094606929}
-          m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
-          m_MethodName: Apply
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - key: quest_clear_wood_beams
-    onTriggered:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 2002831370}
-          m_TargetAssemblyTypeName: WoodBeamPuzzle, Assembly-CSharp
-          m_MethodName: BeginPuzzle
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - key: quest_move_bridge_second_crossing
     onTriggered:
       m_PersistentCalls:
@@ -36907,6 +36938,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Level1DialogueDatabase
   loadPortraitsFromResources: 1
+--- !u!114 &1158618836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1158618830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 257905a68145c7a45bbf738f4fe0790b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProgressFlagSetter
 --- !u!1001 &1162239264
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52865,6 +52908,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTriggerById
   sequenceId: well_arrival
   triggerOnlyOnce: 1
+  requiredFlag: well_unlocked
+  blockedByFlag: 
   playerTag: Player
   dialogueIndicator: {fileID: 0}
 --- !u!65 &1595104380
@@ -67815,6 +67860,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   sequenceId: villager_c_first_house_intro
   triggerOnlyOnce: 1
+  requiredFlag: Energy_siphoned
+  blockedByFlag: 
   playerTag: Player
   dialogueIndicator: {fileID: 1168228433}
 --- !u!65 &2041564570
