@@ -537,6 +537,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1539175627}
     m_Modifications:
+    - target: {fileID: 864185297270095942, guid: fef740c046878754f98582d10f6be19f,
+        type: 3}
+      propertyPath: requiredFlag
+      value: villagerC_finished
+      objectReference: {fileID: 0}
     - target: {fileID: 2332363150357240205, guid: fef740c046878754f98582d10f6be19f,
         type: 3}
       propertyPath: m_Name
@@ -7039,6 +7044,7 @@ MonoBehaviour:
   objectiveText: Switch back to Player perspective
   wayfindingTarget: {fileID: 0}
   completePreviousObjective: 1
+  onlyOnce: 1
 --- !u!4 &304429659
 Transform:
   m_ObjectHideFlags: 0
@@ -9314,6 +9320,7 @@ MonoBehaviour:
   objectiveText: Go to the first house deep in the grasslands and ask Villager C.
   wayfindingTarget: {fileID: 0}
   completePreviousObjective: 1
+  onlyOnce: 1
 --- !u!1001 &380793841
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9913,6 +9920,7 @@ MonoBehaviour:
   objectiveText: Move camera and tap Siphon to place the object
   wayfindingTarget: {fileID: 0}
   completePreviousObjective: 1
+  onlyOnce: 1
 --- !u!1001 &390534282
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16538,6 +16546,8 @@ MonoBehaviour:
   siphonableObject: {fileID: 616993738}
   collectLocalDistance: 0.6
   triggerOnlyOnce: 1
+  requiredFlag: 
+  blockedByFlag: 
 --- !u!54 &616993736
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -32427,6 +32437,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlastBlockedRockTarget
   destroyOnlyOnce: 1
+  requiredFlag: 
+  blockedByFlag: 
 --- !u!65 &1055076027
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32462,6 +32474,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TowerBlockedRocksTrigger
   playerTag: Player
   triggerOnlyOnce: 1
+  requiredFlag: 
+  blockedByFlag: 
 --- !u!1001 &1056603742
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36165,6 +36179,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TowerAreaTrigger
   playerTag: Player
   triggerOnlyOnce: 1
+  requiredFlag: Over_the_bridge
+  blockedByFlag: 
 --- !u!65 &1157345534
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -36731,6 +36747,86 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+        - m_Target: {fileID: 1158618836}
+          m_TargetAssemblyTypeName: ProgressFlagSetter, Assembly-CSharp
+          m_MethodName: SetFlag
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: villagerC_finished
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: quest_move_bridge_second_crossing
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 62152413}
+          m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
+          m_MethodName: Apply
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1603784933}
+          m_TargetAssemblyTypeName: BridgePlacementGoal, Assembly-CSharp
+          m_MethodName: ActivateGoal
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: quest_go_to_tower
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1969120762}
+          m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
+          m_MethodName: Apply
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1603784933}
+          m_TargetAssemblyTypeName: BridgePlacementGoal, Assembly-CSharp
+          m_MethodName: DeactivateGoal
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1158618836}
+          m_TargetAssemblyTypeName: ProgressFlagSetter, Assembly-CSharp
+          m_MethodName: SetFlag
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Over_the_bridge
+            m_BoolArgument: 0
+          m_CallState: 2
   - key: tower_quest_collect_energy_core
     onTriggered:
       m_PersistentCalls:
@@ -36747,9 +36843,13 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 2056302140}
-          m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
-          m_MethodName: Apply
+  - key: tower_quest_return_to_player_after_core
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 806699660}
+          m_TargetAssemblyTypeName: TowerFlowController, Assembly-CSharp
+          m_MethodName: ShowReturnToPlayerAfterCoreObjective
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -36807,22 +36907,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  - key: tower_quest_return_to_player_after_core
-    onTriggered:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 806699660}
-          m_TargetAssemblyTypeName: TowerFlowController, Assembly-CSharp
-          m_MethodName: ShowReturnToPlayerAfterCoreObjective
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - key: tower_quest_return_to_player_after_blast
     onTriggered:
       m_PersistentCalls:
@@ -36830,62 +36914,6 @@ MonoBehaviour:
         - m_Target: {fileID: 806699660}
           m_TargetAssemblyTypeName: TowerFlowController, Assembly-CSharp
           m_MethodName: ShowReturnToPlayerAfterBlastObjective
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - key: quest_move_bridge_second_crossing
-    onTriggered:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 62152413}
-          m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
-          m_MethodName: Apply
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1603784933}
-          m_TargetAssemblyTypeName: BridgePlacementGoal, Assembly-CSharp
-          m_MethodName: ActivateGoal
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - key: quest_go_to_tower
-    onTriggered:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1969120762}
-          m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
-          m_MethodName: Apply
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1603784933}
-          m_TargetAssemblyTypeName: BridgePlacementGoal, Assembly-CSharp
-          m_MethodName: DeactivateGoal
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -44999,6 +45027,7 @@ MonoBehaviour:
   objectiveText: Retrieve the object from the abandoned well
   wayfindingTarget: {fileID: 0}
   completePreviousObjective: 1
+  onlyOnce: 1
 --- !u!1001 &1391373000
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45867,7 +45896,7 @@ MonoBehaviour:
   head: {fileID: 2112412577}
   playerController: {fileID: 2112412578}
   headOffset: {x: 0, y: 2000, z: 0}
-  moveScale: 3000
+  moveScale: 4000
   debugLog: 1
 --- !u!1001 &1416250449
 PrefabInstance:
@@ -46435,7 +46464,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 910, y: -58}
+  m_AnchoredPosition: {x: 960, y: -230}
   m_SizeDelta: {x: 140, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1425761528
@@ -52579,6 +52608,7 @@ MonoBehaviour:
   objectiveText: Investigate the glowing light near the well
   wayfindingTarget: {fileID: 0}
   completePreviousObjective: 1
+  onlyOnce: 1
 --- !u!1 &1582671813
 GameObject:
   m_ObjectHideFlags: 0
@@ -58858,6 +58888,7 @@ MonoBehaviour:
   objectiveText: Switch to UFO perspective
   wayfindingTarget: {fileID: 0}
   completePreviousObjective: 1
+  onlyOnce: 1
 --- !u!4 &1710830441
 Transform:
   m_ObjectHideFlags: 0
@@ -63078,10 +63109,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1655858524}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 21.251194, y: -12.533865}
-  m_SizeDelta: {x: 441.7436, y: 10.3421}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 281, y: -92}
+  m_SizeDelta: {x: 441.7436, y: 10.342102}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1883319072
 MonoBehaviour:
@@ -64940,6 +64971,7 @@ MonoBehaviour:
   objectiveText: Switch to UFO view. Aim at the well and use siphon.
   wayfindingTarget: {fileID: 0}
   completePreviousObjective: 1
+  onlyOnce: 1
 --- !u!1001 &1944119834
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -73099,6 +73131,7 @@ MonoBehaviour:
   objectiveText: Talk to the villager near the well
   wayfindingTarget: {fileID: 0}
   completePreviousObjective: 1
+  onlyOnce: 1
 --- !u!1 &2058545682
 GameObject:
   m_ObjectHideFlags: 0
@@ -74116,6 +74149,7 @@ MonoBehaviour:
   objectiveText: Go to second house.
   wayfindingTarget: {fileID: 0}
   completePreviousObjective: 1
+  onlyOnce: 1
 --- !u!1001 &2102738368
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -75046,6 +75080,7 @@ MonoBehaviour:
   objectiveText: Go to the tent
   wayfindingTarget: {fileID: 0}
   completePreviousObjective: 1
+  onlyOnce: 1
 --- !u!4 &2135058849
 Transform:
   m_ObjectHideFlags: 0
