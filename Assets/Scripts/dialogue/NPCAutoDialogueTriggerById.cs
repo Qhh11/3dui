@@ -33,9 +33,7 @@ public class NPCAutoDialogueTriggerById : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag(playerTag))
-        {
             return;
-        }
 
         TryStartDialogue();
     }
@@ -43,15 +41,16 @@ public class NPCAutoDialogueTriggerById : MonoBehaviour
     private void TryStartDialogue()
     {
         if (!CanStartDialogue())
-        {
             return;
-        }
 
-        DialogueSequence sequence = Level1DialogueDatabase.Instance.GetSequence(sequenceId);
+        DialogueSequence sequence =
+            Level1DialogueDatabase.Instance.GetSequence(sequenceId);
 
         if (sequence == null)
         {
-            Debug.LogWarning($"Dialogue sequence not found: {sequenceId}");
+            Debug.LogWarning(
+                $"Dialogue sequence not found: {sequenceId}"
+            );
             return;
         }
 
@@ -63,21 +62,23 @@ public class NPCAutoDialogueTriggerById : MonoBehaviour
 
     private bool CanStartDialogue()
     {
-        if (triggerOnlyOnce && hasTriggered)
-        {
+        if (GameplayInputLockService.IsBlocked)
             return false;
-        }
+
+        if (triggerOnlyOnce && hasTriggered)
+            return false;
 
         if (!QuestProgress.Has(requiredFlag))
-        {
             return false;
-        }
-        if (!string.IsNullOrWhiteSpace(blockedByFlag) && QuestProgress.Has(blockedByFlag))
+
+        if (!string.IsNullOrWhiteSpace(blockedByFlag) &&
+            QuestProgress.Has(blockedByFlag))
         {
             return false;
         }
 
-        if (DialogueRunner.Instance != null && DialogueRunner.Instance.IsDialogueOpen)
+        if (DialogueRunner.Instance != null &&
+            DialogueRunner.Instance.IsDialogueOpen)
         {
             return false;
         }
@@ -88,11 +89,10 @@ public class NPCAutoDialogueTriggerById : MonoBehaviour
     private void RefreshIndicator()
     {
         if (dialogueIndicator == null)
-        {
             return;
-        }
 
         bool wanted = CanShowIndicator();
+
         if (dialogueIndicator.activeSelf != wanted)
             dialogueIndicator.SetActive(wanted);
     }
@@ -100,14 +100,13 @@ public class NPCAutoDialogueTriggerById : MonoBehaviour
     private bool CanShowIndicator()
     {
         if (triggerOnlyOnce && hasTriggered)
-        {
             return false;
-        }
+
         if (!QuestProgress.Has(requiredFlag))
-        {
             return false;
-        }
-        if (!string.IsNullOrWhiteSpace(blockedByFlag) && QuestProgress.Has(blockedByFlag))
+
+        if (!string.IsNullOrWhiteSpace(blockedByFlag) &&
+            QuestProgress.Has(blockedByFlag))
         {
             return false;
         }

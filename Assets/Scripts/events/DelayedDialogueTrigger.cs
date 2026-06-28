@@ -8,21 +8,38 @@ public class DelayedDialogueTrigger : MonoBehaviour
     [SerializeField] private bool triggerOnlyOnce = true;
 
     private bool hasTriggered = false;
+    private int triggerVersion;
 
     public void TriggerWithDelay()
     {
-        if (triggerOnlyOnce && hasTriggered) return;
-        hasTriggered = true;
+        if (triggerOnlyOnce && hasTriggered)
+            return;
 
-        StartCoroutine(DelayedTrigger());
+        hasTriggered = true;
+        triggerVersion++;
+
+        StartCoroutine(
+            DelayedTrigger(triggerVersion)
+        );
     }
 
-    private IEnumerator DelayedTrigger()
+    private IEnumerator DelayedTrigger(int version)
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSecondsRealtime(delay);
 
-        DialogueSequence seq = Level1DialogueDatabase.Instance
-            .GetSequence(sequenceId);
+        if (version != triggerVersion)
+            yield break;
+
+        if (DialogueRunner.Instance != null &&
+            DialogueRunner.Instance.IsDialogueOpen)
+        {
+            yield break;
+        }
+
+        DialogueSequence seq =
+            Level1DialogueDatabase.Instance
+                .GetSequence(sequenceId);
+
         if (seq != null)
             DialogueRunner.Instance.StartDialogue(seq);
     }
