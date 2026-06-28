@@ -19,6 +19,12 @@ public class SiphonController : MonoBehaviour
     [SerializeField] private Camera aimCamera;
     [SerializeField] private Button siphonButton;
     [SerializeField] private GameObject siphonButtonRoot;
+
+    [Header("Button Icons")]
+    [SerializeField] private Image siphonButtonIcon;
+    [SerializeField] private Sprite siphonIcon;
+    [SerializeField] private Sprite releaseIcon;
+
     [SerializeField] private Transform holdPoint;
 
     [Header("Pick Up Raycast")]
@@ -407,6 +413,7 @@ public class SiphonController : MonoBehaviour
         if (IsHeldObjectReady())
         {
             state = SiphonState.Holding;
+            UpdateSiphonButtonIcon();
             SetButtonInteractable(CanTriggerNow());
         }
     }
@@ -464,6 +471,7 @@ public class SiphonController : MonoBehaviour
         heldObject.transform.SetParent(null, true);
 
         state = SiphonState.Placing;
+        UpdateSiphonButtonIcon();
         SetButtonInteractable(false);
     }
 
@@ -674,11 +682,43 @@ public class SiphonController : MonoBehaviour
             (mask.value & (1 << layer)) != 0;
     }
 
+    private bool ShouldShowReleaseIcon()
+    {
+        return heldObject != null &&
+               (state == SiphonState.Holding ||
+                state == SiphonState.Placing);
+    }
+
+    private void UpdateSiphonButtonIcon()
+    {
+        if (siphonButtonIcon == null &&
+            siphonButton != null)
+        {
+            siphonButtonIcon = siphonButton.image;
+        }
+
+        if (siphonButtonIcon == null)
+            return;
+
+        Sprite targetIcon =
+            ShouldShowReleaseIcon()
+                ? releaseIcon
+                : siphonIcon;
+
+        if (targetIcon == null)
+            return;
+
+        if (siphonButtonIcon.sprite != targetIcon)
+            siphonButtonIcon.sprite = targetIcon;
+    }
+
     private void SetButtonInteractable(
         bool interactable)
     {
         if (siphonButton != null)
             siphonButton.interactable = interactable;
+
+        UpdateSiphonButtonIcon();
     }
 
     private void SetCrosshairColor(Color color)
