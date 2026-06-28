@@ -27,16 +27,13 @@ public class NPCDialogueTriggerById : MonoBehaviour
 
     private void Update()
     {
-        // flag 是动态变化的，指示器状态也要随之刷新（解锁后才冒出"!"）
         RefreshIndicator();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (!other.CompareTag(playerTag))
-        {
             return;
-        }
 
         TryStartDialogue();
     }
@@ -44,15 +41,16 @@ public class NPCDialogueTriggerById : MonoBehaviour
     private void TryStartDialogue()
     {
         if (!CanStartDialogue())
-        {
             return;
-        }
 
-        DialogueSequence sequence = Level1DialogueDatabase.Instance.GetSequence(sequenceId);
+        DialogueSequence sequence =
+            Level1DialogueDatabase.Instance.GetSequence(sequenceId);
 
         if (sequence == null)
         {
-            Debug.LogWarning($"Dialogue sequence not found: {sequenceId}");
+            Debug.LogWarning(
+                $"Dialogue sequence not found: {sequenceId}"
+            );
             return;
         }
 
@@ -64,22 +62,24 @@ public class NPCDialogueTriggerById : MonoBehaviour
 
     private bool CanStartDialogue()
     {
-        if (triggerOnlyOnce && hasTriggered)
-        {
+        if (GameplayInputLockService.IsBlocked)
             return false;
-        }
+
+        if (triggerOnlyOnce && hasTriggered)
+            return false;
 
         // —— 进度门控 ——
         if (!QuestProgress.Has(requiredFlag))
-        {
             return false;
-        }
-        if (!string.IsNullOrWhiteSpace(blockedByFlag) && QuestProgress.Has(blockedByFlag))
+
+        if (!string.IsNullOrWhiteSpace(blockedByFlag) &&
+            QuestProgress.Has(blockedByFlag))
         {
             return false;
         }
 
-        if (DialogueRunner.Instance != null && DialogueRunner.Instance.IsDialogueOpen)
+        if (DialogueRunner.Instance != null &&
+            DialogueRunner.Instance.IsDialogueOpen)
         {
             return false;
         }
@@ -90,12 +90,11 @@ public class NPCDialogueTriggerById : MonoBehaviour
     private void RefreshIndicator()
     {
         if (dialogueIndicator == null)
-        {
             return;
-        }
 
         bool show = dialogueIndicator.activeSelf;
         bool wanted = CanShowIndicator();
+
         if (show != wanted)
             dialogueIndicator.SetActive(wanted);
     }
@@ -103,15 +102,14 @@ public class NPCDialogueTriggerById : MonoBehaviour
     private bool CanShowIndicator()
     {
         if (triggerOnlyOnce && hasTriggered)
-        {
             return false;
-        }
+
         // 没解锁 / 已被关闭时也不显示指示器
         if (!QuestProgress.Has(requiredFlag))
-        {
             return false;
-        }
-        if (!string.IsNullOrWhiteSpace(blockedByFlag) && QuestProgress.Has(blockedByFlag))
+
+        if (!string.IsNullOrWhiteSpace(blockedByFlag) &&
+            QuestProgress.Has(blockedByFlag))
         {
             return false;
         }

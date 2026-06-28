@@ -4,7 +4,9 @@ using UnityEngine;
 public class FirstUfoPerspectiveAction : MonoBehaviour
 {
     [Header("Dialogue")]
-    [SerializeField] private string firstUfoSequenceId = "level1_first_ufo_view";
+    [SerializeField] private string firstUfoSequenceId =
+        "level1_first_ufo_view";
+
     [SerializeField] private float delayBeforeDialogue = 2f;
 
     [Header("Objective")]
@@ -15,9 +17,7 @@ public class FirstUfoPerspectiveAction : MonoBehaviour
     public void Trigger()
     {
         if (hasTriggered)
-        {
             return;
-        }
 
         hasTriggered = true;
         StartCoroutine(RunRoutine());
@@ -25,23 +25,32 @@ public class FirstUfoPerspectiveAction : MonoBehaviour
 
     private IEnumerator RunRoutine()
     {
-        if (completeCurrentObjective && ObjectivePanelController.Instance != null)
+        if (completeCurrentObjective &&
+            ObjectivePanelController.Instance != null)
         {
-            ObjectivePanelController.Instance.CompleteCurrentObjective();
+            ObjectivePanelController.Instance
+                .CompleteCurrentObjective();
         }
 
-        yield return new WaitForSeconds(delayBeforeDialogue);
+        yield return new WaitForSecondsRealtime(
+            delayBeforeDialogue
+        );
 
-        if (DialogueRunner.Instance != null && DialogueRunner.Instance.IsDialogueOpen)
+        if (DialogueRunner.Instance != null &&
+            DialogueRunner.Instance.IsDialogueOpen)
         {
             yield break;
         }
 
-        DialogueSequence sequence = Level1DialogueDatabase.Instance.GetSequence(firstUfoSequenceId);
+        DialogueSequence sequence =
+            Level1DialogueDatabase.Instance
+                .GetSequence(firstUfoSequenceId);
 
         if (sequence == null)
         {
-            Debug.LogWarning($"Dialogue sequence not found: {firstUfoSequenceId}");
+            Debug.LogWarning(
+                $"Dialogue sequence not found: {firstUfoSequenceId}"
+            );
             yield break;
         }
 

@@ -18,11 +18,27 @@ public class DialogueObjectTrigger : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if (onlyOnce && hasInteracted) return;
+        if (GameplayInputLockService.IsBlocked)
+            return;
 
+        if (DialogueRunner.Instance != null &&
+            DialogueRunner.Instance.IsDialogueOpen)
+        {
+            return;
+        }
+
+        if (onlyOnce && hasInteracted)
+            return;
+        
         // —— 进度门控 ——
-        if (!QuestProgress.Has(requiredFlag)) return;
-        if (!string.IsNullOrWhiteSpace(blockedByFlag) && QuestProgress.Has(blockedByFlag)) return;
+        if (!QuestProgress.Has(requiredFlag))
+            return;
+
+        if (!string.IsNullOrWhiteSpace(blockedByFlag) &&
+            QuestProgress.Has(blockedByFlag))
+        {
+            return;
+        }
 
         hasInteracted = true;
 
