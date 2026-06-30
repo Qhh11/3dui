@@ -216,7 +216,7 @@ public class Level1DialogueDatabase : MonoBehaviour
 
         DialogueEntry question = Line(villager, "Tell me. What shape is on top of our tower?");
         question.choices.Add(Choice("Circle", wrongAnswer));
-        question.choices.Add(Choice("Triangle", correctAnswer, setFlagOnSelect: DialogueIds.Flags.AnsweredTowerMark));
+        question.choices.Add(Choice("Star", correctAnswer, setFlagOnSelect: DialogueIds.Flags.AnsweredTowerMark));
         question.choices.Add(Choice("Square", wrongAnswer));
         sequence.entries.Add(question);
     }
@@ -237,7 +237,7 @@ public class Level1DialogueDatabase : MonoBehaviour
 
         DialogueEntry question = Line(villager, "Then answer carefully. What shape is on top of our tower?");
         question.choices.Add(Choice("Circle", wrongAnswer));
-        question.choices.Add(Choice("Triangle", correctAnswer, setFlagOnSelect: DialogueIds.Flags.AnsweredTowerMark));
+        question.choices.Add(Choice("Star", correctAnswer, setFlagOnSelect: DialogueIds.Flags.AnsweredTowerMark));
         question.choices.Add(Choice("Square", wrongAnswer));
         sequence.entries.Add(question);
     }
@@ -248,7 +248,7 @@ public class Level1DialogueDatabase : MonoBehaviour
         DialogueCharacter terminal = GetCharacter(DialogueIds.Characters.UFOTerminal);
         DialogueCharacter villager = GetCharacter(DialogueIds.Characters.VillagerA);
 
-        sequence.entries.Add(Line(villager, "...Triangle."));
+        sequence.entries.Add(Line(villager, "...Star."));
         sequence.entries.Add(Line(villager, "So you have seen it."));
         sequence.entries.Add(Line(player, "Was that a test?"));
         sequence.entries.Add(Line(villager, "A warning."));
