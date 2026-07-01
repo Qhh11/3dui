@@ -356,7 +356,7 @@ public class DialogueRunner : MonoBehaviour
                 bodyText.text += fullCurrentText[i];
 
             if (delay > 0f)
-                yield return new WaitForSeconds(delay);
+                yield return new WaitForSecondsRealtime(delay);
             else
                 yield return null;
         }

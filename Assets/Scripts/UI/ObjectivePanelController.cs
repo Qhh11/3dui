@@ -155,7 +155,7 @@ public class ObjectivePanelController : MonoBehaviour
 
             while (timer < completeLineDuration)
             {
-                timer += Time.deltaTime;
+                timer += Time.unscaledDeltaTime;
                 float t = Mathf.Clamp01(timer / completeLineDuration);
                 completedLine.fillAmount = t;
                 yield return null;
@@ -164,7 +164,7 @@ public class ObjectivePanelController : MonoBehaviour
             completedLine.fillAmount = 1f;
         }
 
-        yield return new WaitForSeconds(completeHoldDuration);
+        yield return new WaitForSecondsRealtime(completeHoldDuration);
     }
 
     private IEnumerator FadePanel(float targetAlpha)
@@ -179,7 +179,7 @@ public class ObjectivePanelController : MonoBehaviour
 
         while (timer < fadeDuration)
         {
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             float t = Mathf.Clamp01(timer / fadeDuration);
             panelCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, t);
             yield return null;

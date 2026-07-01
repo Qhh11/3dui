@@ -41,7 +41,7 @@ public class SignalLostOverlayController : MonoBehaviour
         canvasGroup.alpha = 0f;
 
         yield return FadeTo(1f, fadeInDuration);
-        yield return new WaitForSeconds(holdDuration);
+        yield return new WaitForSecondsRealtime(holdDuration);
         yield return FadeTo(0f, fadeOutDuration);
 
         HideInstant();
@@ -103,7 +103,7 @@ public class SignalLostOverlayController : MonoBehaviour
 
         while (timer < duration)
         {
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             float t = Mathf.Clamp01(timer / duration);
             canvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, t);
             yield return null;
