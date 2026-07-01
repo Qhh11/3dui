@@ -3,24 +3,7 @@ using UnityEngine.EventSystems;
 
 /// <summary>
 /// 第一人称里点击并拖动场景中的可拖拽物体。
-/// 模型：被拖物体位于「以相机为球心、拾取时距离为半径」的球面上，沿视线/手指方向；
-///       视角转动、人物移动都会带着它走（"真窗户"式）。
-///
-/// 碰撞（防穿插）：不再用从相机发射的 SphereCast（那会在相机处与地面/玩家重叠，
-/// 导致距离=0、把物体甩到脸前并抽搐）。改用【穿透解算】：每帧先让物体自由跟手，
-/// 再用 ComputePenetration 把它从 obstacleMask 里的碰撞体中推出来。
-///   - 木梁之间从任何方向都不会重叠（把木梁所在层放进 obstacleMask 即可）。
-///   - 被拖物体自身的碰撞体会被跳过，不会挡自己。
-///   - 障碍若是【非凸 MeshCollider】(如复杂地形/墙)无法被解算，需要凸碰撞体才会挡。
-///
-/// 用法：可拖拽物体放到单独 Layer(如 Draggable)、加 Collider(凸的，如 Box)；
-/// 脚本挂 Main Camera 或玩家上：
-///   - draggableMask = Draggable（用于点选拾取）
-///   - obstacleMask  = Draggable（木梁互相挡）(+ 想挡墙就把墙的凸碰撞体层也勾上)
-///   - obstacleMask 不要勾玩家、不要勾地面（除非地面有凸碰撞体且你确实需要）
-/// 只在第一人称视角启用。需要场景里有 EventSystem，点 UI 时不会误触发。
-///
-/// 实现 IDragNotify 的物体会在拾取/松手时收到回调；ForceRelease() 供外部(自动吸附)强制松手。
+/// 需要门控时填 requiredFlag：未点亮该 flag 时不可拾取/拖动（会松开当前物体）。
 /// </summary>
 public class TouchDragger : MonoBehaviour
 {
@@ -29,6 +12,10 @@ public class TouchDragger : MonoBehaviour
     public Camera cam;
     [Tooltip("哪些 Layer 算可拖拽物体(用于点选)")]
     public LayerMask draggableMask = ~0;
+
+    [Header("门控")]
+    [Tooltip("必须已点亮这个 flag 才允许拾取/拖拽（空=无要求，一直可拖）。与 DraggableHighlighter 填同一个即可联动。")]
+    public string requiredFlag = "";
 
     [Header("碰撞")]
     [Tooltip("被拖物体不会与这些层的【凸】碰撞体重叠。木梁互相挡就把木梁的层(Draggable)勾进来。" +
@@ -65,6 +52,13 @@ public class TouchDragger : MonoBehaviour
     void Update()
     {
         if (cam == null) return;
+
+        // 门控：flag 没点亮 → 不可拖，松开当前物体
+        if (!QuestProgress.Has(requiredFlag))
+        {
+            ForceRelease();
+            return;
+        }
 
         if (GameplayInputLockService.IsBlocked)
         {

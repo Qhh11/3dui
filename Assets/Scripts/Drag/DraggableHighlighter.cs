@@ -8,7 +8,7 @@ public enum ViewMode { FirstPerson, ThirdPerson }
 /// 检测进入范围内的物体并点亮亮框，离开范围则熄灭。
 /// 支持多组：每组一个 Layer + 颜色 + 在哪个视角显示。
 /// 检测距离按视角分别设置(第一人称 / 第三人称)。
-/// 两个视角下都保持启用，由 currentView 决定用哪个距离、哪些组显示。
+/// 需要门控时填 requiredFlag：未点亮该 flag 时熄灭全部、不检测。
 /// </summary>
 public class DraggableHighlighter : MonoBehaviour
 {
@@ -31,6 +31,10 @@ public class DraggableHighlighter : MonoBehaviour
     public Transform origin;
     [Tooltip("当前视角，由切换视角的脚本设置(见 SetView)")]
     public ViewMode currentView = ViewMode.FirstPerson;
+
+    [Header("门控")]
+    [Tooltip("必须已点亮这个 flag 才显示高亮（空=无要求，一直显示）。与 TouchDragger 填同一个即可联动。")]
+    public string requiredFlag = "";
 
     [Tooltip("每个 Layer 配一组：层、颜色、显示视角")]
     public HighlightGroup[] groups;
@@ -58,6 +62,13 @@ public class DraggableHighlighter : MonoBehaviour
 
     void Update()
     {
+        // 门控：flag 没点亮 → 熄灭全部、不做检测
+        if (!QuestProgress.Has(requiredFlag))
+        {
+            if (current.Count > 0) ClearAllHighlights();
+            return;
+        }
+
         timer -= Time.deltaTime;
         if (timer > 0f) return;
         timer = refreshInterval;
@@ -128,9 +139,14 @@ public class DraggableHighlighter : MonoBehaviour
         foreach (var h in found) current.Add(h);
     }
 
-    void OnDisable() // 禁用时熄灭所有
+    private void ClearAllHighlights()
     {
         foreach (var h in current) if (h != null) h.SetHighlighted(false);
         current.Clear();
+    }
+
+    void OnDisable() // 禁用时熄灭所有
+    {
+        ClearAllHighlights();
     }
 }
