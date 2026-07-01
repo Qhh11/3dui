@@ -2597,6 +2597,7 @@ MonoBehaviour:
   draggableMask:
     serializedVersion: 2
     m_Bits: 256
+  requiredFlag: Allow_drag
   obstacleMask:
     serializedVersion: 2
     m_Bits: 769
@@ -2774,6 +2775,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DraggableHighlighter
   origin: {fileID: 129442567}
   currentView: 0
+  requiredFlag: Allow_drag
   groups:
   - name: Draggable
     mask:
