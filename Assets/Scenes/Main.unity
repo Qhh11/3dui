@@ -56375,7 +56375,7 @@ MonoBehaviour:
   crosshairImage: {fileID: 1950364655}
   normalCrosshairColor: {r: 0, g: 0.65882355, b: 1, a: 1}
   targetCrosshairColor: {r: 0.23137255, g: 0.92941177, b: 0.23137255, a: 1}
-  markController: {fileID: 0}
+  markController: {fileID: 755441420}
   rocketLauncher: {fileID: 230146493}
 --- !u!224 &1974357348
 RectTransform:
@@ -56709,7 +56709,7 @@ Transform:
   m_GameObject: {fileID: 1993286303}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1515, y: -53, z: 308}
+  m_LocalPosition: {x: -1515, y: -156, z: 308}
   m_LocalScale: {x: 275.3, y: 211.2, z: 297.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -58210,17 +58210,17 @@ PrefabInstance:
         type: 3}
       propertyPath: markButton
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 558140296}
     - target: {fileID: 2591290716498472835, guid: 419f68672a088d440b24d47a924e3c98,
         type: 3}
       propertyPath: rocketLauncher
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 230146493}
     - target: {fileID: 2591290716498472835, guid: 419f68672a088d440b24d47a924e3c98,
         type: 3}
       propertyPath: siphonController
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1974357347}
     - target: {fileID: 2591290716498472835, guid: 419f68672a088d440b24d47a924e3c98,
         type: 3}
       propertyPath: viewToggleButton
@@ -58230,7 +58230,7 @@ PrefabInstance:
         type: 3}
       propertyPath: compassElementParent
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 520946048}
     - target: {fileID: 5710011652870317695, guid: 419f68672a088d440b24d47a924e3c98,
         type: 3}
       propertyPath: m_Name
