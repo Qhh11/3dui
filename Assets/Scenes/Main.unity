@@ -1687,9 +1687,6 @@ Transform:
   - {fileID: 539200269}
   - {fileID: 1465136565}
   - {fileID: 801429241}
-  - {fileID: 787133661}
-  - {fileID: 1058294579}
-  - {fileID: 2045896364}
   m_Father: {fileID: 1539175627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &91919614
@@ -2752,7 +2749,7 @@ Transform:
   m_GameObject: {fileID: 129442561}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -577.9597, y: 3307.5586, z: -6685.501}
+  m_LocalPosition: {x: 1660.0403, y: 3503.5586, z: -5982.501}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8685,7 +8682,7 @@ PrefabInstance:
     - target: {fileID: 6421441071783833251, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 207
+      value: 179.5
       objectReference: {fileID: 0}
     - target: {fileID: 6421441071783833251, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
         type: 3}
@@ -19844,7 +19841,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 87593333}
+    m_TransformParent: {fileID: 2078020511}
     m_Modifications:
     - target: {fileID: 5933028572992582681, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
         type: 3}
@@ -19874,17 +19871,17 @@ PrefabInstance:
     - target: {fileID: 6421441071783833251, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1924
+      value: 340.4
       objectReference: {fileID: 0}
     - target: {fileID: 6421441071783833251, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -53
+      value: 187.6001
       objectReference: {fileID: 0}
     - target: {fileID: 6421441071783833251, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -982.3
+      value: -1907.1001
       objectReference: {fileID: 0}
     - target: {fileID: 6421441071783833251, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
         type: 3}
@@ -21841,7 +21838,7 @@ PrefabInstance:
     - target: {fileID: 4472970297906040409, guid: 544c4cf2a93327b4a839cf37f7923bc2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 198
+      value: 187.3
       objectReference: {fileID: 0}
     - target: {fileID: 4472970297906040409, guid: 544c4cf2a93327b4a839cf37f7923bc2,
         type: 3}
@@ -26467,7 +26464,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 87593333}
+    m_TransformParent: {fileID: 2078020511}
     m_Modifications:
     - target: {fileID: 5933028572992582681, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
         type: 3}
@@ -26497,17 +26494,17 @@ PrefabInstance:
     - target: {fileID: 6421441071783833251, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2023.2
+      value: 253.8
       objectReference: {fileID: 0}
     - target: {fileID: 6421441071783833251, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -53
+      value: 187.6001
       objectReference: {fileID: 0}
     - target: {fileID: 6421441071783833251, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -975.7
+      value: -1907.1001
       objectReference: {fileID: 0}
     - target: {fileID: 6421441071783833251, guid: d3c22f15c09d557428dfa0ccb6ae8f35,
         type: 3}
@@ -28758,7 +28755,7 @@ PrefabInstance:
     - target: {fileID: 4472970297906040409, guid: 544c4cf2a93327b4a839cf37f7923bc2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 192
+      value: 186.6
       objectReference: {fileID: 0}
     - target: {fileID: 4472970297906040409, guid: 544c4cf2a93327b4a839cf37f7923bc2,
         type: 3}
@@ -37366,7 +37363,7 @@ PrefabInstance:
     - target: {fileID: 4472970297906040409, guid: 544c4cf2a93327b4a839cf37f7923bc2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 194
+      value: 186.5
       objectReference: {fileID: 0}
     - target: {fileID: 4472970297906040409, guid: 544c4cf2a93327b4a839cf37f7923bc2,
         type: 3}
@@ -37932,7 +37929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25b4e25caf740094a8135cf069e62f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectiveEventAction
-  objectiveText: Retrieve the object from the abandoned well
+  objectiveText: Retrieve the energy unit from the well
   wayfindingTarget: {fileID: 0}
   completePreviousObjective: 1
   onlyOnce: 1
@@ -41373,12 +41370,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1511514368}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1107.9, y: -8.399902, z: -1508.7676}
-  m_LocalScale: {x: 21, y: 21, z: 21}
+  m_LocalRotation: {x: 0.7071068, y: 0.000000030908623, z: -0.00000003090861, w: 0.70710677}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.003549235, y: 0.003549235, z: 0.0035492354}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2078020511}
+  m_Father: {fileID: 1927183720}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1512716541
 PrefabInstance:
@@ -45365,7 +45362,7 @@ MonoBehaviour:
   delayAfterSwitch: 2
   energyHighlight: {fileID: 1927183719}
   outlineEffect: {fileID: 1511514368}
-  objectiveText: Switch to UFO view to scan for energy
+  objectiveText: Switch to UFO view to scan for the energy unit
 --- !u!1 &1614304451
 GameObject:
   m_ObjectHideFlags: 0
@@ -49757,6 +49754,8 @@ GameObject:
   - component: {fileID: 1701912080}
   - component: {fileID: 1701912079}
   - component: {fileID: 1701912078}
+  - component: {fileID: 1701912082}
+  - component: {fileID: 1701912081}
   m_Layer: 9
   m_Name: Energy
   m_TagString: Untagged
@@ -49923,6 +49922,39 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.01
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1701912081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701912076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 150b08c056cf38449ba36885d6d92dc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WellEnergyCoreSiphonPickup
+  siphonController: {fileID: 0}
+  siphonableObject: {fileID: 0}
+  collectLocalDistance: 0.6
+  triggerOnlyOnce: 1
+  requiredFlag: 
+  blockedByFlag: 
+--- !u!114 &1701912082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1701912076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a2297994f81f8d4fbc54da5fdd0ccd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DraggableHighlight
+  color: {r: 1, g: 0.9, b: 0.2, a: 1}
+  lineWidth: 3
+  padding: 0
 --- !u!1 &1703324243
 GameObject:
   m_ObjectHideFlags: 0
@@ -54351,7 +54383,7 @@ PrefabInstance:
     - target: {fileID: 3332756950553193982, guid: 4f9803ed31b25c049b47eaf15bcb0c32,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1156
+      value: -1440
       objectReference: {fileID: 0}
     - target: {fileID: 3332756950553193982, guid: 4f9803ed31b25c049b47eaf15bcb0c32,
         type: 3}
@@ -54725,7 +54757,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1927183720
 Transform:
   m_ObjectHideFlags: 0
@@ -54735,8 +54767,8 @@ Transform:
   m_GameObject: {fileID: 1927183719}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0.000000030908623, z: 0.00000003090861, w: 0.70710677}
-  m_LocalPosition: {x: -1107.9, y: -8.4, z: -1508.7676}
-  m_LocalScale: {x: 5916.768, y: 5916.767, z: 5916.768}
+  m_LocalPosition: {x: 298.3219, y: 200.5, z: -1907.1001}
+  m_LocalScale: {x: 5916.7686, y: 5916.7676, z: 5916.7686}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 181949191}
@@ -54786,6 +54818,7 @@ Transform:
   - {fileID: 1724666517}
   - {fileID: 974304001}
   - {fileID: 2052257422}
+  - {fileID: 1511514371}
   m_Father: {fileID: 2078020511}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1927183721
@@ -58674,11 +58707,11 @@ Transform:
   m_GameObject: {fileID: 2045896363}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1973.9915, y: -34.743164, z: -1528.4355}
+  m_LocalPosition: {x: 298.3219, y: 200.5, z: -1907.1001}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 87593333}
+  m_Father: {fileID: 2078020511}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!199 &2045896365
 ParticleSystemRenderer:
@@ -63805,7 +63838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25b4e25caf740094a8135cf069e62f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectiveEventAction
-  objectiveText: Talk to the villager near the well
+  objectiveText: Someone nearby looks upset. Go see what is wrong.
   wayfindingTarget: {fileID: 0}
   completePreviousObjective: 1
   onlyOnce: 1
@@ -64336,6 +64369,10 @@ Transform:
   - {fileID: 813401121}
   - {fileID: 1374162437}
   - {fileID: 1123663948}
+  - {fileID: 1927183720}
+  - {fileID: 2045896364}
+  - {fileID: 1058294579}
+  - {fileID: 787133661}
   - {fileID: 863849257}
   - {fileID: 424326203}
   - {fileID: 488733623095827543}
@@ -64351,8 +64388,6 @@ Transform:
   - {fileID: 2017616345}
   - {fileID: 1036275306}
   - {fileID: 1595104378}
-  - {fileID: 1927183720}
-  - {fileID: 1511514371}
   - {fileID: 2002831369}
   m_Father: {fileID: 1539175627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -64875,7 +64910,7 @@ Transform:
   m_GameObject: {fileID: 2112412576}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1593, y: 2652, z: -6665}
+  m_LocalPosition: {x: 645, y: 2848, z: -5962}
   m_LocalScale: {x: 50, y: 100, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children:

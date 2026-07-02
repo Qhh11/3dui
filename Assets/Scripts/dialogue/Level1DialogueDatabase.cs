@@ -276,24 +276,26 @@ public class Level1DialogueDatabase : MonoBehaviour
         sequence.entries.Add(Line(villager, "But I warn you. Do not bring it back.", eventOnEnd: DialogueIds.Events.QuestGoToWell));
     }
 
-    // 段1: 到达水井,小人发现草太厚 → 触发切UFO视角
+    // 段1: 到达水井,小人发现能量痕迹但草太厚找不到 → 触发切UFO视角
     private void BuildWellArrival(DialogueSequence sequence)
     {
         DialogueCharacter player = GetCharacter(DialogueIds.Characters.Player);
-
-        sequence.entries.Add(Line(player, "The grass is too thick."));
-        sequence.entries.Add(Line(player, "UFO, can you see anything from your side?",
+    
+        sequence.entries.Add(Line(player, "Wait... there is something glowing faintly near the well."));
+        sequence.entries.Add(Line(player, "It looks like traces of an energy unit."));
+        sequence.entries.Add(Line(player, "It must be here somewhere, but the grass is too thick. I cannot find it."));
+        sequence.entries.Add(Line(player, "UFO, can you scan this spot from your side?",
             eventOnEnd: DialogueIds.Events.ActivateWellArea));
             // activate_well_area: 激活UFO视角下的水井触发区域
     }
-
+    
     // 段2: UFO视角下,小人看到能源块 → 触发切回+标记位置
     private void BuildWellUfoView(DialogueSequence sequence)
     {
         DialogueCharacter player = GetCharacter(DialogueIds.Characters.Player);
-
-        sequence.entries.Add(Line(player, "The grass is dead..."));
-        sequence.entries.Add(Line(player, "So the stone is right there.",
+    
+        sequence.entries.Add(Line(player, "The grass here looks dead."));
+        sequence.entries.Add(Line(player, "There it is. The stone was hiding right underneath.",
             eventOnEnd: DialogueIds.Events.WellMarkEnergy));
         // gameplay: 标记能源块位置,切回小人视角,玩家点击草丛拾取
     }
@@ -331,9 +333,9 @@ public class Level1DialogueDatabase : MonoBehaviour
         sequence.entries.Add(Line(villager, "You cannot pick that up! Drop it! Now!"));
 
         sequence.entries.Add(Line(player, "Why?"));
-        sequence.entries.Add(Line(player, "It is just a glowing energy block."));
+        sequence.entries.Add(Line(player, "It is just a glowing energy unit."));
 
-        sequence.entries.Add(Line(villager, "Energy block?"));
+        sequence.entries.Add(Line(villager, "Energy unit?"));
         sequence.entries.Add(Line(villager,
             "You outsiders always give pretty names to things you should not touch."));
         sequence.entries.Add(Line(villager, "It is cursed."));
@@ -357,21 +359,13 @@ public class Level1DialogueDatabase : MonoBehaviour
 
         sequence.entries.Add(Line(villager, "You do not believe me?"));
         sequence.entries.Add(Line(villager,
-            "Then go look at the abandoned well."));
+            "Then go look at the well."));
         sequence.entries.Add(Line(villager,
             "Last night, I threw one of these down there myself."));
         sequence.entries.Add(Line(villager,
             "The well is deep. No one can fish it out."));
         sequence.entries.Add(Line(villager,
-            "If you can find it down there, then I am not crazy."));
-
-        sequence.entries.Add(Line(player, "Where is the abandoned well?"));
-
-        sequence.entries.Add(Line(villager,
-            "Right behind this well. Hidden by the grass."));
-        sequence.entries.Add(Line(villager, "Do not say I did not warn you."));
-        sequence.entries.Add(Line(villager,
-            "Some things only need to be proven once to regret for a lifetime.",
+            "If you can find it down there, then I am not crazy.",
             eventOnEnd: DialogueIds.Events.QuestRetrieveFromAbandonedWell));
     }
 
@@ -422,17 +416,15 @@ public class Level1DialogueDatabase : MonoBehaviour
         sequence.entries.Add(Line(terminal,
             "Residual frequency highly matches the active unit."));
         sequence.entries.Add(Line(terminal,
-            "Possible cause: temporal turbulence."));
+            "Possible cause: a break in local time."));
         sequence.entries.Add(Line(terminal,
-            "Local time structure is unstable."));
-        sequence.entries.Add(Line(terminal,
-            "Parallel timeline residue may be present."));
+            "There may be traces from another timeline here."));
 
-        sequence.entries.Add(Line(player, "Parallel timelines?"));
+        sequence.entries.Add(Line(player, "Another timeline?"));
         sequence.entries.Add(Line(player,
-            "So this could be the same energy block, but from a different time?"));
+            "So this could be the same energy unit, but from a different time?"));
 
-        sequence.entries.Add(Line(terminal, "Hypothesis probability rising."));
+        sequence.entries.Add(Line(terminal, "That theory is likely."));
         sequence.entries.Add(Line(terminal,
             "The active unit and the depleted unit may originate from different timelines."));
         sequence.entries.Add(Line(terminal,
@@ -442,7 +434,7 @@ public class Level1DialogueDatabase : MonoBehaviour
         sequence.entries.Add(Line(player,
             "What you see might be the future."));
         sequence.entries.Add(Line(player,
-            "And these energy blocks... may be falling out from different points in time."));
+            "And these energy units... may be falling out from different points in time."));
 
         sequence.entries.Add(Line(terminal, "Reasoning accepted."));
         sequence.entries.Add(Line(terminal,
