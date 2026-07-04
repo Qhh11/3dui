@@ -2,14 +2,17 @@ using UnityEngine;
 
 public class NPCDialogueTriggerById : MonoBehaviour
 {
+    [SerializeField] private MonoBehaviour dialogueDatabase;
+
     [Header("Dialogue")]
     [SerializeField] private string sequenceId = "villager_a_first_meet";
     [SerializeField] private bool triggerOnlyOnce = true;
 
     [Header("Progression Gate")]
-    [Tooltip("必须已点亮这个 flag 才允许触发（空=无前置要求）。用于让本步只能在上一步完成后触发。")]
+    [Tooltip("Dialogue can only start after this flag is set. Leave empty for no requirement.")]
     [SerializeField] private string requiredFlag = "";
-    [Tooltip("若这个 flag 已点亮，则不再触发（可选，用来在更晚的阶段关闭它）。")]
+
+    [Tooltip("Dialogue will not start if this flag is already set. Optional.")]
     [SerializeField] private string blockedByFlag = "";
 
     [Header("Player Detection")]
@@ -18,10 +21,23 @@ public class NPCDialogueTriggerById : MonoBehaviour
     [Header("3D Dialogue Indicator")]
     [SerializeField] private GameObject dialogueIndicator;
 
+    private IDialogueDatabase database;
     private bool hasTriggered;
 
     private void Start()
     {
+        database = dialogueDatabase as IDialogueDatabase;
+
+        if (database == null && dialogueDatabase != null)
+            database = dialogueDatabase.GetComponent<IDialogueDatabase>();
+
+        if (database == null)
+        {
+            Debug.LogError(
+                $"{name}: Dialogue Database is not assigned or does not implement IDialogueDatabase."
+            );
+        }
+
         RefreshIndicator();
     }
 
@@ -43,14 +59,11 @@ public class NPCDialogueTriggerById : MonoBehaviour
         if (!CanStartDialogue())
             return;
 
-        DialogueSequence sequence =
-            Level1DialogueDatabase.Instance.GetSequence(sequenceId);
+        DialogueSequence sequence = database?.GetSequence(sequenceId);
 
         if (sequence == null)
         {
-            Debug.LogWarning(
-                $"Dialogue sequence not found: {sequenceId}"
-            );
+            Debug.LogWarning($"Dialogue sequence not found: {sequenceId}");
             return;
         }
 
@@ -68,9 +81,11 @@ public class NPCDialogueTriggerById : MonoBehaviour
         if (triggerOnlyOnce && hasTriggered)
             return false;
 
-        // —— 进度门控 ——
-        if (!QuestProgress.Has(requiredFlag))
+        if (!string.IsNullOrWhiteSpace(requiredFlag) &&
+            !QuestProgress.Has(requiredFlag))
+        {
             return false;
+        }
 
         if (!string.IsNullOrWhiteSpace(blockedByFlag) &&
             QuestProgress.Has(blockedByFlag))
@@ -92,10 +107,9 @@ public class NPCDialogueTriggerById : MonoBehaviour
         if (dialogueIndicator == null)
             return;
 
-        bool show = dialogueIndicator.activeSelf;
         bool wanted = CanShowIndicator();
 
-        if (show != wanted)
+        if (dialogueIndicator.activeSelf != wanted)
             dialogueIndicator.SetActive(wanted);
     }
 
@@ -104,9 +118,11 @@ public class NPCDialogueTriggerById : MonoBehaviour
         if (triggerOnlyOnce && hasTriggered)
             return false;
 
-        // 没解锁 / 已被关闭时也不显示指示器
-        if (!QuestProgress.Has(requiredFlag))
+        if (!string.IsNullOrWhiteSpace(requiredFlag) &&
+            !QuestProgress.Has(requiredFlag))
+        {
             return false;
+        }
 
         if (!string.IsNullOrWhiteSpace(blockedByFlag) &&
             QuestProgress.Has(blockedByFlag))

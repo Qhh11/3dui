@@ -23,6 +23,11 @@ public class SiphonableObject : MonoBehaviour
     [Header("Place")]
     [SerializeField] private float skinWidth = 0.03f;
 
+    [Header("Blocked")]
+    [SerializeField] private bool isBlocked = false;
+    [SerializeField] private GameObject blockingObject;
+    public UnityEvent onPickUpBlocked;
+
     [Header("Events")]
     public UnityEvent onPickedUp;
     public UnityEvent onPlaced;
@@ -73,19 +78,27 @@ public class SiphonableObject : MonoBehaviour
         }
     }
 
-    public void PickUp(Transform holdPoint)
+    public bool PickUp(Transform holdPoint)
     {
+        if (isBlocked && blockingObject != null && blockingObject.activeSelf)
+        {
+            onPickUpBlocked?.Invoke();
+            return false;
+        }
+        
         originalParent = transform.parent;
-
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         rb.useGravity = false;
         rb.isKinematic = true;
-
         transform.SetParent(holdPoint, true);
         SetOutlineState(OutlineState.Default);
-
         onPickedUp?.Invoke();
+        return true;
+    }
+    public void ClearBlocked()
+    {
+        isBlocked = false;
     }
 
     public void Place(Vector3 position, Quaternion rotation)
