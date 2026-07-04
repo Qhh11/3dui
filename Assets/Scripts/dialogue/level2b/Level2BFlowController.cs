@@ -130,7 +130,7 @@ public class Level2BFlowController : MonoBehaviour
         }
 
         ObjectivePanelController.Instance?.CompleteAndSetNextObjective(
-            "Melt the frozen mountains"
+            GetMeltObjectiveText()
         );
     }
 
@@ -140,6 +140,10 @@ public class Level2BFlowController : MonoBehaviour
         {
             return;
         }
+
+        ObjectivePanelController.Instance?.SetObjective(
+            GetMeltObjectiveText()
+        );
 
         if (!AreAllIceMountainsMelted())
         {
@@ -289,5 +293,43 @@ public class Level2BFlowController : MonoBehaviour
         {
             switchHighlightObject.SetActive(visible);
         }
+    }
+
+    private string GetMeltObjectiveText()
+    {
+        int completedCount = GetCompletedIceMountainCount();
+        int totalCount = GetTotalIceMountainCount();
+
+        return $"Melt the frozen mountains ({completedCount}/{totalCount})";
+    }
+
+    private int GetCompletedIceMountainCount()
+    {
+        if (iceMountains == null)
+        {
+            return 0;
+        }
+
+        int count = 0;
+
+        foreach (Level2HeatMeltableObject mountain in iceMountains)
+        {
+            if (mountain != null && mountain.IsCompleted)
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    private int GetTotalIceMountainCount()
+    {
+        if (iceMountains == null)
+        {
+            return 0;
+        }
+
+        return iceMountains.Length;
     }
 }
