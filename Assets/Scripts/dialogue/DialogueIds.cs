@@ -78,5 +78,6 @@ public static class DialogueIds
         public const string VillagerB = "villager_b";
         public const string VillagerC = "villager_c";
         public const string VillagerD = "villager_d";
+        public const string Hint = "hint";
     }
 }

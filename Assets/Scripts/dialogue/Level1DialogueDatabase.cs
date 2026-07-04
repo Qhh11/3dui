@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class Level1DialogueDatabase : MonoBehaviour
@@ -55,6 +56,7 @@ public class Level1DialogueDatabase : MonoBehaviour
         AddCharacter(DialogueIds.Characters.VillagerB, "Villager B", "villager_b", new Color(1f, 0.75f, 0.45f));
         AddCharacter(DialogueIds.Characters.VillagerC, "Villager C", "villager_c", new Color(1f, 0.75f, 0.45f));
         AddCharacter(DialogueIds.Characters.VillagerD, "Villager D", "villager_d", new Color(1f, 0.75f, 0.45f));
+        AddCharacter(DialogueIds.Characters.Hint, "Hint", "hint", new Color(1f, 1f, 1f));
     }
 
     private void AddCharacter(string id, string displayName, string portraitResourceName, Color nameColor)
@@ -132,6 +134,7 @@ public class Level1DialogueDatabase : MonoBehaviour
     {
         DialogueCharacter player = GetCharacter(DialogueIds.Characters.Player);
         DialogueCharacter terminal = GetCharacter(DialogueIds.Characters.UFOTerminal);
+        DialogueCharacter Hint = GetCharacter(DialogueIds.Characters.Hint);
         sequence.entries.Add(Line(player, "Ugh... my head hurts."));
         sequence.entries.Add(Line(player, "What happened? UFO Terminal, can you hear me?", eventOnEnd: DialogueIds.Events.StartWakeUpFade));
 
@@ -152,7 +155,11 @@ public class Level1DialogueDatabase : MonoBehaviour
 
         sequence.entries.Add(Line(
             player,
-            "Let me try if this still works.",
+            "Let me try if this still works."
+        ));
+        sequence.entries.Add(Line(
+            Hint,
+            "Please make sure your camera is not blocked by any objects when switching perspectives.",
             eventOnEnd: DialogueIds.Events.ShowSwitchHint
         ));
     }
