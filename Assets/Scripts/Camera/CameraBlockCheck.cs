@@ -1,125 +1,112 @@
-using System;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
-
+ 
 /// <summary>
-/// 用 AR 环境深度判断"摄像头正前方近距离内是否有障碍物"。
-/// 取深度图中心一小块的最近深度，小于 obstacleDistance(米) 即视为被挡。
-/// 需要 AROcclusionManager + 设备支持 ARCore Depth；AR 会话要在跑并稍微移动过，深度才有值。
+/// 不依赖 Depth API 的"摄像头前近距离障碍"检测。
+/// 直接分析相机图的中心区域(Y 亮度通道)：
+///   - 平均亮度太低  → 镜头被捂住(手指/贴面)
+///   - 方差(对比度)太低 → 贴到无纹理的近处表面(墙、桌面)
+/// 任一命中即视为被挡。需要 ARCameraManager 在出帧(AR 会话运行中)。
 /// </summary>
 public class CameraBlockCheck : MonoBehaviour
 {
     [Header("引用")]
-    [Tooltip("AR 相机上的 AROcclusionManager；留空自动找")]
-    public AROcclusionManager occlusionManager;
-
-    [Header("判定")]
-    [Tooltip("正前方这个距离(米)内有障碍就算被挡")]
-    public float obstacleDistance = 0.3f;
-    [Tooltip("中心采样块的半径(深度图像素)，越大越稳但略慢")]
-    public int samplePatchRadius = 8;
-    [Tooltip("拿不到深度数据时是否放行(true=不拦截，避免误挡)")]
+    [Tooltip("AR 相机上的 ARCameraManager；留空自动找")]
+    public ARCameraManager cameraManager;
+ 
+    [Header("判定(不依赖 Depth)")]
+    [Tooltip("中心平均亮度(0-255)低于此值视为被捂住/太暗")]
+    public float darkThreshold = 25f;
+    [Tooltip("中心纹理方差低于此值视为贴到无特征近表面(方差≈对比度)")]
+    public float flatVarianceThreshold = 40f;
+    [Tooltip("中心采样块半径(像素，基于相机图分辨率)")]
+    public int samplePatchRadius = 24;
+    [Tooltip("拿不到画面数据时是否放行(true=不拦截)")]
     public bool assumeClearIfNoData = true;
-
-    private float lastMinDepth = -1f;
-    private readonly byte[] f4 = new byte[4];
-
+ 
+    private float lastMean = -1f;
+    private float lastVar = -1f;
+ 
     void Awake()
     {
-        if (occlusionManager == null) occlusionManager = FindObjectOfType<AROcclusionManager>();
+        if (cameraManager == null) cameraManager = FindObjectOfType<ARCameraManager>();
     }
-
-    void OnEnable()
-    {
-        if (occlusionManager != null)
-            occlusionManager.requestedEnvironmentDepthMode = EnvironmentDepthMode.Fastest;
-    }
-
-    /// <summary>正前方近距离内是否有障碍。</summary>
+ 
+    /// <summary>正前方近距离是否被障碍遮挡。</summary>
     public bool IsBlocked()
     {
-        lastMinDepth = -1f;
-
-        if (occlusionManager == null)
+        lastMean = -1f;
+        lastVar = -1f;
+ 
+        if (cameraManager == null)
             return !assumeClearIfNoData;
-
-        if (!occlusionManager.TryAcquireEnvironmentDepthCpuImage(out XRCpuImage image))
+ 
+        if (!cameraManager.TryAcquireLatestCpuImage(out XRCpuImage image))
             return !assumeClearIfNoData;
-
+ 
         try
         {
-            lastMinDepth = SampleCenterMinDepth(image);
+            Analyze(image, out lastMean, out lastVar);
         }
         finally
         {
             image.Dispose();
         }
-
-        if (lastMinDepth <= 0f)
-            return !assumeClearIfNoData;   // 中心没有有效深度
-
-        return lastMinDepth < obstacleDistance;
+ 
+        if (lastMean < 0f)                     // 没采到有效像素
+            return !assumeClearIfNoData;
+ 
+        return lastMean < darkThreshold || lastVar < flatVarianceThreshold;
     }
-
-    private float SampleCenterMinDepth(XRCpuImage image)
+ 
+    private void Analyze(XRCpuImage image, out float mean, out float variance)
     {
-        XRCpuImage.Plane plane = image.GetPlane(0);
+        mean = -1f;
+        variance = -1f;
+ 
+        XRCpuImage.Plane plane = image.GetPlane(0);   // 0 号平面 = Y 亮度
         NativeArray<byte> data = plane.data;
-
+ 
         int width = image.width;
         int height = image.height;
         int rowStride = plane.rowStride;
         int pixelStride = plane.pixelStride;
-
+ 
         int cx = width / 2;
         int cy = height / 2;
         int r = Mathf.Max(1, samplePatchRadius);
-
-        float min = float.MaxValue;
-        bool any = false;
-
+ 
+        double sum = 0.0;
+        double sumSq = 0.0;
+        int n = 0;
+ 
         for (int y = cy - r; y <= cy + r; y++)
         {
             if (y < 0 || y >= height) continue;
             for (int x = cx - r; x <= cx + r; x++)
             {
                 if (x < 0 || x >= width) continue;
-
+ 
                 int idx = y * rowStride + x * pixelStride;
-                float depth = ReadDepth(data, idx, image.format);
-
-                if (depth > 0f && depth < min)
-                {
-                    min = depth;
-                    any = true;
-                }
+                if (idx < 0 || idx >= data.Length) continue;
+ 
+                byte v = data[idx];
+                sum += v;
+                sumSq += (double)v * v;
+                n++;
             }
         }
-
-        return any ? min : -1f;
+ 
+        if (n == 0) return;
+ 
+        double m = sum / n;
+        mean = (float)m;
+        variance = (float)(sumSq / n - m * m);
     }
-
-    private float ReadDepth(NativeArray<byte> data, int i, XRCpuImage.Format format)
-    {
-        switch (format)
-        {
-            case XRCpuImage.Format.DepthFloat32:
-                if (i + 3 >= data.Length) return 0f;
-                f4[0] = data[i]; f4[1] = data[i + 1]; f4[2] = data[i + 2]; f4[3] = data[i + 3];
-                return BitConverter.ToSingle(f4, 0);                 // 米
-
-            case XRCpuImage.Format.DepthUint16:
-                if (i + 1 >= data.Length) return 0f;
-                ushort mm = (ushort)(data[i] | (data[i + 1] << 8));
-                return mm * 0.001f;                                   // 毫米 -> 米
-
-            default:
-                return 0f;
-        }
-    }
-
-    /// <summary>调试用：上次检测到的最近深度(米)，无数据为 -1。</summary>
-    public float LastMinDepth => lastMinDepth;
+ 
+    // 调试用：真机上把这两个打到屏幕，看"正常 / 捂住 / 贴墙"各是多少来定阈值
+    public float LastMean => lastMean;
+    public float LastVariance => lastVar;
 }
