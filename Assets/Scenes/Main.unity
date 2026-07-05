@@ -27277,6 +27277,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 722228741}
     m_Modifications:
+    - target: {fileID: 1187716702224463343, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187716702224463343, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187716702224463343, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187716702224463343, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187716702224463343, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187716702224463343, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1187716702224463343, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
         type: 3}
       propertyPath: m_Pivot.x
@@ -27377,6 +27412,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2434128738734298794, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2458575788867237349, guid: 9510a813a8aab364b9f3e87c6d719b12,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -27402,6 +27442,66 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnergyCubeBar
       objectReference: {fileID: 0}
+    - target: {fileID: 3637778001322110063, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3637778001322110063, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3637778001322110063, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3637778001322110063, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3637778001322110063, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3637778001322110063, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3637778001322110063, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140509964003258631, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140509964003258631, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140509964003258631, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140509964003258631, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4140509964003258631, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4469503252412069876, guid: 9510a813a8aab364b9f3e87c6d719b12,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -27420,6 +27520,11 @@ PrefabInstance:
     - target: {fileID: 4469503252412069876, guid: 9510a813a8aab364b9f3e87c6d719b12,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4885826563253569245, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6827536177277549582, guid: 9510a813a8aab364b9f3e87c6d719b12,
@@ -27483,7 +27588,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1188920425}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Objective
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43787,9 +43892,9 @@ MonoBehaviour:
   onPickedUp:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 387675392}
-        m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
-        m_MethodName: Apply
+      - m_Target: {fileID: 1748637628}
+        m_TargetAssemblyTypeName: EnergyCubeBar, Assembly-CSharp
+        m_MethodName: AddOne
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -43799,9 +43904,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1748637628}
-        m_TargetAssemblyTypeName: EnergyCubeBar, Assembly-CSharp
-        m_MethodName: AddOne
+      - m_Target: {fileID: 387675392}
+        m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
+        m_MethodName: Apply
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -50036,9 +50141,9 @@ MonoBehaviour:
   - {fileID: 1046747361}
   - {fileID: 1320744261}
   slots:
-  - {fileID: 0}
   - {fileID: 868194828}
-  - {fileID: 0}
+  - {fileID: 1525267311}
+  - {fileID: 1761150706}
   objectivePanel: {fileID: 1655858523}
   objectiveText: {fileID: 1686134844}
   objectiveFormat: Clean the woods   {0}/{1}

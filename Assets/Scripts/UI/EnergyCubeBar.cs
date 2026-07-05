@@ -34,7 +34,12 @@ public class EnergyCubeBar : MonoBehaviour
     public static void Collect()
     {
         int max = Instance != null ? Instance.SlotCount : int.MaxValue;
-        if (collected >= max) return;
+        if (collected >= max) 
+        {
+            Debug.LogWarning($"EnergyCubeBar.Collect() called but already full ({collected}/{max})");
+            return;
+        }
+        Debug.Log($"EnergyCubeBar.Collect() called, count {collected + 1}/{max}");
         collected++;
         if (Instance != null) Instance.Refresh(true);
     }
