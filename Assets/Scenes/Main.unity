@@ -12407,7 +12407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dbd2a7bc82edf441a58c7a9cc6b496b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTriggerById
-  dialogueDatabase: {fileID: 1158618833}
+  dialogueDatabase: {fileID: 1158618835}
   sequenceId: abandoned_well_arrival
   triggerOnlyOnce: 1
   requiredFlag: NPCWell_met
@@ -15868,7 +15868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dbd2a7bc82edf441a58c7a9cc6b496b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTriggerById
-  dialogueDatabase: {fileID: 1158618833}
+  dialogueDatabase: {fileID: 1158618835}
   sequenceId: villager_b_first_meet
   triggerOnlyOnce: 1
   requiredFlag: grass_checked
@@ -26880,6 +26880,118 @@ MonoBehaviour:
         - m_Target: {fileID: 399468685}
           m_TargetAssemblyTypeName: Level2BFlowController, Assembly-CSharp
           m_MethodName: ShowReturnToPlayerForPortalObjective
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: level2a_quest_explore_ufo
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977930618}
+          m_TargetAssemblyTypeName: Level2AFlowController, Assembly-CSharp
+          m_MethodName: OnQuestExploreUfo
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: level2a_quest_siphon_energy
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977930618}
+          m_TargetAssemblyTypeName: Level2AFlowController, Assembly-CSharp
+          m_MethodName: OnQuestSiphonEnergy
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: level2a_quest_shoot_roots
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977930618}
+          m_TargetAssemblyTypeName: Level2AFlowController, Assembly-CSharp
+          m_MethodName: OnQuestShootRoots
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: level2a_quest_siphon_after_roots
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977930618}
+          m_TargetAssemblyTypeName: Level2AFlowController, Assembly-CSharp
+          m_MethodName: OnQuestSiphonAfterRoots
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: level2a_play_signal_lost
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977930618}
+          m_TargetAssemblyTypeName: Level2AFlowController, Assembly-CSharp
+          m_MethodName: PlaySignalLost
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: level2a_quest_go_to_portal
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977930618}
+          m_TargetAssemblyTypeName: Level2AFlowController, Assembly-CSharp
+          m_MethodName: OnQuestGoToPortal
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: level2a_show_switch_hint
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 977930618}
+          m_TargetAssemblyTypeName: Level2AFlowController, Assembly-CSharp
+          m_MethodName: OnShowSwitchHint
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -38995,7 +39107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dbd2a7bc82edf441a58c7a9cc6b496b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NPCDialogueTriggerById
-  dialogueDatabase: {fileID: 1158618833}
+  dialogueDatabase: {fileID: 1158618835}
   sequenceId: well_arrival
   triggerOnlyOnce: 1
   requiredFlag: well_unlocked
