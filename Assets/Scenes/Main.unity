@@ -1426,6 +1426,81 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 93157696}
   m_Mesh: {fileID: 6341335486032048251, guid: a62d5a41c1e1ea84baf8b6d52059eaef, type: 3}
+--- !u!1 &98060166
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 98060167}
+  - component: {fileID: 98060169}
+  - component: {fileID: 98060168}
+  m_Layer: 5
+  m_Name: EnergyCubeBarBG
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &98060167
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98060166}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 722228741}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -88}
+  m_SizeDelta: {x: 550, y: 175}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &98060168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98060166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.1, g: 0.1, b: 0.1, a: 0.42352942}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &98060169
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 98060166}
+  m_CullTransparentMesh: 1
 --- !u!1 &106609910
 GameObject:
   m_ObjectHideFlags: 0
@@ -5173,7 +5248,7 @@ PrefabInstance:
     - target: {fileID: 4324183160605158426, guid: 249ebbaae21002c499f1c8a7925c1905,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 25.3
+      value: 75.27509
       objectReference: {fileID: 0}
     - target: {fileID: 4324183160605158426, guid: 249ebbaae21002c499f1c8a7925c1905,
         type: 3}
@@ -5188,7 +5263,7 @@ PrefabInstance:
     - target: {fileID: 4324183160605158426, guid: 249ebbaae21002c499f1c8a7925c1905,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -35
+      value: -238.2129
       objectReference: {fileID: 0}
     - target: {fileID: 4324183160605158426, guid: 249ebbaae21002c499f1c8a7925c1905,
         type: 3}
@@ -11494,7 +11569,19 @@ MonoBehaviour:
       m_Calls: []
   onPickedUp:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1748637628}
+        m_TargetAssemblyTypeName: EnergyCubeBar, Assembly-CSharp
+        m_MethodName: AddOne
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onPlaced:
     m_PersistentCalls:
       m_Calls: []
@@ -14808,7 +14895,7 @@ PrefabInstance:
     - target: {fileID: 2515697713448990657, guid: 1876e96a48eea50458d7e14f141123ed,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 20
+      value: 79.038
       objectReference: {fileID: 0}
     - target: {fileID: 2515697713448990657, guid: 1876e96a48eea50458d7e14f141123ed,
         type: 3}
@@ -14823,7 +14910,7 @@ PrefabInstance:
     - target: {fileID: 2515697713448990657, guid: 1876e96a48eea50458d7e14f141123ed,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 65.117676
+      value: 58.6848
       objectReference: {fileID: 0}
     - target: {fileID: 2515697713448990657, guid: 1876e96a48eea50458d7e14f141123ed,
         type: 3}
@@ -15731,6 +15818,43 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 718047534}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &722228740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 722228741}
+  m_Layer: 5
+  m_Name: EnergyCubeBarPanel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &722228741
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722228740}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 98060167}
+  - {fileID: 1184416825}
+  m_Father: {fileID: 1399025606}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -1196, y: 423}
+  m_SizeDelta: {x: 550, y: 200}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &726392459
 GameObject:
   m_ObjectHideFlags: 0
@@ -25614,12 +25738,12 @@ PrefabInstance:
     - target: {fileID: 2191666470857331508, guid: 8b63f536dcb9512418bb18c53c2565c6,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 164.69263
+      value: 73.7
       objectReference: {fileID: 0}
     - target: {fileID: 2191666470857331508, guid: 8b63f536dcb9512418bb18c53c2565c6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 60.93579
+      value: -46.1
       objectReference: {fileID: 0}
     - target: {fileID: 2191666470857331508, guid: 8b63f536dcb9512418bb18c53c2565c6,
         type: 3}
@@ -27144,6 +27268,210 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9f35ff0476e26794ab07771739e20c19,
     type: 3}
   m_PrefabInstance: {fileID: 1168228432}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1184416824
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 722228741}
+    m_Modifications:
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 550
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -100
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2458575788867237349, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2458575788867237349, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2458575788867237349, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2458575788867237349, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2980929149777092760, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_Name
+      value: EnergyCubeBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469503252412069876, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469503252412069876, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469503252412069876, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4469503252412069876, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6827536177277549582, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6827536177277549582, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6827536177277549582, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6827536177277549582, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8634754526914299810, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8634754526914299810, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8634754526914299810, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8634754526914299810, guid: 9510a813a8aab364b9f3e87c6d719b12,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9510a813a8aab364b9f3e87c6d719b12, type: 3}
+--- !u!224 &1184416825 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 1648238192439037616, guid: 9510a813a8aab364b9f3e87c6d719b12,
+    type: 3}
+  m_PrefabInstance: {fileID: 1184416824}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1191771111
 GameObject:
@@ -33025,6 +33353,7 @@ RectTransform:
   - {fileID: 1447228288}
   - {fileID: 879637180}
   - {fileID: 943781595}
+  - {fileID: 722228741}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -43434,6 +43763,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1748637628}
+        m_TargetAssemblyTypeName: EnergyCubeBar, Assembly-CSharp
+        m_MethodName: AddOne
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onPlaced:
     m_PersistentCalls:
       m_Calls:
@@ -44144,6 +44485,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1746943632}
   m_Mesh: {fileID: -21619852604044188, guid: a62d5a41c1e1ea84baf8b6d52059eaef, type: 3}
+--- !u!114 &1748637628 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4340503651627266603, guid: 9510a813a8aab364b9f3e87c6d719b12,
+    type: 3}
+  m_PrefabInstance: {fileID: 1184416824}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 129f0eeebd40c6840b506a86b3ad94b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnergyCubeBar
 --- !u!1 &1751168849
 GameObject:
   m_ObjectHideFlags: 0
@@ -44860,6 +45213,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 564769897}
     m_Modifications:
+    - target: {fileID: -5578815575310830069, guid: fa9b3057ee026bb41a40d9f7eabfef7c,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1190995455649073363, guid: fa9b3057ee026bb41a40d9f7eabfef7c,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -44868,7 +45226,7 @@ PrefabInstance:
     - target: {fileID: 1190995455649073363, guid: fa9b3057ee026bb41a40d9f7eabfef7c,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 40
+      value: 122.196
       objectReference: {fileID: 0}
     - target: {fileID: 1190995455649073363, guid: fa9b3057ee026bb41a40d9f7eabfef7c,
         type: 3}
@@ -44883,7 +45241,7 @@ PrefabInstance:
     - target: {fileID: 1190995455649073363, guid: fa9b3057ee026bb41a40d9f7eabfef7c,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -190.88257
+      value: -539.6252
       objectReference: {fileID: 0}
     - target: {fileID: 1190995455649073363, guid: fa9b3057ee026bb41a40d9f7eabfef7c,
         type: 3}
@@ -44923,6 +45281,11 @@ PrefabInstance:
     - target: {fileID: 1190995455649073363, guid: fa9b3057ee026bb41a40d9f7eabfef7c,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1190995455649073363, guid: fa9b3057ee026bb41a40d9f7eabfef7c,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3615299149272416980, guid: fa9b3057ee026bb41a40d9f7eabfef7c,
@@ -47729,7 +48092,19 @@ MonoBehaviour:
   splitDuration: 0.8
   onPickedUp:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1748637628}
+        m_TargetAssemblyTypeName: EnergyCubeBar, Assembly-CSharp
+        m_MethodName: AddOne
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!54 &1927183722
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -110381,6 +110756,18 @@ MonoBehaviour:
       - m_Target: {fileID: 977930618}
         m_TargetAssemblyTypeName: Level2AFlowController, Assembly-CSharp
         m_MethodName: OnEnergyCollected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1748637628}
+        m_TargetAssemblyTypeName: EnergyCubeBar, Assembly-CSharp
+        m_MethodName: AddOne
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
