@@ -209,19 +209,12 @@ public class Level1DialogueDatabase : MonoBehaviour, IDialogueDatabase
         DialogueCharacter player = GetCharacter(DialogueIds.Characters.Player);
         DialogueCharacter villager = GetCharacter(DialogueIds.Characters.VillagerA);
 
-        sequence.entries.Add(Line(villager, "A stranger? We do not see many new faces on this grassland.", eventOnStart: DialogueIds.Flags.MetVillagerA));
-        sequence.entries.Add(Line(player, "We got lost. We are looking for a glowing stone. Have you seen one?"));
-        sequence.entries.Add(Line(villager, "A glowing stone?"));
-        sequence.entries.Add(Line(villager, "We do not tell the truth to outsiders."));
-        sequence.entries.Add(Line(player, "Why? We do not mean any harm."));
-        sequence.entries.Add(Line(villager, "That is not for you to decide."));
-        sequence.entries.Add(Line(villager, "Too many people who should not be here have already come to this grassland."));
-        sequence.entries.Add(Line(villager, "Some look like us. Some speak like us. But they do not belong here."));
-        sequence.entries.Add(Line(player, "What do you mean?"));
-        sequence.entries.Add(Line(villager, "Numbers, symbols, scratches, the shape on the tower roof... These are our marks."));
-        sequence.entries.Add(Line(villager, "If you truly belong here, you should know today's mark."));
+        sequence.entries.Add(Line(villager, "A stranger? This grassland does not trust outsiders.", eventOnStart: DialogueIds.Flags.MetVillagerA));
+        sequence.entries.Add(Line(player, "We are looking for a glowing stone. Have you seen one?"));
+        sequence.entries.Add(Line(villager, "Maybe. But first, prove you belong here."));
+        sequence.entries.Add(Line(villager, "Every day, we use the tower mark to tell who is real."));
 
-        DialogueEntry question = Line(villager, "Tell me. What shape is on top of our tower?");
+        DialogueEntry question = Line(villager, "What shape is on top of our tower?");
         question.choices.Add(Choice("Circle", wrongAnswer));
         question.choices.Add(Choice("Star", correctAnswer, setFlagOnSelect: DialogueIds.Flags.AnsweredTowerMark));
         question.choices.Add(Choice("Square", wrongAnswer));
@@ -256,31 +249,23 @@ public class Level1DialogueDatabase : MonoBehaviour, IDialogueDatabase
         DialogueCharacter villager = GetCharacter(DialogueIds.Characters.VillagerA);
 
         sequence.entries.Add(Line(villager, "...Star."));
-        sequence.entries.Add(Line(villager, "So you have seen it."));
-        sequence.entries.Add(Line(player, "Was that a test?"));
-        sequence.entries.Add(Line(villager, "A warning."));
-        sequence.entries.Add(Line(villager, "The last person who answered the mark wrong still insisted that he lived here."));
-        sequence.entries.Add(Line(villager, "The next morning, his house was still there. But he was gone."));
-        sequence.entries.Add(Line(villager, "Only drag marks were left near the lake."));
-        sequence.entries.Add(Line(terminal, "Signal unstable..."));
-        sequence.entries.Add(Line(terminal, "Temporal noise detected..."));
-        sequence.entries.Add(Line(player, "What was that?"));
-        sequence.entries.Add(Line(player, "I think I saw someone lying near the lake."));
-        sequence.entries.Add(Line(terminal, "Signal lost."));
-        sequence.entries.Add(Line(terminal, "Image cannot be confirmed."));
-        sequence.entries.Add(Line(terminal, "Suggestion: continue investigating the energy fluctuation."));
-        sequence.entries.Add(Line(villager, "You saw something too, did you not?"));
-        sequence.entries.Add(Line(villager, "Then stop pretending nothing is wrong."));
-        sequence.entries.Add(Line(player, "Do you know what is happening here?"));
-        sequence.entries.Add(Line(villager, "I only know this grassland keeps repeating itself."));
-        sequence.entries.Add(Line(villager, "Some things are thrown away, and the next day they return."));
-        sequence.entries.Add(Line(villager, "Some people are dead, and the next morning they stand at their doors again."));
-        sequence.entries.Add(Line(villager, "But their marks are different."));
-        sequence.entries.Add(Line(player, "Different marks..."));
-        sequence.entries.Add(Line(villager, "Last night, I went to draw water."));
-        sequence.entries.Add(Line(villager, "I saw something glowing near the well."));
-        sequence.entries.Add(Line(villager, "If you are looking for a glowing object, go there."));
-        sequence.entries.Add(Line(villager, "But I warn you. Do not bring it back.", eventOnEnd: DialogueIds.Events.QuestGoToWell));
+        sequence.entries.Add(Line(villager, "Good. Then listen carefully."));
+        sequence.entries.Add(Line(villager, "People who answer wrong often disappear."));
+        sequence.entries.Add(Line(villager, "Last time, only drag marks were left near the lake."));
+
+        sequence.entries.Add(Line(terminal, "Temporal anomaly detected."));
+        sequence.entries.Add(Line(terminal, "Energy fluctuation is spreading from the lake area."));
+        sequence.entries.Add(Line(player, "So this is not just a village rule."));
+        sequence.entries.Add(Line(terminal, "Confirmed. Local timeline is unstable."));
+
+        sequence.entries.Add(Line(villager, "Now you understand."));
+        sequence.entries.Add(Line(villager, "This grassland keeps repeating itself."));
+        sequence.entries.Add(Line(villager, "Objects return. People return. But their marks change."));
+
+        sequence.entries.Add(Line(player, "The glowing stone may be part of this."));
+        sequence.entries.Add(Line(villager, "I saw a glow near the well last night."));
+        sequence.entries.Add(Line(villager, "Go there if you want answers."));
+        sequence.entries.Add(Line(villager, "But do not bring it back.", eventOnEnd: DialogueIds.Events.QuestGoToWell));
     }
 
     // 段1: 到达水井,小人发现能量痕迹但草太厚找不到 → 触发切UFO视角
