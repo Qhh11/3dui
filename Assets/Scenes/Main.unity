@@ -110363,7 +110363,7 @@ MonoBehaviour:
   onPickUpBlocked:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 977930618}
         m_TargetAssemblyTypeName: Level2AFlowController, Assembly-CSharp
         m_MethodName: OnSiphonAttemptFailed
         m_Mode: 1
@@ -110378,7 +110378,7 @@ MonoBehaviour:
   onPickedUp:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 977930618}
         m_TargetAssemblyTypeName: Level2AFlowController, Assembly-CSharp
         m_MethodName: OnEnergyCollected
         m_Mode: 1
