@@ -128,4 +128,50 @@ public class RocketLauncher : MonoBehaviour
             rocketButton.interactable = CanFire();
         }
     }
+    
+    public bool CanFireNow()
+    {
+        return CanFire();
+    }
+
+    public bool TryGetAimTarget(out BlastBlockedRockTarget target)
+    {
+        target = null;
+
+        if (!enabled || !gameObject.activeInHierarchy)
+            return false;
+
+        if (!CanFire())
+            return false;
+
+        if (aimCamera == null)
+            aimCamera = Camera.main;
+
+        if (aimCamera == null)
+            return false;
+
+        Ray ray = aimCamera.ViewportPointToRay(
+            new Vector3(0.5f, 0.5f, 0f)
+        );
+
+        if (!Physics.Raycast(
+                ray,
+                out RaycastHit hit,
+                maxAimDistance,
+                aimMask,
+                QueryTriggerInteraction.Collide))
+        {
+            return false;
+        }
+
+        target = hit.collider.GetComponentInParent<BlastBlockedRockTarget>();
+
+        if (target == null || !target.CanBeRocketTargetNow())
+        {
+            target = null;
+            return false;
+        }
+
+        return true;
+    }
 }

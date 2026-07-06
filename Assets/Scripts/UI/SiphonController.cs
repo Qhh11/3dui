@@ -80,6 +80,9 @@ public class SiphonController : MonoBehaviour
     public bool CanSwitchPerspective =>
         state == SiphonState.Disabled ||
         state == SiphonState.Idle;
+    
+    public Color NormalCrosshairColor => normalCrosshairColor;
+    public Color TargetCrosshairColor => targetCrosshairColor;
 
     private void Start()
     {
@@ -753,4 +756,24 @@ public class SiphonController : MonoBehaviour
         beamLine.SetPosition(0, start);
         beamLine.SetPosition(1, targetPosition);
     }
+    
+    public bool TryGetAimTarget(out SiphonableObject target)
+    {
+        target = null;
+    
+        if (state != SiphonState.Idle)
+            return false;
+    
+        if (!isUfoView)
+            return false;
+    
+        if (IsExternalInputBlocked())
+            return false;
+    
+        if (holdPoint == null)
+            return false;
+    
+        return TryGetPickUpTarget(out target);
+    }
+
 }
