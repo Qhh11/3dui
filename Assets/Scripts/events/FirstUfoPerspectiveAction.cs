@@ -36,10 +36,10 @@ public class FirstUfoPerspectiveAction : MonoBehaviour
             delayBeforeDialogue
         );
 
-        if (DialogueRunner.Instance != null &&
-            DialogueRunner.Instance.IsDialogueOpen)
+        while (DialogueRunner.Instance != null &&
+               DialogueRunner.Instance.IsDialogueOpen)
         {
-            yield break;
+            yield return null;
         }
 
         DialogueSequence sequence =

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -53,12 +54,17 @@ public class DialogueRunner : MonoBehaviour
 
     private int nextExternalWaitToken = 1;
     private int activeExternalWaitToken;
+    private readonly HashSet<int> activeExternalWaitTokens =
+        new HashSet<int>();
 
     private GameplayInputLockService.LockHandle dialogueGameplayLockHandle;
     private GameplayInputLockService.LockHandle externalGameplayLockHandle;
 
     private bool gameplayAvailabilityInitialized;
     private bool gameplayControlsEnabled;
+
+    private readonly List<RaycastResult> uiRaycastResults =
+        new List<RaycastResult>();
 
     private void Awake()
     {
@@ -73,7 +79,8 @@ public class DialogueRunner : MonoBehaviour
 
     private void Start()
     {
-        CloseImmediate();
+        if (!IsDialogueOpen)
+            CloseImmediate();
     }
 
     private void Update()
@@ -101,8 +108,12 @@ public class DialogueRunner : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (IsPointerOverUi(-1))
+            if (IsPointerBlockedForAdvance(
+                    -1,
+                    Input.mousePosition))
+            {
                 return false;
+            }
 
             return true;
         }
@@ -113,8 +124,12 @@ public class DialogueRunner : MonoBehaviour
 
             if (touch.phase == TouchPhase.Began)
             {
-                if (IsPointerOverUi(touch.fingerId))
+                if (IsPointerBlockedForAdvance(
+                        touch.fingerId,
+                        touch.position))
+                {
                     return false;
+                }
 
                 return true;
             }
@@ -123,19 +138,84 @@ public class DialogueRunner : MonoBehaviour
         return false;
     }
 
-    private bool IsPointerOverUi(int pointerId)
+    private bool IsPointerBlockedForAdvance(
+        int pointerId,
+        Vector2 screenPosition)
     {
         if (EventSystem.current == null)
             return false;
 
-        if (pointerId >= 0)
+        uiRaycastResults.Clear();
+
+        PointerEventData eventData =
+            new PointerEventData(EventSystem.current)
+            {
+                pointerId = pointerId,
+                position = screenPosition
+            };
+
+        EventSystem.current.RaycastAll(
+            eventData,
+            uiRaycastResults);
+
+        if (uiRaycastResults.Count == 0)
+            return false;
+
+        Transform dialogueRoot =
+            dialogueCanvasGroup != null
+                ? dialogueCanvasGroup.transform
+                : null;
+
+        foreach (RaycastResult result in uiRaycastResults)
         {
-            return EventSystem.current
-                .IsPointerOverGameObject(pointerId);
+            if (!(result.module is GraphicRaycaster))
+                continue;
+
+            GameObject hitObject = result.gameObject;
+
+            if (hitObject == null)
+                continue;
+
+            if (dialogueRoot != null &&
+                hitObject.transform.IsChildOf(dialogueRoot))
+            {
+                return HasInteractiveUiControl(
+                    hitObject.transform);
+            }
+
+            return true;
         }
 
-        return EventSystem.current
-            .IsPointerOverGameObject();
+        return false;
+    }
+
+    private static bool HasInteractiveUiControl(
+        Transform transform)
+    {
+        Selectable selectable =
+            transform.GetComponentInParent<Selectable>();
+
+        if (selectable != null &&
+            selectable.IsActive() &&
+            selectable.IsInteractable())
+        {
+            return true;
+        }
+
+        GameObject gameObject = transform.gameObject;
+
+        return ExecuteEvents
+                .GetEventHandler<IPointerClickHandler>(
+                    gameObject) != null ||
+            ExecuteEvents
+                .GetEventHandler<IPointerDownHandler>(
+                    gameObject) != null ||
+            ExecuteEvents
+                .GetEventHandler<IDragHandler>(
+                    gameObject) != null ||
+            ExecuteEvents
+                .GetEventHandler<IScrollHandler>(
+                    gameObject) != null;
     }
 
     public int WaitForExternalAction(string reason = null)
@@ -146,6 +226,7 @@ public class DialogueRunner : MonoBehaviour
             nextExternalWaitToken = 1;
 
         activeExternalWaitToken = token;
+        activeExternalWaitTokens.Add(token);
         isWaitingForExternalAction = true;
 
         return token;
@@ -154,12 +235,12 @@ public class DialogueRunner : MonoBehaviour
     public void ResumeAfterExternalAction(int token)
     {
         if (token == 0 ||
-            token != activeExternalWaitToken)
+            !activeExternalWaitTokens.Contains(token))
         {
             return;
         }
 
-        ClearExternalWait();
+        ClearExternalWait(token);
     }
 
     // Legacy API. Keep temporarily for old scene bindings/scripts.
@@ -182,11 +263,7 @@ public class DialogueRunner : MonoBehaviour
         }
         else
         {
-            GameplayInputLockService.Release(
-                externalGameplayLockHandle
-            );
-
-            externalGameplayLockHandle = default;
+            ReleaseExternalGameplayLock();
         }
 
         RefreshGameplayAvailability();
@@ -197,17 +274,21 @@ public class DialogueRunner : MonoBehaviour
         bool endDialogue)
     {
         if (token == 0 ||
-            token != activeExternalWaitToken)
+            !activeExternalWaitTokens.Contains(token))
         {
             return;
         }
 
-        ClearExternalWait();
+        ClearExternalWait(token);
 
         if (endDialogue)
+        {
             EndDialogue();
-        else
+        }
+        else if (!isWaitingForExternalAction)
+        {
             Advance();
+        }
     }
 
     // Legacy API. Keep temporarily for old scene bindings/scripts.
@@ -356,7 +437,7 @@ public class DialogueRunner : MonoBehaviour
                 bodyText.text += fullCurrentText[i];
 
             if (delay > 0f)
-                yield return new WaitForSeconds(delay);
+                yield return new WaitForSecondsRealtime(delay);
             else
                 yield return null;
         }
@@ -510,6 +591,7 @@ public class DialogueRunner : MonoBehaviour
     {
         IsDialogueOpen = false;
         ClearExternalWait();
+        ReleaseExternalGameplayLock();
         ReleaseDialogueGameplayLock();
 
         currentSequence = null;
@@ -619,7 +701,27 @@ public class DialogueRunner : MonoBehaviour
     private void ClearExternalWait()
     {
         activeExternalWaitToken = 0;
+        activeExternalWaitTokens.Clear();
         isWaitingForExternalAction = false;
+    }
+
+    private void ClearExternalWait(int token)
+    {
+        activeExternalWaitTokens.Remove(token);
+
+        if (activeExternalWaitToken == token)
+        {
+            activeExternalWaitToken = 0;
+
+            foreach (int activeToken in activeExternalWaitTokens)
+            {
+                activeExternalWaitToken = activeToken;
+                break;
+            }
+        }
+
+        isWaitingForExternalAction =
+            activeExternalWaitTokens.Count > 0;
     }
 
     private void AcquireDialogueGameplayLock()
@@ -643,5 +745,17 @@ public class DialogueRunner : MonoBehaviour
         );
 
         dialogueGameplayLockHandle = default;
+    }
+
+    private void ReleaseExternalGameplayLock()
+    {
+        if (!externalGameplayLockHandle.IsValid)
+            return;
+
+        GameplayInputLockService.Release(
+            externalGameplayLockHandle
+        );
+
+        externalGameplayLockHandle = default;
     }
 }

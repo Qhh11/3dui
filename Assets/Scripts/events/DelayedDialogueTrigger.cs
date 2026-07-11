@@ -30,11 +30,17 @@ public class DelayedDialogueTrigger : MonoBehaviour
         if (version != triggerVersion)
             yield break;
 
-        if (DialogueRunner.Instance != null &&
-            DialogueRunner.Instance.IsDialogueOpen)
+        while (DialogueRunner.Instance != null &&
+               DialogueRunner.Instance.IsDialogueOpen)
         {
-            yield break;
+            if (version != triggerVersion)
+                yield break;
+
+            yield return null;
         }
+
+        if (version != triggerVersion)
+            yield break;
 
         DialogueSequence seq =
             Level1DialogueDatabase.Instance

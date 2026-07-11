@@ -9,9 +9,15 @@ public class DialogueStartOnAwakeById : MonoBehaviour
     private IEnumerator Start()
     {
         if (delaySeconds > 0f)
-            yield return new WaitForSeconds(delaySeconds);
+            yield return new WaitForSecondsRealtime(delaySeconds);
         else
             yield return null;
+
+        while (DialogueRunner.Instance != null &&
+               DialogueRunner.Instance.IsDialogueOpen)
+        {
+            yield return null;
+        }
 
         DialogueSequence sequence = Level1DialogueDatabase.Instance?.GetSequence(sequenceId);
 

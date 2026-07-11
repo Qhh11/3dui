@@ -121,6 +121,8 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
 
     public void NotifyDialogueOpened()
     {
+        CancelStaleGuidedSwitchWait();
+
         if (switchVisible)
             SetRootVisible(true);
 
@@ -129,6 +131,8 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
 
     public void NotifyDialogueClosed()
     {
+        CancelStaleGuidedSwitchWait();
+
         if (switchVisible)
             SetRootVisible(true);
 
@@ -137,41 +141,33 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
 
     public void ShowSwitchToUfoHint()
     {
-        switchVisible = true;
-        requestMode = SwitchRequestMode.SwitchToUfo;
-
-        SetRootVisible(true);
-        RefreshSwitchButtonAvailability();
-
-        switchWaitToken =
-            DialogueRunner.Instance != null
-                ? DialogueRunner.Instance
-                    .WaitForExternalAction(
-                        "Switch to UFO hint"
-                    )
-                : 0;
+        RequestSwitchToUfo();
     }
 
     public void ShowSwitchToPlayerHint()
     {
-        switchVisible = true;
-        requestMode = SwitchRequestMode.SwitchToPlayer;
-
-        SetRootVisible(true);
-        RefreshSwitchButtonAvailability();
-
-        switchWaitToken =
-            DialogueRunner.Instance != null
-                ? DialogueRunner.Instance
-                    .WaitForExternalAction(
-                        "Switch to player hint"
-                    )
-                : 0;
+        RequestSwitchToPlayer();
     }
 
     public void ShowSwitchHint()
     {
-        ShowSwitchToUfoHint();
+        RequestSwitchToUfo();
+    }
+
+    public void RequestSwitchToUfo()
+    {
+        BeginGuidedSwitch(
+            SwitchRequestMode.SwitchToUfo,
+            "Switch to UFO hint"
+        );
+    }
+
+    public void RequestSwitchToPlayer()
+    {
+        BeginGuidedSwitch(
+            SwitchRequestMode.SwitchToPlayer,
+            "Switch to player hint"
+        );
     }
 
     public void EnableFreeSwitching()
@@ -234,7 +230,7 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
                 true
             );
 
-        switchWaitToken = 0;
+        ClearGuidedSwitchWait();
 
         StartDelayedDialogue(
             firstUfoSequenceId,
@@ -265,7 +261,7 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
                 true
             );
 
-        switchWaitToken = 0;
+        ClearGuidedSwitchWait();
 
         StartDelayedDialogue(
             afterSwitchBackSequenceId,
@@ -290,6 +286,16 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
 
     public void ForceSwitchToUfo()
     {
+        ForceSwitchToUfoForCutscene();
+    }
+
+    public void ForceSwitchToPlayer()
+    {
+        ForceSwitchToPlayerForCutscene();
+    }
+
+    public void ForceSwitchToUfoForCutscene()
+    {
         if (viewToggleButton == null)
             return;
 
@@ -297,13 +303,47 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         SyncAfterPerspectiveChanged();
     }
 
-    public void ForceSwitchToPlayer()
+    public void ForceSwitchToPlayerForCutscene()
     {
         if (viewToggleButton == null)
             return;
 
         viewToggleButton.SwitchToPlayer();
         SyncAfterPerspectiveChanged();
+    }
+
+    private void BeginGuidedSwitch(
+        SwitchRequestMode mode,
+        string waitReason)
+    {
+        if (mode != SwitchRequestMode.SwitchToUfo &&
+            mode != SwitchRequestMode.SwitchToPlayer)
+        {
+            return;
+        }
+
+        if (switchWaitToken != 0)
+        {
+            Debug.LogWarning(
+                "Switch hint ignored because another " +
+                "guided switch request is already active.",
+                this
+            );
+
+            return;
+        }
+
+        switchVisible = true;
+        requestMode = mode;
+
+        SetRootVisible(true);
+        RefreshSwitchButtonAvailability();
+
+        switchWaitToken =
+            DialogueRunner.Instance != null
+                ? DialogueRunner.Instance
+                    .WaitForExternalAction(waitReason)
+                : 0;
     }
 
     private void StartDelayedDialogue(
@@ -337,13 +377,19 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         if (version != delayedDialogueVersion)
             yield break;
 
-        pendingDialogueCoroutine = null;
-
-        if (DialogueRunner.Instance != null &&
-            DialogueRunner.Instance.IsDialogueOpen)
+        while (DialogueRunner.Instance != null &&
+               DialogueRunner.Instance.IsDialogueOpen)
         {
-            yield break;
+            if (version != delayedDialogueVersion)
+                yield break;
+
+            yield return null;
         }
+
+        if (version != delayedDialogueVersion)
+            yield break;
+
+        pendingDialogueCoroutine = null;
 
         DialogueSequence sequence =
             Level1DialogueDatabase.Instance
@@ -358,6 +404,28 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         }
 
         DialogueRunner.Instance?.StartDialogue(sequence);
+    }
+
+    private void ClearGuidedSwitchWait()
+    {
+        switchWaitToken = 0;
+    }
+
+    private void CancelStaleGuidedSwitchWait()
+    {
+        if (switchWaitToken == 0)
+        {
+            return;
+        }
+
+        switchWaitToken = 0;
+
+        if (requestMode == SwitchRequestMode.SwitchToUfo ||
+            requestMode == SwitchRequestMode.SwitchToPlayer)
+        {
+            requestMode = SwitchRequestMode.None;
+            SetHighlightVisible(false);
+        }
     }
 
     private bool CanSwitchNow()

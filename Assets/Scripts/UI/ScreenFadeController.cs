@@ -72,7 +72,7 @@ public class ScreenFadeController : MonoBehaviour
         fadeCanvasGroup.alpha = 1f;
         fadeCanvasGroup.blocksRaycasts = true;
 
-        yield return new WaitForSeconds(wakeUpDelay);
+        yield return new WaitForSecondsRealtime(wakeUpDelay);
 
         yield return FadeRoutine(0f, wakeUpFadeDuration, false);
     }
@@ -91,7 +91,7 @@ public class ScreenFadeController : MonoBehaviour
 
         while (timer < duration)
         {
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime;
             float t = Mathf.Clamp01(timer / duration);
             fadeCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, t);
             yield return null;

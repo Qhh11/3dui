@@ -974,6 +974,7 @@ MonoBehaviour:
   objectiveText: Head to the tower
   wayfindingTarget: {fileID: 0}
   completePreviousObjective: 1
+  onlyOnce: 1
 --- !u!1 &2478703245627419503
 GameObject:
   m_ObjectHideFlags: 0
@@ -1261,6 +1262,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   sequenceId: villager_d_first_meet
   triggerOnlyOnce: 1
+  requiredFlag: villagerC_finished
+  blockedByFlag: 
   playerTag: Player
   dialogueIndicator: {fileID: 7811101900333423157}
 --- !u!1 &3099633958148151452
@@ -2513,7 +2516,7 @@ Transform:
   m_GameObject: {fileID: 7144540463255501696}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11, y: 0, z: -189.2}
+  m_LocalPosition: {x: 11, y: 30, z: -189.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2566,6 +2569,7 @@ MonoBehaviour:
   objectiveText: Siphon the bridge and cross
   wayfindingTarget: {fileID: 0}
   completePreviousObjective: 1
+  onlyOnce: 1
 --- !u!1 &7261478406568263423
 GameObject:
   m_ObjectHideFlags: 0
@@ -2623,7 +2627,7 @@ Transform:
   m_GameObject: {fileID: 7317806714859329735}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.8, y: -86.75, z: -161.4}
+  m_LocalPosition: {x: 0.8, y: -40, z: -161.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2688,8 +2692,8 @@ Transform:
   m_GameObject: {fileID: 7811101900333423157}
   serializedVersion: 2
   m_LocalRotation: {x: -0.5431399, y: -0.45276827, z: -0.45276827, w: 0.5431399}
-  m_LocalPosition: {x: 0.001, y: 2.038, z: -0.038}
-  m_LocalScale: {x: 0.045714296, y: 0.045714304, z: 0.1525324}
+  m_LocalPosition: {x: 0.002, y: 2.032, z: -0.044}
+  m_LocalScale: {x: 3, y: 3, z: 10.009936}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3525466381865840904}
@@ -3022,7 +3026,7 @@ Transform:
   m_GameObject: {fileID: 8860585472860523210}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 826, y: 24.9, z: 0}
+  m_LocalPosition: {x: 826, y: 50, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

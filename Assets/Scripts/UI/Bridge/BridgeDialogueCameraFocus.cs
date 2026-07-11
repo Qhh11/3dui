@@ -64,15 +64,13 @@ public sealed class BridgeDialogueCameraFocus :
     private int previousFocusPriority;
     private bool focusPriorityCaptured;
 
+    private int nextFocusSessionId;
+    private int activeFocusSessionId;
+    private int advanceWaitSessionId;
+
     private void Awake()
     {
         ResolveSceneReferences();
-
-        if (focusCamera != null)
-        {
-            focusCamera.Priority =
-                inactivePriority;
-        }
     }
 
     private void Update()
@@ -108,6 +106,15 @@ public sealed class BridgeDialogueCameraFocus :
 
     private void OnDisable()
     {
+        if (state != FocusState.Idle)
+        {
+            Debug.LogWarning(
+                "Bridge focus was cancelled because " +
+                "the component was disabled.",
+                this
+            );
+        }
+
         CancelFocusImmediate();
     }
 
@@ -136,6 +143,9 @@ public sealed class BridgeDialogueCameraFocus :
             CaptureSwitchState();
             AcquireGameplayLock();
         }
+
+        activeFocusSessionId =
+            ++nextFocusSessionId;
 
         AcquireDialogueAdvanceLock();
 
@@ -205,7 +215,8 @@ public sealed class BridgeDialogueCameraFocus :
                 Time.unscaledTime -
                 forwardBlendStartedTime;
 
-            if (brain.IsBlending &&
+            if ((brain.IsBlending ||
+                 !IsFocusCameraLive()) &&
                 elapsed < fallbackReturnLockDuration)
             {
                 return;
@@ -244,7 +255,8 @@ public sealed class BridgeDialogueCameraFocus :
                 Time.unscaledTime -
                 returnStartedTime;
 
-            if (brain.IsBlending &&
+            if ((brain.IsBlending ||
+                 IsFocusCameraLive()) &&
                 elapsed < fallbackReturnLockDuration)
             {
                 return;
@@ -275,6 +287,7 @@ public sealed class BridgeDialogueCameraFocus :
         returnStartedFrame = -1;
 
         ReleaseDialogueAdvanceLock();
+        activeFocusSessionId = 0;
         RestoreSwitchState();
         ReleaseGameplayLock();
     }
@@ -290,6 +303,7 @@ public sealed class BridgeDialogueCameraFocus :
         returnStartedFrame = -1;
 
         ReleaseDialogueAdvanceLock();
+        activeFocusSessionId = 0;
         RestoreSwitchState();
         ReleaseGameplayLock();
     }
@@ -310,6 +324,9 @@ public sealed class BridgeDialogueCameraFocus :
                 advanceLockedRunner.WaitForExternalAction(
                     "Bridge camera focus"
                 );
+
+            advanceWaitSessionId =
+                activeFocusSessionId;
         }
     }
 
@@ -320,6 +337,16 @@ public sealed class BridgeDialogueCameraFocus :
             return;
         }
 
+        if (advanceWaitSessionId != 0 &&
+            activeFocusSessionId != 0 &&
+            advanceWaitSessionId != activeFocusSessionId)
+        {
+            advanceLockedRunner = null;
+            advanceWaitToken = 0;
+            advanceWaitSessionId = 0;
+            return;
+        }
+
         advanceLockedRunner
             .ResumeAfterExternalAction(
                 advanceWaitToken
@@ -327,6 +354,22 @@ public sealed class BridgeDialogueCameraFocus :
 
         advanceLockedRunner = null;
         advanceWaitToken = 0;
+        advanceWaitSessionId = 0;
+    }
+
+    private bool IsFocusCameraLive()
+    {
+        if (brain == null ||
+            focusCamera == null ||
+            brain.ActiveVirtualCamera == null)
+        {
+            return false;
+        }
+
+        return
+            brain.ActiveVirtualCamera
+                .VirtualCameraGameObject ==
+            focusCamera.gameObject;
     }
 
     private void AcquireGameplayLock()

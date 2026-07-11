@@ -28,9 +28,9 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7645664033833693322}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -103,9 +103,9 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: -1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7645664033833693322}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -178,11 +178,11 @@ RectTransform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7645664033753747225}
   - {fileID: 7645664033522548503}
   m_Father: {fileID: 7645664034481385418}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -237,8 +237,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7645664034481385418}
   - component: {fileID: 7645664034481385399}
-  - component: {fileID: 7645664034481385417}
   - component: {fileID: 7645664034481385416}
+  - component: {fileID: 8388276543897603603}
+  - component: {fileID: 3392833435481830825}
   m_Layer: 5
   m_Name: VirtualStick
   m_TagString: Untagged
@@ -253,13 +254,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7645664034481385419}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7645664033833693322}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -274,26 +275,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7645664034481385419}
   m_CullTransparentMesh: 1
---- !u!114 &7645664034481385417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7645664034481385419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47a4ff91422e7e84587b356b131d5989, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  socket: {fileID: 7645664033833693322}
-  knob: {fileID: 7645664033522548503}
-  _stickBehavior: 0
-  hideSocketOnInactive: 0
-  hideKnobOnInactive: 0
-  socketMagnitudeAxes: 0
-  inputSystemType: 0
-  m_ControlPath: 
 --- !u!114 &7645664034481385416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -308,7 +289,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -324,3 +305,45 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8388276543897603603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7645664034481385419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dfcfe6f80e322842b2df8e36bb079ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DyrdaDev.TouchControls.VirtualStick
+  socket: {fileID: 7645664033833693322}
+  knob: {fileID: 7645664033522548503}
+  _stickBehavior: 0
+  hideSocketOnInactive: 0
+  hideKnobOnInactive: 0
+  socketMagnitudeAxes: 0
+  maxStickOffset: 0.7
+  inputSystemType: 0
+  m_ControlPath: <Gamepad>/leftStick
+--- !u!114 &3392833435481830825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7645664034481385419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dfcfe6f80e322842b2df8e36bb079ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DyrdaDev.TouchControls.VirtualStick
+  socket: {fileID: 7645664033833693322}
+  knob: {fileID: 7645664033522548503}
+  _stickBehavior: 0
+  hideSocketOnInactive: 0
+  hideKnobOnInactive: 0
+  socketMagnitudeAxes: 0
+  maxStickOffset: 0.7
+  inputSystemType: 0
+  m_ControlPath: <Gamepad>/leftStick

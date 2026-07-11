@@ -314,13 +314,13 @@ public class TowerFlowController : MonoBehaviour
         // Activate Level 2 objects after Signal Lost.
         if (level2ActivateDelayAfterSignalLost > 0f)
         {
-            yield return new WaitForSeconds(level2ActivateDelayAfterSignalLost);
+            yield return new WaitForSecondsRealtime(level2ActivateDelayAfterSignalLost);
         }
 
         SetLevel2Visible(true);
 
         // Then continue the dialogue.
-        yield return new WaitForSeconds(afterSignalLostDialogueDelay);
+        yield return new WaitForSecondsRealtime(afterSignalLostDialogueDelay);
 
         DialogueSequence sequence = TowerDialogueDatabase.Instance.GetSequence(
             TowerDialogueIds.Sequences.AfterRocksDestroyed

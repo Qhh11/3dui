@@ -208,13 +208,13 @@ public class WoodBeamPuzzle : MonoBehaviour
         if (learnedToast != null)
         {
             learnedToast.SetActive(true);
-            yield return new WaitForSeconds(learnedToastSeconds);
+            yield return new WaitForSecondsRealtime(learnedToastSeconds);
             learnedToast.SetActive(false);
         }
 
         if (delayBeforeNextDialogue > 0f)
         {
-            yield return new WaitForSeconds(delayBeforeNextDialogue);
+            yield return new WaitForSecondsRealtime(delayBeforeNextDialogue);
         }
 
         StartNextDialogue();
