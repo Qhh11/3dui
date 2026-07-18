@@ -180,7 +180,7 @@ public class TowerFlowController : MonoBehaviour
         SetSwitchHighlight(false);
 
         ObjectivePanelController.Instance?.CompleteAndSetNextObjective(
-            "Go to the blocked stone passage"
+            "Go to the blocked stone passage behind the tower"
         );
     }
 
