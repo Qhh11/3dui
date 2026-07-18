@@ -76,18 +76,49 @@ public class Level1DialogueDatabase : MonoBehaviour, IDialogueDatabase
         sequences.Clear();
 
         DialogueSequence prelude = NewSequence(DialogueIds.Sequences.Level1Prelude);
-        DialogueSequence level1FirstUfoView = NewSequence(DialogueIds.Sequences.Level1FirstUfoView);
-        DialogueSequence level1TentAnalyzed = NewSequence(DialogueIds.Sequences.Level1TentAnalyzed);
-        DialogueSequence level1AfterSwitchBackToPlayer = NewSequence(DialogueIds.Sequences.Level1AfterSwitchBackToPlayer);
+        DialogueSequence level1FirstUfoView =
+            NewSequence(
+                DialogueIds.Sequences.Level1FirstUfoView
+            );
+
+        DialogueSequence level1TentMarked =
+            NewSequence(
+                DialogueIds.Sequences.Level1TentMarked
+            );
+
+        DialogueSequence level1TentAnalyzed =
+            NewSequence(
+                DialogueIds.Sequences.Level1TentAnalyzed
+            );
+
+        DialogueSequence level1AfterSwitchBackToPlayer =
+            NewSequence(
+                DialogueIds.Sequences
+                    .Level1AfterSwitchBackToPlayer
+            );
 
         DialogueSequence villagerAFirstMeet = NewSequence(DialogueIds.Sequences.VillagerAFirstMeet);
         DialogueSequence villagerAWrongAnswer = NewSequence(DialogueIds.Sequences.VillagerAWrongAnswer);
         DialogueSequence villagerACorrectAnswer = NewSequence(DialogueIds.Sequences.VillagerACorrectAnswer);
 
         BuildPrelude(prelude);
-        BuildLevel1FirstUfoView(level1FirstUfoView);
-        BuildLevel1TentAnalyzed(level1TentAnalyzed);
-        BuildLevel1AfterSwitchBackToPlayer(level1AfterSwitchBackToPlayer);
+        BuildLevel1FirstUfoView(
+            level1FirstUfoView
+        );
+
+        BuildLevel1TentMarked(
+            level1TentMarked
+        );
+
+        // Legacy Analyze sequence.
+        // Kept for compatibility but no longer used by Main flow.
+        BuildLevel1TentAnalyzed(
+            level1TentAnalyzed
+        );
+
+        BuildLevel1AfterSwitchBackToPlayer(
+            level1AfterSwitchBackToPlayer
+        );
 
         BuildVillagerAFirstMeet(villagerAFirstMeet, villagerAWrongAnswer, villagerACorrectAnswer);
         BuildVillagerAWrongAnswer(villagerAWrongAnswer, villagerAWrongAnswer, villagerACorrectAnswer);
@@ -163,18 +194,102 @@ public class Level1DialogueDatabase : MonoBehaviour, IDialogueDatabase
             eventOnEnd: DialogueIds.Events.ShowSwitchHint
         ));
     }
-    private void BuildLevel1FirstUfoView(DialogueSequence sequence)
+    
+    private void BuildLevel1FirstUfoView(
+        DialogueSequence sequence)
     {
-        DialogueCharacter player = GetCharacter(DialogueIds.Characters.Player);
+        DialogueCharacter player =
+            GetCharacter(
+                DialogueIds.Characters.Player
+            );
 
-        sequence.entries.Add(Line(player, "Strange..."));
-        sequence.entries.Add(Line(player, "Why does the world look different through the UFO?"));
-        sequence.entries.Add(Line(player, "I still see grassland here, but this view looks ruined."));
-        sequence.entries.Add(Line(
-            player,
-            "That tent stands out. I should investigate it.",
-            eventOnEnd: DialogueIds.Events.ShowAnalyzeTent
-        ));
+        DialogueCharacter terminal =
+            GetCharacter(
+                DialogueIds.Characters.UFOTerminal
+            );
+
+        sequence.entries.Add(
+            Line(
+                player,
+                "Strange..."
+            )
+        );
+
+        sequence.entries.Add(
+            Line(
+                player,
+                "Why does the world look different through the UFO?"
+            )
+        );
+
+        sequence.entries.Add(
+            Line(
+                player,
+                "I still see grassland here, but this view looks ruined."
+            )
+        );
+
+        sequence.entries.Add(
+            Line(
+                player,
+                "That tent stands out. I should mark its location before switching back."
+            )
+        );
+
+        sequence.entries.Add(
+            Line(
+                terminal,
+                "Aim at the tent and activate a marker. The marker will remain visible from Player perspective."
+            )
+        );
+
+        sequence.entries.Add(
+            Line(
+                terminal,
+                "Aim at a deployed marker and activate Mark again if you need to recall it.",
+                eventOnEnd:
+                DialogueIds.Events
+                    .ShowMarkTutorial
+            )
+        );
+    }
+    
+    private void BuildLevel1TentMarked(
+        DialogueSequence sequence)
+    {
+        DialogueCharacter player =
+            GetCharacter(
+                DialogueIds.Characters.Player
+            );
+
+        DialogueCharacter terminal =
+            GetCharacter(
+                DialogueIds.Characters.UFOTerminal
+            );
+
+        sequence.entries.Add(
+            Line(
+                terminal,
+                "Marker deployed. Its location will remain visible from Player perspective."
+            )
+        );
+
+        sequence.entries.Add(
+            Line(
+                player,
+                "Good. I can use it to find the tent from the ground."
+            )
+        );
+
+        sequence.entries.Add(
+            Line(
+                player,
+                "I should switch back and investigate.",
+                eventOnEnd:
+                DialogueIds.Events
+                    .QuestSwitchBackToPlayer
+            )
+        );
     }
 
     private void BuildLevel1TentAnalyzed(DialogueSequence sequence)
@@ -190,15 +305,30 @@ public class Level1DialogueDatabase : MonoBehaviour, IDialogueDatabase
         ));
     }
 
-    private void BuildLevel1AfterSwitchBackToPlayer(DialogueSequence sequence)
+    private void BuildLevel1AfterSwitchBackToPlayer(
+        DialogueSequence sequence)
     {
-        DialogueCharacter player = GetCharacter(DialogueIds.Characters.Player);
+        DialogueCharacter player =
+            GetCharacter(
+                DialogueIds.Characters.Player
+            );
 
-        sequence.entries.Add(Line(
-            player,
-            "I should go take a look at that tent.",
-            eventOnEnd: DialogueIds.Events.QuestGoToTent
-        ));
+        sequence.entries.Add(
+            Line(
+                player,
+                "There—the marker is still visible."
+            )
+        );
+
+        sequence.entries.Add(
+            Line(
+                player,
+                "I'll follow it to the tent.",
+                eventOnEnd:
+                DialogueIds.Events
+                    .QuestGoToTent
+            )
+        );
     }
 
     private void BuildVillagerAFirstMeet(

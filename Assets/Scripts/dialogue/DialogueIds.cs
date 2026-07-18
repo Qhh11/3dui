@@ -7,6 +7,7 @@ public static class DialogueIds
         public const string VillagerAWrongAnswer = "villager_a_wrong_answer";
         public const string VillagerACorrectAnswer = "villager_a_correct_answer";
         public const string Level1FirstUfoView = "level1_first_ufo_view";
+        public const string Level1TentMarked = "level1_tent_marked";
         public const string Level1TentAnalyzed = "level1_tent_analyzed";
         public const string Level1AfterSwitchBackToPlayer = "level1_after_switch_back_to_player";
 
@@ -32,6 +33,7 @@ public static class DialogueIds
         public const string QuestSwitchBackToPlayer = "quest_switch_back_to_player";
         public const string QuestInvestigateTent = "quest_investigate_tent";
         public const string ShowAnalyzeTent = "show_analyze_tent";
+        public const string ShowMarkTutorial = "show_mark_tutorial";
         public const string QuestAnalyzeTent = "quest_analyze_tent";
         public const string QuestGoToTent = "quest_go_to_tent";
 
