@@ -1,24 +1,64 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ObjectivePanelController : MonoBehaviour
+public class ObjectivePanelController :
+    MonoBehaviour
 {
-    public static ObjectivePanelController Instance { get; private set; }
+    public static ObjectivePanelController Instance
+    {
+        get;
+        private set;
+    }
 
     [Header("UI")]
-    [SerializeField] private CanvasGroup panelCanvasGroup;
-    [SerializeField] private TMP_Text objectiveText;
-    [SerializeField] private Image completedLine;
+    [SerializeField]
+    private CanvasGroup panelCanvasGroup;
+
+    [SerializeField]
+    private TMP_Text objectiveText;
+
+    [SerializeField]
+    private Image completedLine;
 
     [Header("Animation")]
-    [SerializeField] private float fadeDuration = 0.25f;
-    [SerializeField] private float completeLineDuration = 0.25f;
-    [SerializeField] private float completeHoldDuration = 0.45f;
+    [SerializeField]
+    private float fadeDuration = 0.25f;
+
+    [SerializeField]
+    private float completeLineDuration = 0.25f;
+
+    [SerializeField]
+    private float completeHoldDuration = 0.45f;
 
     private string currentObjective;
     private Coroutine currentRoutine;
+
+    public string CurrentObjective =>
+        currentObjective;
+
+    public ObjectiveHintTarget CurrentHintTarget
+    {
+        get;
+        private set;
+    }
+
+    public bool HasObjective =>
+        !string.IsNullOrWhiteSpace(
+            currentObjective
+        );
+
+    public bool IsTransitioning
+    {
+        get;
+        private set;
+    }
+
+    public event Action<
+        string,
+        ObjectiveHintTarget> ObjectiveChanged;
 
     private void Awake()
     {
@@ -27,11 +67,7 @@ public class ObjectivePanelController : MonoBehaviour
 
     private void Start()
     {
-        if (completedLine != null)
-        {
-            completedLine.gameObject.SetActive(false);
-            completedLine.fillAmount = 0f;
-        }
+        ResetCompletedVisual();
 
         if (panelCanvasGroup != null)
         {
@@ -43,107 +79,191 @@ public class ObjectivePanelController : MonoBehaviour
 
     public void SetObjective(string objective)
     {
-        if (currentRoutine != null)
-        {
-            StopCoroutine(currentRoutine);
-        }
+        SetObjective(objective, null);
+    }
 
-        currentRoutine = StartCoroutine(SetObjectiveRoutine(objective));
+    public void SetObjective(
+        string objective,
+        ObjectiveHintTarget hintTarget)
+    {
+        StopCurrentRoutine();
+
+        currentRoutine = StartCoroutine(
+            SetObjectiveRoutine(
+                objective,
+                hintTarget
+            )
+        );
     }
 
     public void CompleteCurrentObjective()
     {
-        if (string.IsNullOrWhiteSpace(currentObjective))
-        {
+        if (!HasObjective)
             return;
-        }
 
-        if (currentRoutine != null)
-        {
-            StopCoroutine(currentRoutine);
-        }
+        StopCurrentRoutine();
 
-        currentRoutine = StartCoroutine(CompleteCurrentObjectiveRoutine());
+        // 立即取消旧目标，避免淡出期间仍能点击 Hint。
+        SetObjectiveData(
+            currentObjective,
+            null
+        );
+
+        currentRoutine = StartCoroutine(
+            CompleteCurrentObjectiveRoutine()
+        );
     }
 
-    public void CompleteAndSetNextObjective(string nextObjective)
+    public void CompleteAndSetNextObjective(
+        string nextObjective)
+    {
+        CompleteAndSetNextObjective(
+            nextObjective,
+            null
+        );
+    }
+
+    public void CompleteAndSetNextObjective(
+        string nextObjective,
+        ObjectiveHintTarget nextHintTarget)
     {
         gameObject.SetActive(true);
-        if (currentRoutine != null)
-        {
-            StopCoroutine(currentRoutine);
-        }
+        StopCurrentRoutine();
 
-        currentRoutine = StartCoroutine(CompleteAndSetNextRoutine(nextObjective));
+        // 旧目标从开始完成动画时就不可 Hint。
+        SetObjectiveData(
+            currentObjective,
+            null
+        );
+
+        currentRoutine = StartCoroutine(
+            CompleteAndSetNextRoutine(
+                nextObjective,
+                nextHintTarget
+            )
+        );
     }
 
-    private IEnumerator SetObjectiveRoutine(string objective)
+    private IEnumerator SetObjectiveRoutine(
+        string objective,
+        ObjectiveHintTarget hintTarget)
     {
-        currentObjective = objective;
+        IsTransitioning = true;
 
-        if (objectiveText != null)
-        {
-            objectiveText.text = objective;
-            objectiveText.fontStyle &= ~FontStyles.Strikethrough;
-        }
+        SetObjectiveData(
+            objective,
+            hintTarget
+        );
 
-        if (completedLine != null)
-        {
-            completedLine.gameObject.SetActive(false);
-            completedLine.fillAmount = 0f;
-        }
+        ApplyObjectiveText(objective);
+        ResetCompletedVisual();
 
         yield return FadePanel(1f);
+
+        IsTransitioning = false;
         currentRoutine = null;
     }
 
-    private IEnumerator CompleteCurrentObjectiveRoutine()
+    private IEnumerator
+        CompleteCurrentObjectiveRoutine()
     {
+        IsTransitioning = true;
+
         yield return PlayCompleteAnimation();
         yield return FadePanel(0f);
 
-        currentObjective = string.Empty;
+        SetObjectiveData(
+            string.Empty,
+            null
+        );
 
-        if (objectiveText != null)
-        {
-            objectiveText.text = string.Empty;
-            objectiveText.fontStyle &= ~FontStyles.Strikethrough;
-        }
+        ApplyObjectiveText(string.Empty);
 
+        IsTransitioning = false;
         currentRoutine = null;
     }
 
-    private IEnumerator CompleteAndSetNextRoutine(string nextObjective)
+    private IEnumerator CompleteAndSetNextRoutine(
+        string nextObjective,
+        ObjectiveHintTarget nextHintTarget)
     {
-        if (!string.IsNullOrWhiteSpace(currentObjective))
+        IsTransitioning = true;
+
+        if (!string.IsNullOrWhiteSpace(
+                currentObjective))
         {
             yield return PlayCompleteAnimation();
             yield return FadePanel(0f);
         }
 
-        currentObjective = nextObjective;
+        SetObjectiveData(
+            nextObjective,
+            nextHintTarget
+        );
 
-        if (objectiveText != null)
-        {
-            objectiveText.text = nextObjective;
-            objectiveText.fontStyle &= ~FontStyles.Strikethrough;
-        }
-
-        if (completedLine != null)
-        {
-            completedLine.gameObject.SetActive(false);
-            completedLine.fillAmount = 0f;
-        }
+        ApplyObjectiveText(nextObjective);
+        ResetCompletedVisual();
 
         yield return FadePanel(1f);
+
+        IsTransitioning = false;
         currentRoutine = null;
+    }
+
+    private void SetObjectiveData(
+        string objective,
+        ObjectiveHintTarget hintTarget)
+    {
+        currentObjective =
+            objective ?? string.Empty;
+
+        CurrentHintTarget = hintTarget;
+
+        ObjectiveChanged?.Invoke(
+            currentObjective,
+            CurrentHintTarget
+        );
+    }
+
+    private void ApplyObjectiveText(
+        string objective)
+    {
+        if (objectiveText == null)
+            return;
+
+        objectiveText.text =
+            objective ?? string.Empty;
+
+        objectiveText.fontStyle &=
+            ~FontStyles.Strikethrough;
+    }
+
+    private void ResetCompletedVisual()
+    {
+        if (completedLine == null)
+            return;
+
+        completedLine.gameObject.SetActive(false);
+        completedLine.fillAmount = 0f;
+    }
+
+    private void StopCurrentRoutine()
+    {
+        if (currentRoutine != null)
+        {
+            StopCoroutine(currentRoutine);
+            currentRoutine = null;
+        }
+
+        IsTransitioning = false;
     }
 
     private IEnumerator PlayCompleteAnimation()
     {
         if (objectiveText != null)
         {
-            objectiveText.fontStyle |= FontStyles.Strikethrough;
+            objectiveText.fontStyle |=
+                FontStyles.Strikethrough;
         }
 
         if (completedLine != null)
@@ -156,7 +276,15 @@ public class ObjectivePanelController : MonoBehaviour
             while (timer < completeLineDuration)
             {
                 timer += Time.unscaledDeltaTime;
-                float t = Mathf.Clamp01(timer / completeLineDuration);
+
+                float t = Mathf.Clamp01(
+                    timer /
+                    Mathf.Max(
+                        0.0001f,
+                        completeLineDuration
+                    )
+                );
+
                 completedLine.fillAmount = t;
                 yield return null;
             }
@@ -164,24 +292,44 @@ public class ObjectivePanelController : MonoBehaviour
             completedLine.fillAmount = 1f;
         }
 
-        yield return new WaitForSecondsRealtime(completeHoldDuration);
+        yield return new WaitForSecondsRealtime(
+            completeHoldDuration
+        );
     }
 
-    private IEnumerator FadePanel(float targetAlpha)
+    private IEnumerator FadePanel(
+        float targetAlpha)
     {
         if (panelCanvasGroup == null)
-        {
             yield break;
-        }
 
-        float startAlpha = panelCanvasGroup.alpha;
+        float startAlpha =
+            panelCanvasGroup.alpha;
+
         float timer = 0f;
+
+        panelCanvasGroup.interactable = false;
+        panelCanvasGroup.blocksRaycasts = false;
 
         while (timer < fadeDuration)
         {
             timer += Time.unscaledDeltaTime;
-            float t = Mathf.Clamp01(timer / fadeDuration);
-            panelCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, t);
+
+            float t = Mathf.Clamp01(
+                timer /
+                Mathf.Max(
+                    0.0001f,
+                    fadeDuration
+                )
+            );
+
+            panelCanvasGroup.alpha =
+                Mathf.Lerp(
+                    startAlpha,
+                    targetAlpha,
+                    t
+                );
+
             yield return null;
         }
 

@@ -15,6 +15,9 @@ public class WellEnergyDiscoveryAction : MonoBehaviour
     [SerializeField]
     private string objectiveText =
         "Switch to UFO view near the well";
+    
+    [SerializeField]
+    private ObjectiveHintTarget scanHintTarget;
 
     private bool hasTriggered;
 
@@ -28,7 +31,10 @@ public class WellEnergyDiscoveryAction : MonoBehaviour
         if (ObjectivePanelController.Instance != null)
         {
             ObjectivePanelController.Instance
-                .CompleteAndSetNextObjective(objectiveText);
+                .CompleteAndSetNextObjective(
+                    objectiveText,
+                    scanHintTarget
+                );
         }
 
         StartCoroutine(WaitForUfoThenPlay());

@@ -1,99 +1,139 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// "清理堵住门口的木梁" 小玩法。
-/// 拖拽由 TouchDragger 负责；本脚本负责：露虚影 + 计数 + 目标UI + 完成接对话。
+/// 清理堵住门口的木梁。
 ///
-/// 吸附方式：木梁被拖进某个空 slot 的 AcceptRadius 内就【自动吸附】，
-/// 不需要松手。吸附瞬间会让 TouchDragger.ForceRelease() 立刻放手。
-///
-/// 把这个物体保持在所有 ControlLockGroup / Behaviours To Disable While Open 之外，
-/// 它才能在对话期间继续运行、并察觉对话框关闭。
+/// TouchDragger 负责拖拽；
+/// 本脚本负责：
+/// - 显示 Slot Ghost
+/// - 自动吸附
+/// - 更新中央 Objective
+/// - 动态更新 Hint 可用木梁
+/// - 完成后播放后续对话
 /// </summary>
 public class WoodBeamPuzzle : MonoBehaviour
 {
-    [Header("Drag system")]
-    [Tooltip("场景里的 TouchDragger，自动吸附时叫它松手。留空会自动 FindObjectOfType。")]
-    [SerializeField] private TouchDragger touchDragger;
+    [Header("Drag System")]
+    [Tooltip(
+        "场景里的 TouchDragger。" +
+        "留空时自动查找。"
+    )]
+    [SerializeField]
+    private TouchDragger touchDragger;
 
-    [Header("Puzzle pieces")]
-    [SerializeField] private DraggableBeam[] beams;
-    [SerializeField] private BeamSlot[] slots;
+    [Header("Puzzle Pieces")]
+    [SerializeField]
+    private DraggableBeam[] beams;
 
-    [Header("Objective UI")]
-    [SerializeField] private GameObject objectivePanel;
-    [SerializeField] private TMP_Text objectiveText;
+    [SerializeField]
+    private BeamSlot[] slots;
 
-    [Tooltip("{0} = 已放, {1} = 总数")]
-    [SerializeField] private string objectiveFormat = "清理堵住门口的木梁   {0}/{1}";
+    [Header("Objective")]
+    [SerializeField]
+    private ObjectiveHintTarget
+        objectiveHintTarget;
 
-    [Header("Hints")]
-    [Tooltip("\"按住木梁，拖到发光位置\". 第一根放好后自动隐藏")]
-    [SerializeField] private GameObject dragHint;
+    [Tooltip(
+        "{0} = 已归位数量，{1} = 总数量"
+    )]
+    [SerializeField]
+    private string objectiveFormat =
+        "Clear the wooden beams blocking the doorway   {0}/{1}";
 
-    [Tooltip("\"已学会 — 拖拽\" toast，解谜完成后显示")]
-    [SerializeField] private GameObject learnedToast;
-    [SerializeField] private float learnedToastSeconds = 2f;
+    [Header("Tutorial UI")]
+    [Tooltip(
+        "例如“按住木梁，拖到发光位置”。" +
+        "第一根归位后自动隐藏。"
+    )]
+    [SerializeField]
+    private GameObject dragHint;
 
-    [Header("On complete")]
-    [SerializeField] private string nextSequenceId = DialogueIds.Sequences.VillagerCFirstHouseAfterBeams;
-    [SerializeField] private float delayBeforeNextDialogue = 0.3f;
+    [Tooltip(
+        "例如“已学会：拖拽”的提示。"
+    )]
+    [SerializeField]
+    private GameObject learnedToast;
 
-    private bool armed;        // BeginPuzzle 已调用，等对话框关闭
-    private bool revealed;     // 虚影+目标已显示
+    [SerializeField]
+    private float learnedToastSeconds = 2f;
+
+    [Header("On Complete")]
+    [SerializeField]
+    private string nextSequenceId =
+        DialogueIds.Sequences
+            .VillagerCFirstHouseAfterBeams;
+
+    [Tooltip(
+        "建议至少 1 秒，让 Objective 完成动画结束后再播放对话。"
+    )]
+    [SerializeField]
+    private float delayBeforeNextDialogue = 1.1f;
+
+    private ObjectiveHintOutline[]
+        beamHintOutlines;
+
+    private bool armed;
+    private bool revealed;
     private bool solved;
+
     private int placedCount;
 
-    private DraggableBeam currentBeam;   // 当前正被 TouchDragger 拖着的木梁
+    private DraggableBeam currentBeam;
 
     private void Start()
     {
-        if (touchDragger == null)
-        {
-            touchDragger = FindObjectOfType<TouchDragger>();
-        }
+        ResolveTouchDragger();
+        CacheBeamHintOutlines();
 
-        // 解谜开始前保持隐藏
         SetSlotGhostsVisible(false);
-        if (objectivePanel != null) objectivePanel.SetActive(false);
-        if (dragHint != null) dragHint.SetActive(false);
-        if (learnedToast != null) learnedToast.SetActive(false);
 
-        // 让每根木梁拾起/松手/释放时回调本脚本
-        if (beams != null)
-        {
-            foreach (DraggableBeam beam in beams)
-            {
-                if (beam != null) beam.Bind(this);
-            }
-        }
+        if (dragHint != null)
+            dragHint.SetActive(false);
+
+        if (learnedToast != null)
+            learnedToast.SetActive(false);
+
+        BindBeams();
+
+        // 根据场景初始状态同步一次。
+        RefreshPlacedCountAndEligibility();
     }
 
-    /// <summary>绑到 DialogueEventRouter 的 "quest_clear_wood_beams"。</summary>
+    /// <summary>
+    /// 绑定到 DialogueEventRouter：
+    /// quest_clear_wood_beams
+    /// </summary>
     public void BeginPuzzle()
     {
-        if (revealed || solved) return;
+        if (revealed || solved)
+            return;
+
         armed = true;
     }
 
     private void Update()
     {
-        bool dialogueOpen = DialogueRunner.Instance != null && DialogueRunner.Instance.IsDialogueOpen;
+        bool dialogueOpen =
+            DialogueRunner.Instance != null &&
+            DialogueRunner.Instance
+                .IsDialogueOpen;
 
-        // 对话框关闭后才露出玩法
-        if (armed && !revealed && !dialogueOpen)
+        // 对话结束后才正式显示玩法。
+        if (armed &&
+            !revealed &&
+            !dialogueOpen)
         {
             Reveal();
         }
 
-        if (!revealed || solved || dialogueOpen)
+        if (!revealed ||
+            solved ||
+            dialogueOpen)
         {
             return;
         }
 
-        // 每帧检查：当前拖着的木梁是否已进入某个空 slot 的吸附范围
         TryAutoSnap();
     }
 
@@ -101,120 +141,233 @@ public class WoodBeamPuzzle : MonoBehaviour
     {
         revealed = true;
 
+        RefreshPlacedCountAndEligibility();
         SetSlotGhostsVisible(true);
 
         if (beams != null)
         {
             foreach (DraggableBeam beam in beams)
             {
-                if (beam != null) beam.SetGrabbable(true);
+                if (beam == null ||
+                    beam.IsPlaced)
+                {
+                    continue;
+                }
+
+                beam.SetGrabbable(true);
             }
         }
 
-        if (objectivePanel != null) objectivePanel.SetActive(true);
-        if (dragHint != null) dragHint.SetActive(true);
+        if (dragHint != null &&
+            placedCount == 0)
+        {
+            dragHint.SetActive(true);
+        }
 
-        UpdateObjective();
+        PublishObjective();
     }
 
-    // ----- DraggableBeam 通过这两个方法告诉我"谁正被拖" -----
-
-    public void OnBeamGrabbed(DraggableBeam beam)
+    public void OnBeamGrabbed(
+        DraggableBeam beam)
     {
+        if (!revealed ||
+            solved ||
+            beam == null ||
+            beam.IsPlaced)
+        {
+            return;
+        }
+
         currentBeam = beam;
     }
 
-    public void OnBeamReleased(DraggableBeam beam)
+    public void OnBeamReleased(
+        DraggableBeam beam)
     {
-        // 玩家自己松手(没吸附到)：清空当前拖拽，木梁留在原地不动。
         if (currentBeam == beam)
-        {
             currentBeam = null;
-        }
     }
-
-    // ----- 自动吸附核心 -----
 
     private void TryAutoSnap()
     {
-        if (currentBeam == null || currentBeam.IsPlaced) return;
+        if (currentBeam == null ||
+            currentBeam.IsPlaced)
+        {
+            return;
+        }
 
-        BeamSlot slot = FindNearestFreeSlot(currentBeam.transform.position);
-        if (slot == null) return;   // 还没拖到任何 slot 的范围内
+        BeamSlot slot =
+            FindNearestFreeSlot(
+                currentBeam.transform.position
+            );
+
+        if (slot == null)
+            return;
 
         DraggableBeam beam = currentBeam;
         currentBeam = null;
 
-        // 先让拖拽系统立刻松手，避免它继续把已吸附的木梁拽走
-        if (touchDragger != null) touchDragger.ForceRelease();
+        if (touchDragger != null)
+            touchDragger.ForceRelease();
 
         Place(beam, slot);
     }
 
-    private void Place(DraggableBeam beam, BeamSlot slot)
+    private void Place(
+        DraggableBeam beam,
+        BeamSlot slot)
     {
-        beam.PlaceAt(slot.SnapPosition, slot.SnapRotation);
-        slot.MarkOccupied();
-        placedCount++;
-
-        if (dragHint != null) dragHint.SetActive(false);
-
-        UpdateObjective();
-
-        if (beams != null && placedCount >= beams.Length)
+        if (beam == null ||
+            slot == null ||
+            beam.IsPlaced)
         {
-            StartCoroutine(CompleteRoutine());
+            return;
+        }
+
+        beam.PlaceAt(
+            slot.SnapPosition,
+            slot.SnapRotation
+        );
+
+        slot.MarkOccupied();
+
+        SetBeamHintEligible(
+            beam,
+            false
+        );
+
+        if (dragHint != null)
+            dragHint.SetActive(false);
+
+        RefreshPlacedCount();
+        PublishObjective();
+
+        int total =
+            beams != null
+                ? beams.Length
+                : 0;
+
+        if (total > 0 &&
+            placedCount >= total)
+        {
+            StartCoroutine(
+                CompleteRoutine()
+            );
         }
     }
 
-    private BeamSlot FindNearestFreeSlot(Vector3 position)
+    private BeamSlot FindNearestFreeSlot(
+        Vector3 position)
     {
         BeamSlot best = null;
-        float bestDist = float.MaxValue;
+        float bestDistance =
+            float.MaxValue;
 
-        if (slots == null) return null;
+        if (slots == null)
+            return null;
 
         foreach (BeamSlot slot in slots)
         {
-            if (slot == null || slot.IsOccupied) continue;
-
-            float dist = Vector3.Distance(position, slot.SnapPosition);
-            if (dist <= slot.AcceptRadius && dist < bestDist)
+            if (slot == null ||
+                slot.IsOccupied)
             {
-                bestDist = dist;
+                continue;
+            }
+
+            float distance =
+                Vector3.Distance(
+                    position,
+                    slot.SnapPosition
+                );
+
+            if (distance <=
+                    slot.AcceptRadius &&
+                distance < bestDistance)
+            {
                 best = slot;
+                bestDistance = distance;
             }
         }
 
         return best;
     }
 
-    private void UpdateObjective()
+    private void PublishObjective()
     {
-        if (objectiveText != null)
+        ObjectivePanelController panel =
+            ObjectivePanelController.Instance;
+
+        if (panel == null)
         {
-            int total = beams != null ? beams.Length : 0;
-            objectiveText.text = string.Format(objectiveFormat, placedCount, total);
+            Debug.LogWarning(
+                "WoodBeamPuzzle: " +
+                "ObjectivePanelController is missing.",
+                this
+            );
+
+            return;
         }
+
+        if (!panel.gameObject.activeSelf)
+            panel.gameObject.SetActive(true);
+
+        panel.SetObjective(
+            BuildObjectiveText(),
+            objectiveHintTarget
+        );
+    }
+
+    private string BuildObjectiveText()
+    {
+        int total =
+            beams != null
+                ? beams.Length
+                : 0;
+
+        return string.Format(
+            objectiveFormat,
+            placedCount,
+            total
+        );
     }
 
     private IEnumerator CompleteRoutine()
     {
-        solved = true;
+        if (solved)
+            yield break;
 
-        if (objectivePanel != null) objectivePanel.SetActive(false);
-        if (dragHint != null) dragHint.SetActive(false);
+        solved = true;
+        currentBeam = null;
+
+        if (touchDragger != null)
+            touchDragger.ForceRelease();
+
+        DisableAllBeamHints();
+
+        ObjectivePanelController.Instance
+            ?.CompleteCurrentObjective();
+
+        if (dragHint != null)
+            dragHint.SetActive(false);
 
         if (learnedToast != null)
         {
             learnedToast.SetActive(true);
-            yield return new WaitForSecondsRealtime(learnedToastSeconds);
+
+            yield return
+                new WaitForSecondsRealtime(
+                    learnedToastSeconds
+                );
+
             learnedToast.SetActive(false);
         }
 
         if (delayBeforeNextDialogue > 0f)
         {
-            yield return new WaitForSecondsRealtime(delayBeforeNextDialogue);
+            yield return
+                new WaitForSecondsRealtime(
+                    delayBeforeNextDialogue
+                );
         }
 
         StartNextDialogue();
@@ -222,25 +375,205 @@ public class WoodBeamPuzzle : MonoBehaviour
 
     private void StartNextDialogue()
     {
-        if (string.IsNullOrWhiteSpace(nextSequenceId)) return;
-
-        DialogueSequence sequence = Level1DialogueDatabase.Instance?.GetSequence(nextSequenceId);
-        if (sequence == null)
+        if (string.IsNullOrWhiteSpace(
+                nextSequenceId))
         {
-            Debug.LogWarning($"WoodBeamPuzzle: next sequence not found: {nextSequenceId}");
             return;
         }
 
-        DialogueRunner.Instance?.StartDialogue(sequence);
+        DialogueSequence sequence =
+            Level1DialogueDatabase.Instance
+                ?.GetSequence(
+                    nextSequenceId
+                );
+
+        if (sequence == null)
+        {
+            Debug.LogWarning(
+                "WoodBeamPuzzle: " +
+                "next sequence not found: " +
+                nextSequenceId,
+                this
+            );
+
+            return;
+        }
+
+        DialogueRunner.Instance
+            ?.StartDialogue(sequence);
     }
 
-    private void SetSlotGhostsVisible(bool visible)
+    private void ResolveTouchDragger()
     {
-        if (slots == null) return;
+        if (touchDragger == null)
+        {
+            touchDragger =
+                FindObjectOfType
+                    <TouchDragger>();
+        }
+    }
+
+    private void BindBeams()
+    {
+        if (beams == null)
+            return;
+
+        foreach (DraggableBeam beam in beams)
+        {
+            if (beam != null)
+                beam.Bind(this);
+        }
+    }
+
+    private void CacheBeamHintOutlines()
+    {
+        int count =
+            beams != null
+                ? beams.Length
+                : 0;
+
+        beamHintOutlines =
+            new ObjectiveHintOutline[count];
+
+        for (int i = 0;
+             i < count;
+             i++)
+        {
+            DraggableBeam beam =
+                beams[i];
+
+            if (beam == null)
+                continue;
+
+            beamHintOutlines[i] =
+                beam.GetComponentInChildren
+                    <ObjectiveHintOutline>(
+                        true
+                    );
+
+            if (beamHintOutlines[i] == null)
+            {
+                Debug.LogWarning(
+                    "WoodBeamPuzzle: " +
+                    beam.name +
+                    " 没有 ObjectiveHintOutline。",
+                    beam
+                );
+            }
+        }
+    }
+
+    private void RefreshPlacedCountAndEligibility()
+    {
+        placedCount = 0;
+
+        if (beams == null)
+            return;
+
+        for (int i = 0;
+             i < beams.Length;
+             i++)
+        {
+            DraggableBeam beam =
+                beams[i];
+
+            if (beam == null)
+                continue;
+
+            bool isPlaced =
+                beam.IsPlaced;
+
+            if (isPlaced)
+                placedCount++;
+
+            if (beamHintOutlines != null &&
+                i < beamHintOutlines.Length &&
+                beamHintOutlines[i] != null)
+            {
+                beamHintOutlines[i]
+                    .SetHintEligible(
+                        !isPlaced
+                    );
+            }
+        }
+    }
+
+    private void RefreshPlacedCount()
+    {
+        placedCount = 0;
+
+        if (beams == null)
+            return;
+
+        foreach (DraggableBeam beam in beams)
+        {
+            if (beam != null &&
+                beam.IsPlaced)
+            {
+                placedCount++;
+            }
+        }
+    }
+
+    private void SetBeamHintEligible(
+        DraggableBeam beam,
+        bool eligible)
+    {
+        if (beam == null ||
+            beams == null ||
+            beamHintOutlines == null)
+        {
+            return;
+        }
+
+        for (int i = 0;
+             i < beams.Length;
+             i++)
+        {
+            if (beams[i] != beam)
+                continue;
+
+            ObjectiveHintOutline outline =
+                i < beamHintOutlines.Length
+                    ? beamHintOutlines[i]
+                    : null;
+
+            if (outline != null)
+            {
+                outline.SetHintEligible(
+                    eligible
+                );
+            }
+
+            return;
+        }
+    }
+
+    private void DisableAllBeamHints()
+    {
+        if (beamHintOutlines == null)
+            return;
+
+        foreach (ObjectiveHintOutline outline
+                 in beamHintOutlines)
+        {
+            if (outline != null)
+            {
+                outline.SetHintEligible(false);
+            }
+        }
+    }
+
+    private void SetSlotGhostsVisible(
+        bool visible)
+    {
+        if (slots == null)
+            return;
 
         foreach (BeamSlot slot in slots)
         {
-            if (slot != null) slot.SetGhostVisible(visible);
+            if (slot != null)
+                slot.SetGhostVisible(visible);
         }
     }
 }
