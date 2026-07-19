@@ -32,6 +32,10 @@ public class Level2BFlowController : MonoBehaviour
     [Header("Mountains")]
     [SerializeField] private Level2HeatMeltableObject[] iceMountains;
 
+    [Header("Objective Hint Target")]
+    [Tooltip("可手工拖入；留空时会在 HintTargets 下按现有层级格式自动生成。")]
+    [SerializeField] private ObjectiveHintTarget iceMountainsHintTarget;
+
     [Header("Switch")]
     [SerializeField] private GameObject switchHighlightObject;
 
@@ -41,10 +45,22 @@ public class Level2BFlowController : MonoBehaviour
     private Level2BState state = Level2BState.WaitingForPortalApproach;
     private bool hasStartedPortalDialogue;
     private bool hasActivatedPortal;
+    private ObjectiveHintOutline[] iceMountainHintOutlines;
+
+    public GameObject InactivePortalRoot => grayPortalRoot;
 
     private void Awake()
     {
         Instance = this;
+
+        iceMountainsHintTarget = ObjectiveHintRuntimeTargetBuilder.ResolveOrCreate(
+            iceMountainsHintTarget,
+            "Level2IceMountainsHintTarget",
+            BuildIceMountainRoots(),
+            out iceMountainHintOutlines
+        );
+
+        RefreshIceMountainHintEligibility();
     }
 
     private void Start()
@@ -130,7 +146,8 @@ public class Level2BFlowController : MonoBehaviour
         }
 
         ObjectivePanelController.Instance?.CompleteAndSetNextObjective(
-            GetMeltObjectiveText()
+            GetMeltObjectiveText(),
+            iceMountainsHintTarget
         );
     }
 
@@ -141,8 +158,11 @@ public class Level2BFlowController : MonoBehaviour
             return;
         }
 
+        RefreshIceMountainHintEligibility();
+
         ObjectivePanelController.Instance?.SetObjective(
-            GetMeltObjectiveText()
+            GetMeltObjectiveText(),
+            iceMountainsHintTarget
         );
 
         if (!AreAllIceMountainsMelted())
@@ -331,5 +351,55 @@ public class Level2BFlowController : MonoBehaviour
         }
 
         return iceMountains.Length;
+    }
+
+    private GameObject[] BuildIceMountainRoots()
+    {
+        if (iceMountains == null)
+            return new GameObject[0];
+
+        GameObject[] roots = new GameObject[
+            iceMountains.Length
+        ];
+
+        for (int i = 0; i < iceMountains.Length; i++)
+        {
+            roots[i] = iceMountains[i] != null
+                ? iceMountains[i].gameObject
+                : null;
+        }
+
+        return roots;
+    }
+
+    private void RefreshIceMountainHintEligibility()
+    {
+        if (iceMountains == null ||
+            iceMountainHintOutlines == null)
+        {
+            return;
+        }
+
+        int count = Mathf.Min(
+            iceMountains.Length,
+            iceMountainHintOutlines.Length
+        );
+
+        for (int i = 0; i < count; i++)
+        {
+            ObjectiveHintOutline outline =
+                iceMountainHintOutlines[i];
+
+            if (outline == null)
+                continue;
+
+            Level2HeatMeltableObject mountain =
+                iceMountains[i];
+
+            outline.SetHintEligible(
+                mountain != null &&
+                !mountain.IsCompleted
+            );
+        }
     }
 }

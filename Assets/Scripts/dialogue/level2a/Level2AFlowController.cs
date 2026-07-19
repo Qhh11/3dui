@@ -8,6 +8,27 @@ public class Level2AFlowController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        energyBlockHintTarget = ObjectiveHintRuntimeTargetBuilder.ResolveOrCreate(
+            energyBlockHintTarget,
+            "Level2EnergyBlockHintTarget",
+            energyBlock
+        );
+
+        treeRootsHintTarget = ObjectiveHintRuntimeTargetBuilder.ResolveOrCreate(
+            treeRootsHintTarget,
+            "Level2TreeRootsHintTarget",
+            treeRoots
+        );
+
+        if (portalHintRendererRoot != null)
+        {
+            portalHintTarget = ObjectiveHintRuntimeTargetBuilder.ResolveOrCreate(
+                portalHintTarget,
+                "Level2PortalHintTarget",
+                portalHintRendererRoot
+            );
+        }
     }
     [Header("References")]
     [SerializeField] private ViewToggleButton viewToggleButton;
@@ -17,6 +38,15 @@ public class Level2AFlowController : MonoBehaviour
     [Header("Energy Block")]
     [SerializeField] private GameObject energyBlock;
     [SerializeField] private GameObject treeRoots;
+
+    [Header("Objective Hint Targets")]
+    [Tooltip("可手工拖入；留空时会在 HintTargets 下按现有层级格式自动生成。")]
+    [SerializeField] private ObjectiveHintTarget energyBlockHintTarget;
+    [SerializeField] private ObjectiveHintTarget treeRootsHintTarget;
+    [SerializeField] private ObjectiveHintTarget portalHintTarget;
+
+    [Tooltip("可选。留空时从 Level2BFlowController 取得未激活 Portal。")]
+    [SerializeField] private GameObject portalHintRendererRoot;
 
     [Header("Triggers")]
     [SerializeField] private GameObject energyTrigger;
@@ -82,7 +112,10 @@ public class Level2AFlowController : MonoBehaviour
     {
         if (ObjectivePanelController.Instance != null)
             ObjectivePanelController.Instance
-                .CompleteAndSetNextObjective("Use siphon on the energy block");
+                .CompleteAndSetNextObjective(
+                    "Use siphon on the energy block",
+                    energyBlockHintTarget
+                );
 
         // Unlock siphon if not already
         if (siphonController != null)
@@ -107,7 +140,10 @@ public class Level2AFlowController : MonoBehaviour
     {
         if (ObjectivePanelController.Instance != null)
             ObjectivePanelController.Instance
-                .CompleteAndSetNextObjective("Use Shooting to clear the roots");
+                .CompleteAndSetNextObjective(
+                    "Use Shooting to clear the roots",
+                    treeRootsHintTarget
+                );
 
         if (shootingButtonRoot != null)
             shootingButtonRoot.SetActive(true);
@@ -139,7 +175,10 @@ public class Level2AFlowController : MonoBehaviour
     {
         if (ObjectivePanelController.Instance != null)
             ObjectivePanelController.Instance
-                .CompleteAndSetNextObjective("Use siphon on the energy block");
+                .CompleteAndSetNextObjective(
+                    "Use siphon on the energy block",
+                    energyBlockHintTarget
+                );
     }
 
     // Called when siphon successfully picks up the energy block
@@ -192,9 +231,34 @@ public class Level2AFlowController : MonoBehaviour
     // Called by DialogueEventRouter: level2a_quest_go_to_portal
     public void OnQuestGoToPortal()
     {
+        EnsurePortalHintTarget();
+
         if (ObjectivePanelController.Instance != null)
             ObjectivePanelController.Instance
-                .CompleteAndSetNextObjective("Go to the portal");
+                .CompleteAndSetNextObjective(
+                    "Go to the portal",
+                    portalHintTarget
+                );
+    }
+
+    private void EnsurePortalHintTarget()
+    {
+        if (portalHintTarget != null)
+            return;
+
+        if (portalHintRendererRoot == null &&
+            Level2BFlowController.Instance != null)
+        {
+            portalHintRendererRoot =
+                Level2BFlowController.Instance
+                    .InactivePortalRoot;
+        }
+
+        portalHintTarget = ObjectiveHintRuntimeTargetBuilder.ResolveOrCreate(
+            null,
+            "Level2PortalHintTarget",
+            portalHintRendererRoot
+        );
     }
 
     public void OnShowSwitchHint()

@@ -46,6 +46,26 @@ public class ObjectiveHintOutline : MonoBehaviour
     public bool HintActive => hintActive;
     public bool HintEligible => hintEligible;
 
+    /// <summary>
+    /// 为运行时生成的公共 Hint Target 显式指定 Renderer。
+    /// 只应传入真正需要描边的 MeshRenderer/SkinnedMeshRenderer。
+    /// </summary>
+    public void ConfigureRenderers(
+        Renderer[] renderers)
+    {
+        if (hintActive)
+        {
+            hintActive = false;
+            RestoreBaseMasks();
+        }
+
+        targetRenderers = renderers;
+        latestBaseMasks = null;
+
+        EnsureStateArray();
+        CaptureCurrentMasks();
+    }
+
     public bool IsUsable
     {
         get

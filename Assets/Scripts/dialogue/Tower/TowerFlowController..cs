@@ -23,6 +23,11 @@ public class TowerFlowController : MonoBehaviour
     [SerializeField] private GameObject blockedRocksRoot;
     [SerializeField] private GameObject newlyOpenedPathRoot;
 
+    [Header("Objective Hint Targets")]
+    [Tooltip("可手工拖入；留空时会在 HintTargets 下按现有层级格式自动生成。")]
+    [SerializeField] private ObjectiveHintTarget energyCoreHintTarget;
+    [SerializeField] private ObjectiveHintTarget blockedRocksHintTarget;
+
     [Header("Shooting")]
     [SerializeField] private GameObject rocketButtonRoot;
     [SerializeField] private RocketLauncher rocketLauncher;
@@ -51,6 +56,18 @@ public class TowerFlowController : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
+        energyCoreHintTarget = ObjectiveHintRuntimeTargetBuilder.ResolveOrCreate(
+            energyCoreHintTarget,
+            "TowerEnergyCoreHintTarget",
+            energyCoreObject
+        );
+
+        blockedRocksHintTarget = ObjectiveHintRuntimeTargetBuilder.ResolveOrCreate(
+            blockedRocksHintTarget,
+            "TowerBlockedRocksHintTarget",
+            blockedRocksRoot
+        );
     }
 
     private void Start()
@@ -118,7 +135,8 @@ public class TowerFlowController : MonoBehaviour
         SetEnergyCoreVisible(true);
 
         ObjectivePanelController.Instance?.SetObjective(
-            "Use Siphon to collect the energy core near the tower"
+            "Use Siphon to collect the energy core near the tower",
+            energyCoreHintTarget
         );
     }
 
@@ -180,7 +198,8 @@ public class TowerFlowController : MonoBehaviour
         SetSwitchHighlight(false);
 
         ObjectivePanelController.Instance?.CompleteAndSetNextObjective(
-            "Go to the blocked stone passage behind the tower"
+            "Go to the blocked stone passage behind the tower",
+            blockedRocksHintTarget
         );
     }
 
@@ -245,7 +264,8 @@ public class TowerFlowController : MonoBehaviour
         SetRocketUnlocked(true);
 
         ObjectivePanelController.Instance?.CompleteAndSetNextObjective(
-            "Aim at the blocked rocks and fire"
+            "Aim at the blocked rocks and fire",
+            blockedRocksHintTarget
         );
     }
 

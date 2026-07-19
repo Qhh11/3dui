@@ -83,6 +83,33 @@ public class ObjectiveHintTarget : MonoBehaviour
         EnsureOutlineTargets();
     }
 
+    /// <summary>
+    /// 配置运行时生成的公共 Hint Target。
+    /// Inspector 中已经配置的 Target 不需要调用。
+    /// </summary>
+    public void Configure(
+        Transform configuredFocusPoint,
+        ObjectiveHintOutline[] configuredOutlines,
+        bool allowFocusWithoutOutline = false)
+    {
+        focusPoint = configuredFocusPoint;
+        outlineTargets = configuredOutlines;
+        allowFocusWithoutUsableOutline =
+            allowFocusWithoutOutline;
+    }
+
+    public ObjectiveHintOutline[]
+        GetOutlineTargetsSnapshot()
+    {
+        EnsureOutlineTargets();
+
+        if (outlineTargets == null)
+            return new ObjectiveHintOutline[0];
+
+        return (ObjectiveHintOutline[])
+            outlineTargets.Clone();
+    }
+
     public bool TryGetFocusPosition(
         out Vector3 focusPosition)
     {
