@@ -33372,7 +33372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25b4e25caf740094a8135cf069e62f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectiveEventAction
-  objectiveText: Retrieve the energy unit from the well
+  objectiveText: Go back to the well and find the energy unit.
   hintTarget: {fileID: 6710422541622832369}
   wayfindingTarget: {fileID: 0}
   completePreviousObjective: 1
@@ -40165,7 +40165,7 @@ MonoBehaviour:
   delayAfterSwitch: 2
   energyHighlight: {fileID: 1927183719}
   outlineEffect: {fileID: 1511514368}
-  objectiveText: Switch to UFO view to scan for the energy unit
+  objectiveText: Switch to UFO view to find the energy unit
   scanHintTarget: {fileID: 1123663954}
 --- !u!1 &1614304451
 GameObject:

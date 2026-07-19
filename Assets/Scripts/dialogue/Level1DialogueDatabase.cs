@@ -406,7 +406,7 @@ public class Level1DialogueDatabase : MonoBehaviour, IDialogueDatabase
         sequence.entries.Add(Line(player, "Wait... there is something glowing faintly near the well."));
         sequence.entries.Add(Line(player, "It looks like traces of an energy unit."));
         sequence.entries.Add(Line(player, "It must be here somewhere, but the grass is too thick. I cannot find it."));
-        sequence.entries.Add(Line(player, "UFO, can you scan this spot from your side?",
+        sequence.entries.Add(Line(player, "UFO, can you see it from your side?",
             eventOnEnd: DialogueIds.Events.ActivateWellArea));
             // activate_well_area: 激活UFO视角下的水井触发区域
     }
@@ -532,7 +532,7 @@ public class Level1DialogueDatabase : MonoBehaviour, IDialogueDatabase
         sequence.entries.Add(Line(villager, "It always comes back."));
         sequence.entries.Add(Line(villager, "Every single time."));
 
-        sequence.entries.Add(Line(terminal, "Scan result: anomaly detected."));
+        sequence.entries.Add(Line(terminal, "Something is wrong with this energy unit."));
         sequence.entries.Add(Line(terminal,
             "This energy unit's core is depleted."));
         sequence.entries.Add(Line(terminal,
