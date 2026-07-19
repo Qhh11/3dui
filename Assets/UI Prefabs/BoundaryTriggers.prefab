@@ -1,5 +1,305 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1855083578327151
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3609557209647586587}
+  - component: {fileID: 6446120646403747754}
+  - component: {fileID: 2550671251465702095}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_38
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3609557209647586587
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1855083578327151}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.77334213, z: -0, w: 0.6339889}
+  m_LocalPosition: {x: -1238, y: 201, z: 6805.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6446120646403747754
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1855083578327151}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 303.9608, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2550671251465702095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1855083578327151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &178196445945265539
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 311368637977197588}
+  - component: {fileID: 3334335993212776773}
+  - component: {fileID: 6978882835634559909}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_69
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &311368637977197588
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178196445945265539}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.46554872, z: -0, w: 0.8850223}
+  m_LocalPosition: {x: 3562, y: 201, z: 4505.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3334335993212776773
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178196445945265539}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 755.69226, y: 5000, z: 260}
+  m_Center: {x: -60.483814, y: 0, z: 0.0000001878484}
+--- !u!114 &6978882835634559909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178196445945265539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &201678323456986817
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4599299129267541075}
+  - component: {fileID: 8782556521228786596}
+  - component: {fileID: 7143728939034557541}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_37
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4599299129267541075
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201678323456986817}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.00000004371139}
+  m_LocalPosition: {x: -878, y: 201, z: 6905.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8782556521228786596
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201678323456986817}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 780, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7143728939034557541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201678323456986817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &227311205705948508
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4463353173275647267}
+  - component: {fileID: 1098751115075099543}
+  - component: {fileID: 7167976683784180121}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_64
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4463353173275647267
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227311205705948508}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.40965608, z: -0, w: 0.9122401}
+  m_LocalPosition: {x: 1222, y: 201, z: 3405.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1098751115075099543
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227311205705948508}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 581.6638, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7167976683784180121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 227311205705948508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
 --- !u!1 &258473962716177533
 GameObject:
   m_ObjectHideFlags: 0
@@ -52,7 +352,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5000, y: 1000, z: 300}
+  m_Size: {x: 5000, y: 5000, z: 300}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6793661175774150208
 MonoBehaviour:
@@ -61,6 +361,81 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 258473962716177533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &581905169666024477
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2241167349626978935}
+  - component: {fileID: 2163120098905154901}
+  - component: {fileID: 2532630132678520902}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_65
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2241167349626978935
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581905169666024477}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.15581316, z: -0, w: 0.98778653}
+  m_LocalPosition: {x: 2062, y: 201, z: 3365.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2163120098905154901
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581905169666024477}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1529.4055, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2532630132678520902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 581905169666024477}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
@@ -127,7 +502,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 500, y: 1000, z: 200}
+  m_Size: {x: 500, y: 5000, z: 200}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2632675093696384832
 MonoBehaviour:
@@ -136,6 +511,381 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 655542411658207727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &755370604203133185
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5097901821154580845}
+  - component: {fileID: 1980777552652198943}
+  - component: {fileID: 4139279486429035953}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_55
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5097901821154580845
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755370604203133185}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.81124216, z: -0, w: 0.5847103}
+  m_LocalPosition: {x: -3198, y: 201, z: 4365.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1980777552652198943
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755370604203133185}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1238.4199, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4139279486429035953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755370604203133185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &863359303998720876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1985511708420945769}
+  - component: {fileID: 6683373261789210701}
+  - component: {fileID: 2742956714366140237}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_30
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1985511708420945769
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863359303998720876}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.9844651, z: -0, w: 0.17558026}
+  m_LocalPosition: {x: 1242, y: 201, z: 7405.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6683373261789210701
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863359303998720876}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 909.9383, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2742956714366140237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863359303998720876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &1013091476771045278
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7483621284707123627}
+  - component: {fileID: 7185229282706200849}
+  - component: {fileID: 1142492354187129591}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_27
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7483621284707123627
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013091476771045278}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 2422, y: 201, z: 7025.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7185229282706200849
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013091476771045278}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 820, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1142492354187129591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013091476771045278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &1074210841104155841
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3230974141421699484}
+  - component: {fileID: 3829479589260149772}
+  - component: {fileID: 4176122765879169540}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_31
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3230974141421699484
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074210841104155841}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.973249, z: -0, w: 0.22975287}
+  m_LocalPosition: {x: 662, y: 201, z: 7445.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3829479589260149772
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074210841104155841}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 547.2136, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4176122765879169540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1074210841104155841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &1090542086171841382
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8105441507614551591}
+  - component: {fileID: 5601859598614548114}
+  - component: {fileID: 1433897443988540717}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_03
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8105441507614551591
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090542086171841382}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 2342, y: 201, z: 5805.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5601859598614548114
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090542086171841382}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 700, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1433897443988540717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090542086171841382}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
@@ -202,7 +952,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 300, y: 1000, z: 200}
+  m_Size: {x: 300, y: 5000, z: 200}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2251096837392987250
 MonoBehaviour:
@@ -211,6 +961,306 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1279726694529805358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &1288817654333128962
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5260042290901238550}
+  - component: {fileID: 4265098203701392653}
+  - component: {fileID: 3526039511834447033}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_35
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5260042290901238550
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288817654333128962}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.00000004371139}
+  m_LocalPosition: {x: -98, y: 201, z: 7425.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4265098203701392653
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288817654333128962}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 900, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3526039511834447033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1288817654333128962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &1424578489371000134
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 34691635135740834}
+  - component: {fileID: 539291780741679712}
+  - component: {fileID: 3763080678567212222}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_32
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &34691635135740834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424578489371000134}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.58471024, z: -0, w: 0.8112422}
+  m_LocalPosition: {x: 502, y: 201, z: 7465.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &539291780741679712
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424578489371000134}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 352.9822, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3763080678567212222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1424578489371000134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &1572996777634131329
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9153081625579128023}
+  - component: {fileID: 8822429602522341715}
+  - component: {fileID: 4597814154916292239}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_34
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9153081625579128023
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572996777634131329}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.8506508, z: -0, w: 0.52573115}
+  m_LocalPosition: {x: 342, y: 201, z: 7505.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8822429602522341715
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572996777634131329}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 278.88544, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4597814154916292239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572996777634131329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &1932856247043448194
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4132626472965857756}
+  - component: {fileID: 2542968406743789292}
+  - component: {fileID: 467573831475083646}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_69 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4132626472965857756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932856247043448194}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.00053109444, z: -0, w: 0.9999999}
+  m_LocalPosition: {x: 4081, y: 201, z: 4719}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: -0.061, z: 0}
+--- !u!65 &2542968406743789292
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932856247043448194}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 755.69226, y: 5000, z: 403.3828}
+  m_Center: {x: -60.48383, y: 0, z: -71.6915}
+--- !u!114 &467573831475083646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1932856247043448194}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
@@ -277,7 +1327,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1000, y: 1000, z: 300}
+  m_Size: {x: 1000, y: 5000, z: 300}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2070502328128695225
 MonoBehaviour:
@@ -352,7 +1402,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1200, y: 1000, z: 500}
+  m_Size: {x: 1200, y: 5000, z: 500}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &907269814816396808
 MonoBehaviour:
@@ -427,7 +1477,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1000, y: 1000, z: 300}
+  m_Size: {x: 1000, y: 5000, z: 300}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6493398236271702850
 MonoBehaviour:
@@ -436,6 +1486,81 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2401196515587716990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &2412907741966794459
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1105302693005448743}
+  - component: {fileID: 3609350312025395907}
+  - component: {fileID: 7764349999233994270}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_42 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1105302693005448743
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2412907741966794459}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -2921, y: 201, z: 5286}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!65 &3609350312025395907
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2412907741966794459}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 694.64276, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7764349999233994270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2412907741966794459}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
@@ -502,7 +1627,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1000, y: 1000, z: 300}
+  m_Size: {x: 1000, y: 5000, z: 300}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1608561538527485119
 MonoBehaviour:
@@ -511,6 +1636,81 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2510831246525226232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &2531786346664300446
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 15873541355964046}
+  - component: {fileID: 8034311130145823209}
+  - component: {fileID: 8940566319991570760}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_57
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &15873541355964046
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2531786346664300446}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.062137447, z: -0, w: 0.9980676}
+  m_LocalPosition: {x: -2898, y: 201, z: 3365.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8034311130145823209
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2531786346664300446}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 422.4903, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8940566319991570760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2531786346664300446}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
@@ -577,7 +1777,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1000, y: 1000, z: 300}
+  m_Size: {x: 1000, y: 5000, z: 300}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3606350503034214933
 MonoBehaviour:
@@ -586,6 +1786,231 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2604796102837255085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &2886089592960210016
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6516059263342655760}
+  - component: {fileID: 2141986123366424964}
+  - component: {fileID: 8845966834509164422}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_36
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6516059263342655760
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2886089592960210016}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7337222, z: -0, w: 0.6794496}
+  m_LocalPosition: {x: -518, y: 201, z: 7165.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2141986123366424964
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2886089592960210016}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 621.5362, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8845966834509164422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2886089592960210016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &3088155747495431342
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2644738743877739475}
+  - component: {fileID: 8685990733529648014}
+  - component: {fileID: 8766591865406980359}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_68
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2644738743877739475
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3088155747495431342}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.7800418, z: -0, w: 0.62572736}
+  m_LocalPosition: {x: 3382, y: 201, z: 4005.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8685990733529648014
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3088155747495431342}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 468.78177, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8766591865406980359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3088155747495431342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &3219456596644045084
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3954418135772335127}
+  - component: {fileID: 1587580804346720968}
+  - component: {fileID: 3950574037547160286}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_42
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3954418135772335127
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3219456596644045084}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.8282544, z: -0, w: 0.5603523}
+  m_LocalPosition: {x: -2758, y: 201, z: 5785.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 111.84, z: 0}
+--- !u!65 &1587580804346720968
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3219456596644045084}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 694.64276, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3950574037547160286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3219456596644045084}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
@@ -652,7 +2077,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1000, y: 1000, z: 300}
+  m_Size: {x: 1000, y: 5000, z: 300}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5086206737846296212
 MonoBehaviour:
@@ -661,6 +2086,231 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3527503255140932261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &4099910991838962564
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 71271419296859103}
+  - component: {fileID: 8924452629088141661}
+  - component: {fileID: 768465377525286017}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_01 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &71271419296859103
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4099910991838962564}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.99993145, z: -0, w: -0.011708979}
+  m_LocalPosition: {x: 4139, y: 201, z: 5530}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: -181.342, z: 0}
+--- !u!65 &8924452629088141661
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4099910991838962564}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 854.35455, y: 5000, z: 220}
+  m_Center: {x: 135.46335, y: 0, z: 0.00034535676}
+--- !u!114 &768465377525286017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4099910991838962564}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &4305048512940465899
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1058689343310256637}
+  - component: {fileID: 8419669000826937518}
+  - component: {fileID: 6331209032193892901}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_56 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1058689343310256637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4305048512940465899}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.8903274, z: -0, w: 0.45532092}
+  m_LocalPosition: {x: -3010, y: 201, z: 2630}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 125.829, z: 0}
+--- !u!65 &8419669000826937518
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4305048512940465899}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1000, y: 5000, z: 500}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6331209032193892901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4305048512940465899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &4360562024791433661
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2272346609483481790}
+  - component: {fileID: 1320138595875444080}
+  - component: {fileID: 2691284002416098541}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_29
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2272346609483481790
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4360562024791433661}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.9436283, z: -0, w: 0.33100694}
+  m_LocalPosition: {x: 1722, y: 201, z: 7345.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1320138595875444080
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4360562024791433661}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 356.12497, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2691284002416098541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4360562024791433661}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
@@ -722,8 +2372,84 @@ Transform:
   - {fileID: 6308306668099247462}
   - {fileID: 8548112724287956341}
   - {fileID: 1403824109295379870}
+  - {fileID: 4353825906828904928}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5380425729603920881
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5543601305634247460}
+  - component: {fileID: 3811256769303041744}
+  - component: {fileID: 29549801853647353}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_39
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5543601305634247460
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5380425729603920881}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.9626219, z: -0, w: 0.27084878}
+  m_LocalPosition: {x: -1618, y: 201, z: 6925.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3811256769303041744
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5380425729603920881}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 943.8009, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &29549801853647353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5380425729603920881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
 --- !u!1 &5647988684405750898
 GameObject:
   m_ObjectHideFlags: 0
@@ -776,7 +2502,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1000, y: 1000, z: 300}
+  m_Size: {x: 1000, y: 5000, z: 300}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1536651403055111587
 MonoBehaviour:
@@ -785,6 +2511,81 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5647988684405750898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &5764118110867785920
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8611607988841490241}
+  - component: {fileID: 5910016906482214424}
+  - component: {fileID: 3752574913003065580}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_41
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8611607988841490241
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5764118110867785920}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.8506508, z: -0, w: 0.52573115}
+  m_LocalPosition: {x: -2618, y: 201, z: 6545.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5910016906482214424
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5764118110867785920}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1173.3126, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3752574913003065580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5764118110867785920}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
@@ -851,7 +2652,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1200, y: 1000, z: 500}
+  m_Size: {x: 1200, y: 5000, z: 500}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8798285746053087544
 MonoBehaviour:
@@ -860,6 +2661,224 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5815002925751320712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &5882397835967142502
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4353825906828904928}
+  m_Layer: 0
+  m_Name: Level2_Danger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4353825906828904928
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5882397835967142502}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4018793457730105674}
+  - {fileID: 71271419296859103}
+  - {fileID: 2774995328522103569}
+  - {fileID: 4374475021917369885}
+  - {fileID: 8105441507614551591}
+  - {fileID: 1413757932857324642}
+  - {fileID: 3449213002999599036}
+  - {fileID: 7483621284707123627}
+  - {fileID: 243583120879173855}
+  - {fileID: 2272346609483481790}
+  - {fileID: 1985511708420945769}
+  - {fileID: 3230974141421699484}
+  - {fileID: 34691635135740834}
+  - {fileID: 6990593348877982854}
+  - {fileID: 9153081625579128023}
+  - {fileID: 5260042290901238550}
+  - {fileID: 6516059263342655760}
+  - {fileID: 4599299129267541075}
+  - {fileID: 3609557209647586587}
+  - {fileID: 5543601305634247460}
+  - {fileID: 7760024451549031713}
+  - {fileID: 8611607988841490241}
+  - {fileID: 3954418135772335127}
+  - {fileID: 1105302693005448743}
+  - {fileID: 1791284350650864603}
+  - {fileID: 5097901821154580845}
+  - {fileID: 7162230203286579140}
+  - {fileID: 1058689343310256637}
+  - {fileID: 15873541355964046}
+  - {fileID: 6576233501217100455}
+  - {fileID: 4463353173275647267}
+  - {fileID: 2241167349626978935}
+  - {fileID: 5219168675848170953}
+  - {fileID: 7075851614768177361}
+  - {fileID: 2644738743877739475}
+  - {fileID: 311368637977197588}
+  - {fileID: 4132626472965857756}
+  m_Father: {fileID: 6662558248511658194}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5932978884624178338
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2774995328522103569}
+  - component: {fileID: 1891045911234775061}
+  - component: {fileID: 86873620958491917}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_01 (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2774995328522103569
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5932978884624178338}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.99993145, z: -0, w: -0.011708979}
+  m_LocalPosition: {x: 3916, y: 201, z: 5321}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: -181.342, z: 0}
+--- !u!65 &1891045911234775061
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5932978884624178338}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 432.44345, y: 5000, z: 206.0438}
+  m_Center: {x: 150.24467, y: 0, z: -6.9777255}
+--- !u!114 &86873620958491917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5932978884624178338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &6120296683942738925
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5219168675848170953}
+  - component: {fileID: 813994915292332423}
+  - component: {fileID: 4007282538000409059}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_66
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5219168675848170953
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6120296683942738925}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.26098, z: -0, w: 0.96534425}
+  m_LocalPosition: {x: 2982, y: 201, z: 3285.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &813994915292332423
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6120296683942738925}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 655.69775, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4007282538000409059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6120296683942738925}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
@@ -926,7 +2945,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1000, y: 1000, z: 300}
+  m_Size: {x: 1000, y: 5000, z: 300}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2422081652881095985
 MonoBehaviour:
@@ -935,6 +2954,156 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6297530829550958191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &6564370347157103428
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6990593348877982854}
+  - component: {fileID: 6934425863799929557}
+  - component: {fileID: 4679681570193589676}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_33
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6990593348877982854
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6564370347157103428}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: -0.00000004371139}
+  m_LocalPosition: {x: 462, y: 201, z: 7585.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6934425863799929557
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6564370347157103428}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 260, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4679681570193589676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6564370347157103428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &6769929295480986226
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3449213002999599036}
+  - component: {fileID: 6320554305462233641}
+  - component: {fileID: 8044199994420515297}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_26
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3449213002999599036
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6769929295480986226}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.28978416, z: -0, w: 0.95709205}
+  m_LocalPosition: {x: 2242, y: 201, z: 6545.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6320554305462233641
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6769929295480986226}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 532.66614, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8044199994420515297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6769929295480986226}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
@@ -1001,7 +3170,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1000, y: 1000, z: 300}
+  m_Size: {x: 1000, y: 5000, z: 300}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8275351566543323110
 MonoBehaviour:
@@ -1076,7 +3245,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1000, y: 1000, z: 300}
+  m_Size: {x: 1000, y: 5000, z: 300}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &680555977037625118
 MonoBehaviour:
@@ -1085,6 +3254,156 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7017385781848507048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &7220173409991717875
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7162230203286579140}
+  - component: {fileID: 5160418703042725651}
+  - component: {fileID: 7988065919519966201}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_56
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7162230203286579140
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7220173409991717875}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.45377764, z: -0, w: 0.89111495}
+  m_LocalPosition: {x: -3218, y: 201, z: 3605.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5160418703042725651
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7220173409991717875}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 644.05884, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7988065919519966201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7220173409991717875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &7300757186814007193
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1791284350650864603}
+  - component: {fileID: 4180140925026697664}
+  - component: {fileID: 7244999746066428835}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_54
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1791284350650864603
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7300757186814007193}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.6334915, z: -0, w: 0.7737497}
+  m_LocalPosition: {x: -2878, y: 201, z: 4945.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 78.616, z: 0}
+--- !u!65 &4180140925026697664
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7300757186814007193}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 391.2044, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7244999746066428835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7300757186814007193}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
@@ -1151,7 +3470,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 150, y: 1000, z: 60}
+  m_Size: {x: 150, y: 5000, z: 60}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2325429716256420010
 MonoBehaviour:
@@ -1160,6 +3479,381 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7506168619668695467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &7709884951939135324
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 243583120879173855}
+  - component: {fileID: 4879969529911779730}
+  - component: {fileID: 2448348712890743542}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_28
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &243583120879173855
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7709884951939135324}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.99944615, z: -0, w: 0.03327788}
+  m_LocalPosition: {x: 2122, y: 201, z: 7405.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4879969529911779730
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7709884951939135324}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 701.33185, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2448348712890743542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7709884951939135324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &8265242660903302770
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1413757932857324642}
+  - component: {fileID: 2948826464557485378}
+  - component: {fileID: 2498025517457198634}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_04
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1413757932857324642
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8265242660903302770}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.9925076, z: -0, w: 0.12218322}
+  m_LocalPosition: {x: 2182, y: 201, z: 6145.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2948826464557485378
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8265242660903302770}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 429.84845, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2498025517457198634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8265242660903302770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &8366837717822957806
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7075851614768177361}
+  - component: {fileID: 5654851611974662829}
+  - component: {fileID: 7225048792137139433}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_67
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7075851614768177361
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8366837717822957806}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.52573115, z: -0, w: 0.8506508}
+  m_LocalPosition: {x: 3322, y: 201, z: 3625.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5654851611974662829
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8366837717822957806}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 547.2136, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7225048792137139433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8366837717822957806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &8374164811713703943
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7760024451549031713}
+  - component: {fileID: 2162834759187816526}
+  - component: {fileID: 8915622738614994967}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_40
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7760024451549031713
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8374164811713703943}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.9894004, z: -0, w: 0.14521317}
+  m_LocalPosition: {x: -2178, y: 201, z: 7085.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2162834759187816526
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8374164811713703943}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 517.6123, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8915622738614994967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8374164811713703943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &8817022987277145410
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6576233501217100455}
+  - component: {fileID: 8108974976148240145}
+  - component: {fileID: 5843196101082421194}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_57 (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6576233501217100455
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8817022987277145410}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.7111062, z: -0, w: 0.7030847}
+  m_LocalPosition: {x: -2777, y: 201, z: 3124}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 90.65, z: 0}
+--- !u!65 &8108974976148240145
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8817022987277145410}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 600, y: 5000, z: 500}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5843196101082421194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8817022987277145410}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
@@ -1226,7 +3920,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1200, y: 1000, z: 500}
+  m_Size: {x: 1200, y: 5000, z: 500}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2976665677705920453
 MonoBehaviour:
@@ -1235,6 +3929,156 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8873161382669797913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &8954080399867373418
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4018793457730105674}
+  - component: {fileID: 2290785101980331725}
+  - component: {fileID: 6876730931221353502}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4018793457730105674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8954080399867373418}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0.98395354, z: -0, w: 0.17842485}
+  m_LocalPosition: {x: 3302, y: 201, z: 5445.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2290785101980331725
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8954080399867373418}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 854.35455, y: 5000, z: 220}
+  m_Center: {x: 135.46335, y: 0, z: 0.00034535676}
+--- !u!114 &6876730931221353502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8954080399867373418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BoundaryDangerTrigger
+  speedMultiplier: 0.5
+  pushBack: 1
+  localSafeDirection: {x: 0, y: 0, z: 1}
+  pushAcceleration: 200
+  maxPushSpeed: 1000
+  pushPriority: 0
+  showWarning: 1
+  warningText: Warning. Cliff detected. Guiding you back.
+  warningPriority: 0
+--- !u!1 &9007885603806447022
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4374475021917369885}
+  - component: {fileID: 7987447886725608840}
+  - component: {fileID: 618193872181333980}
+  m_Layer: 0
+  m_Name: L2_Danger_Outer_02
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4374475021917369885
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9007885603806447022}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.9925076, z: -0, w: 0.12218322}
+  m_LocalPosition: {x: 2582, y: 201, z: 5565.539}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4353825906828904928}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7987447886725608840
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9007885603806447022}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 594.7727, y: 5000, z: 220}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &618193872181333980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9007885603806447022}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c9bd72217f361224e8edbfe62e0fe1db, type: 3}
@@ -1301,7 +4145,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 150, y: 1000, z: 60}
+  m_Size: {x: 150, y: 5000, z: 60}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4840417121220829039
 MonoBehaviour:
@@ -1376,7 +4220,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1000, y: 1000, z: 300}
+  m_Size: {x: 1000, y: 5000, z: 300}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8179912819053566889
 MonoBehaviour:
