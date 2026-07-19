@@ -2273,7 +2273,7 @@ Transform:
   m_GameObject: {fileID: 129442561}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -589.9597, y: 3303.5586, z: -6631.501}
+  m_LocalPosition: {x: -1055.9597, y: 3315.8586, z: -5002.801}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -33125,7 +33125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25b4e25caf740094a8135cf069e62f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ObjectiveEventAction
-  objectiveText: Retrieve the energy unit from the well
+  objectiveText: Go back to the well and find the energy block
   wayfindingTarget: {fileID: 0}
   completePreviousObjective: 1
   onlyOnce: 1
@@ -57686,7 +57686,7 @@ Transform:
   m_GameObject: {fileID: 2112412576}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1605, y: 2648, z: -6611}
+  m_LocalPosition: {x: -2071, y: 2660.3, z: -4982.3}
   m_LocalScale: {x: 50, y: 100, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children:

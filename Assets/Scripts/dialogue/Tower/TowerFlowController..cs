@@ -53,6 +53,16 @@ public class TowerFlowController : MonoBehaviour
         Instance = this;
     }
 
+    //测试
+    public void DebugForceStateToWaitingForBlast()
+    {
+        Debug.Log("[TowerFlow] DebugForceStateToWaitingForBlast CALLED. Before: " + state);
+        state = TowerState.WaitingForBlastRocks;
+        SetRocketUnlocked(true);
+        Debug.Log("[TowerFlow] State is now: " + state);
+    }
+    //测试
+
     private void Start()
     {
         SetEnergyCoreVisible(false);
@@ -384,7 +394,7 @@ public class TowerFlowController : MonoBehaviour
         }
     }
 
-    private void SetRocketUnlocked(bool unlocked)
+    public void SetRocketUnlocked(bool unlocked) //测试，应该是private
     {
         if (rocketButtonRoot != null)
         {
