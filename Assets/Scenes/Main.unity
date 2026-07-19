@@ -2302,8 +2302,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 129442561}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1053.9597, y: 3346.5586, z: -3101.5012}
+  m_LocalRotation: {x: -0.1772073, y: 0.8807264, z: -0.26871234, w: -0.34743667}
+  m_LocalPosition: {x: 4476.7305, y: 6542.89, z: -852.49414}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12228,6 +12228,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Level2BPortalEntryTrigger
   playerTag: Player
   triggerOnlyOnce: 1
+  requiredFlag: Request_to_portal
 --- !u!65 &654139482
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26980,34 +26981,6 @@ MonoBehaviour:
             m_StringArgument: villagerC_finished
             m_BoolArgument: 0
           m_CallState: 2
-  - key: quest_move_bridge_second_crossing
-    onTriggered:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 62152413}
-          m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
-          m_MethodName: Apply
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 1603784933}
-          m_TargetAssemblyTypeName: BridgePlacementGoal, Assembly-CSharp
-          m_MethodName: ActivateGoal
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
   - key: quest_go_to_tower
     onTriggered:
       m_PersistentCalls:
@@ -27046,6 +27019,34 @@ MonoBehaviour:
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: Over_the_bridge
+            m_BoolArgument: 0
+          m_CallState: 2
+  - key: quest_move_bridge_second_crossing
+    onTriggered:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 62152413}
+          m_TargetAssemblyTypeName: ObjectiveEventAction, Assembly-CSharp
+          m_MethodName: Apply
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1603784933}
+          m_TargetAssemblyTypeName: BridgePlacementGoal, Assembly-CSharp
+          m_MethodName: ActivateGoal
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
   - key: tower_quest_collect_energy_core
@@ -27190,6 +27191,18 @@ MonoBehaviour:
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 1158618836}
+          m_TargetAssemblyTypeName: ProgressFlagSetter, Assembly-CSharp
+          m_MethodName: SetFlag
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: Request_to_portal
             m_BoolArgument: 0
           m_CallState: 2
   - key: level2a_quest_explore_ufo
