@@ -2302,8 +2302,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 129442561}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.1772073, y: 0.8807264, z: -0.26871234, w: -0.34743667}
-  m_LocalPosition: {x: 4476.7305, y: 6542.89, z: -852.49414}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1053.9597, y: 3346.5586, z: -3101.5012}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -58073,7 +58073,7 @@ Transform:
   m_GameObject: {fileID: 2112412576}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2249, y: 2691, z: -4727}
+  m_LocalPosition: {x: -2069, y: 2691, z: -3081}
   m_LocalScale: {x: 50, y: 100, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -82432,6 +82432,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlastBlockedRootTarget
   destroyOnlyOnce: 1
+  outline: {fileID: 0}
 --- !u!4 &4359883343437520807
 Transform:
   m_ObjectHideFlags: 0
@@ -92634,6 +92635,8 @@ GameObject:
   - component: {fileID: 6326024794556381701}
   - component: {fileID: 4331106750553834825}
   - component: {fileID: 2356934455637502865}
+  - component: {fileID: 6536175214848047643}
+  - component: {fileID: 6536175214848047644}
   m_Layer: 0
   m_Name: roots_02 (6)
   m_TagString: Untagged
@@ -92641,6 +92644,44 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &6536175214848047643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6536175214848047642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b1b6f8a64cbc5c42a08d503f8399ae8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UfoSelectableOutline
+  defaultMask: 1
+  ufoIdleMask: 4
+  ufoSelectedMask: 2
+  outlineRenderers: []
+--- !u!64 &6536175214848047644
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6536175214848047642}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6936483740770965330, guid: a609af68e9150fe44aa3a3713417f827, type: 3}
 --- !u!199 &6550495707715697930
 ParticleSystemRenderer:
   serializedVersion: 7

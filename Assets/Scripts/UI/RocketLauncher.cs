@@ -134,7 +134,7 @@ public class RocketLauncher : MonoBehaviour
         return CanFire();
     }
 
-    public bool TryGetAimTarget(out BlastBlockedRockTarget target)
+    public bool TryGetAimTarget(out MonoBehaviour target)
     {
         target = null;
 
@@ -150,28 +150,29 @@ public class RocketLauncher : MonoBehaviour
         if (aimCamera == null)
             return false;
 
-        Ray ray = aimCamera.ViewportPointToRay(
-            new Vector3(0.5f, 0.5f, 0f)
-        );
+        Ray ray = aimCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
-        if (!Physics.Raycast(
-                ray,
-                out RaycastHit hit,
-                maxAimDistance,
-                aimMask,
-                QueryTriggerInteraction.Collide))
-        {
+        if (!Physics.Raycast(ray, out RaycastHit hit, maxAimDistance, aimMask, QueryTriggerInteraction.Collide))
             return false;
+
+        BlastBlockedRockTarget rockTarget = hit.collider.GetComponentInParent<BlastBlockedRockTarget>();
+        if (rockTarget != null)
+        {
+            if (!rockTarget.CanBeRocketTargetNow())
+                return false;
+            target = rockTarget;
+            return true;
         }
 
-        target = hit.collider.GetComponentInParent<BlastBlockedRockTarget>();
-
-        if (target == null || !target.CanBeRocketTargetNow())
+        BlastBlockedRootTarget rootTarget = hit.collider.GetComponentInParent<BlastBlockedRootTarget>();
+        if (rootTarget != null)
         {
-            target = null;
-            return false;
+            if (!rootTarget.CanBeRocketTargetNow())
+                return false;
+            target = rootTarget;
+            return true;
         }
 
-        return true;
+        return false;
     }
 }

@@ -129,7 +129,7 @@ public class Level2ADialogueDatabase : MonoBehaviour, IDialogueDatabase
         DialogueCharacter terminal = GetCharacter(Level2ADialogueIds.Characters.UFOTerminal);
 
         sequence.entries.Add(Line(terminal,
-            "Environment scan complete."));
+            "Environment observation complete."));
         sequence.entries.Add(Line(terminal,
             "Surface environments from both perspectives are highly consistent."));
         sequence.entries.Add(Line(terminal,

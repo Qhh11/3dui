@@ -15,8 +15,8 @@ public class UfoAimFeatureFeedbackController : MonoBehaviour
     [Header("Feature Buttons")]
     [SerializeField] private UfoFeatureButtonGlow[] featureButtons;
 
-    private BlastBlockedRockTarget hoveredRocketTarget;
-    private BlastBlockedRockTarget[] rocketTargets;
+    private MonoBehaviour hoveredRocketTarget;
+    private MonoBehaviour[] rocketTargets;
 
     private void Start()
     {
@@ -37,7 +37,7 @@ public class UfoAimFeatureFeedbackController : MonoBehaviour
     private void LateUpdate()
     {
         UfoFeatureType activeFeature = UfoFeatureType.None;
-        BlastBlockedRockTarget selectedRocketTarget = null;
+        MonoBehaviour selectedRocketTarget = null;
 
         bool canShowFeedback =
             IsUfoView() &&
@@ -97,7 +97,7 @@ public class UfoAimFeatureFeedbackController : MonoBehaviour
         }
     }
 
-    private void ApplyRocketOutlineState(BlastBlockedRockTarget selectedTarget)
+    private void ApplyRocketOutlineState(MonoBehaviour selectedTarget)
     {
         if (rocketTargets == null || rocketTargets.Length == 0)
             RefreshRocketTargets();
@@ -111,19 +111,22 @@ public class UfoAimFeatureFeedbackController : MonoBehaviour
         if (rocketTargets == null)
             return;
 
-        foreach (BlastBlockedRockTarget target in rocketTargets)
+        foreach (MonoBehaviour target in rocketTargets)
         {
             if (target == null)
                 continue;
 
             if (target == selectedTarget)
             {
-                target.SetOutlineState(UfoSelectableOutline.OutlineState.UfoSelected);
+                SetTargetOutline(target, UfoSelectableOutline.OutlineState.UfoSelected);
                 continue;
             }
 
-            target.SetOutlineState(
-                showIdle && target.CanBeRocketTargetNow()
+            bool canTarget = GetCanBeRocketTargetNow(target);
+
+            SetTargetOutline(
+                target,
+                showIdle && canTarget
                     ? UfoSelectableOutline.OutlineState.UfoIdle
                     : UfoSelectableOutline.OutlineState.Default
             );
@@ -132,9 +135,33 @@ public class UfoAimFeatureFeedbackController : MonoBehaviour
         hoveredRocketTarget = selectedTarget;
     }
 
+    private bool GetCanBeRocketTargetNow(MonoBehaviour target)
+    {
+        if (target is BlastBlockedRockTarget rock)
+            return rock.CanBeRocketTargetNow();
+
+        if (target is BlastBlockedRootTarget root)
+            return root.CanBeRocketTargetNow();
+
+        return false;
+    }
+
+    private void SetTargetOutline(MonoBehaviour target, UfoSelectableOutline.OutlineState state)
+    {
+        if (target is BlastBlockedRockTarget rock)
+            rock.SetOutlineState(state);
+        else if (target is BlastBlockedRootTarget root)
+            root.SetOutlineState(state);
+    }
+
     private void RefreshRocketTargets()
     {
-        rocketTargets = FindObjectsOfType<BlastBlockedRockTarget>(true);
+        BlastBlockedRockTarget[] rocks = FindObjectsOfType<BlastBlockedRockTarget>(true);
+        BlastBlockedRootTarget[] roots = FindObjectsOfType<BlastBlockedRootTarget>(true);
+
+        rocketTargets = new MonoBehaviour[rocks.Length + roots.Length];
+        rocks.CopyTo(rocketTargets, 0);
+        roots.CopyTo(rocketTargets, rocks.Length);
     }
 
     private bool IsUfoView()
@@ -156,6 +183,6 @@ public class UfoAimFeatureFeedbackController : MonoBehaviour
         ClearFeatureGlow();
 
         if (hoveredRocketTarget != null)
-            hoveredRocketTarget.SetOutlineState(UfoSelectableOutline.OutlineState.Default);
+            SetTargetOutline(hoveredRocketTarget, UfoSelectableOutline.OutlineState.Default);
     }
 }

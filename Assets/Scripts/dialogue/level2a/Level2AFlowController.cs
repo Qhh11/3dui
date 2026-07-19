@@ -236,7 +236,7 @@ public class Level2AFlowController : MonoBehaviour
         if (ObjectivePanelController.Instance != null)
             ObjectivePanelController.Instance
                 .CompleteAndSetNextObjective(
-                    "Go to the portal",
+                    "Switch back to player view and go to the portal",
                     portalHintTarget
                 );
     }
