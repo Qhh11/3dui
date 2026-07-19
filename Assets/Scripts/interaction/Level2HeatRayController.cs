@@ -31,6 +31,8 @@ public class Level2HeatRayController : MonoBehaviour
 
     private Level2HeatMeltableObject hoveredObject;
 
+    public bool IsUnlocked => unlocked;
+
     private void Start()
     {
         SetUnlocked(unlocked);
@@ -86,10 +88,20 @@ public class Level2HeatRayController : MonoBehaviour
         }
     }
 
+    public bool TryGetAimTarget(out Level2HeatMeltableObject target)
+    {
+        return TryGetHeatTarget(out target, out _);
+    }
+
     private bool TryGetHeatTarget(out Level2HeatMeltableObject target, out RaycastHit hit)
     {
         target = null;
         hit = default;
+
+        if (!unlocked || !IsUfoView())
+        {
+            return false;
+        }
 
         Camera cam = aimCamera != null ? aimCamera : Camera.main;
 

@@ -9,6 +9,7 @@ public class UfoAimFeatureFeedbackController : MonoBehaviour
     [SerializeField] private ViewToggleButton viewToggleButton;
     [SerializeField] private SiphonController siphonController;
     [SerializeField] private RocketLauncher rocketLauncher;
+    [SerializeField] private Level2HeatRayController heatRayController;
     [SerializeField] private MarkController markController;
 
     [Header("Feature Buttons")]
@@ -19,9 +20,18 @@ public class UfoAimFeatureFeedbackController : MonoBehaviour
 
     private void Start()
     {
+        ResolveOptionalReferences();
         RefreshRocketTargets();
         ClearFeatureGlow();
         ApplyRocketOutlineState(null);
+    }
+
+    private void ResolveOptionalReferences()
+    {
+        if (heatRayController == null)
+            heatRayController = FindObjectOfType<Level2HeatRayController>(true);
+
+        featureButtons = FindObjectsOfType<UfoFeatureButtonGlow>(true);
     }
 
     private void LateUpdate()
@@ -46,6 +56,12 @@ public class UfoAimFeatureFeedbackController : MonoBehaviour
                  rocketLauncher.TryGetAimTarget(out selectedRocketTarget))
         {
             activeFeature = UfoFeatureType.Rocket;
+        }
+        else if (canShowFeedback &&
+                 heatRayController != null &&
+                 heatRayController.TryGetAimTarget(out _))
+        {
+            activeFeature = UfoFeatureType.Melt;
         }
 
         ApplyCrosshair(activeFeature);

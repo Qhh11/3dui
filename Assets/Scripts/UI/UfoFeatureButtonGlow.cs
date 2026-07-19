@@ -5,7 +5,8 @@ public enum UfoFeatureType
     None,
     Siphon,
     Rocket,
-    Analyze
+    Analyze,
+    Melt
 }
 
 public class UfoFeatureButtonGlow : MonoBehaviour
