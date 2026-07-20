@@ -3,9 +3,18 @@ using UnityEngine.UI;
 
 public class UfoAimFeatureFeedbackController : MonoBehaviour
 {
-    [Header("References")]
-    [SerializeField] private Camera aimCamera;
+    [Header("Crosshair")]
     [SerializeField] private Image crosshairImage;
+
+    [SerializeField]
+    private Color normalCrosshairColor =
+        new Color(0f, 0.65882355f, 1f, 1f);
+
+    [SerializeField]
+    private Color validTargetCrosshairColor =
+        new Color(0.23137255f, 0.92941177f, 0.23137255f, 1f);
+
+    [Header("References")]
     [SerializeField] private ViewToggleButton viewToggleButton;
     [SerializeField] private SiphonController siphonController;
     [SerializeField] private RocketLauncher rocketLauncher;
@@ -23,39 +32,86 @@ public class UfoAimFeatureFeedbackController : MonoBehaviour
         ResolveOptionalReferences();
         RefreshRocketTargets();
         ClearFeatureGlow();
-        ApplyRocketOutlineState(null);
+        ClearAllRocketOutlines();
+        ApplyCrosshair(UfoFeatureType.None);
     }
 
     private void ResolveOptionalReferences()
     {
-        if (heatRayController == null)
-            heatRayController = FindObjectOfType<Level2HeatRayController>(true);
+        if (viewToggleButton == null)
+        {
+            viewToggleButton =
+                FindObjectOfType<ViewToggleButton>(true);
+        }
 
-        featureButtons = FindObjectsOfType<UfoFeatureButtonGlow>(true);
+        if (siphonController == null)
+        {
+            siphonController =
+                FindObjectOfType<SiphonController>(true);
+        }
+
+        if (rocketLauncher == null)
+        {
+            rocketLauncher =
+                FindObjectOfType<RocketLauncher>(true);
+        }
+
+        if (heatRayController == null)
+        {
+            heatRayController =
+                FindObjectOfType<Level2HeatRayController>(true);
+        }
+
+        if (markController == null)
+        {
+            markController =
+                FindObjectOfType<MarkController>(true);
+        }
+
+        featureButtons =
+            FindObjectsOfType<UfoFeatureButtonGlow>(true);
     }
 
     private void LateUpdate()
     {
-        UfoFeatureType activeFeature = UfoFeatureType.None;
+        UfoFeatureType activeFeature =
+            UfoFeatureType.None;
+
         MonoBehaviour selectedRocketTarget = null;
 
         bool canShowFeedback =
             IsUfoView() &&
             !GameplayInputLockService.IsBlocked &&
-            (markController == null ||
-             (!markController.IsBusy && !markController.ActedThisFrame));
+            (
+                markController == null ||
+                (
+                    !markController.IsBusy &&
+                    !markController.ActedThisFrame
+                )
+            );
 
         if (canShowFeedback &&
-            siphonController != null &&
-            siphonController.TryGetAimTarget(out _))
+            markController != null &&
+            markController.TryGetRecallAimTarget(out _))
         {
-            activeFeature = UfoFeatureType.Siphon;
+            // A deployed Mark directly under the reticle should
+            // take priority because clicking Mark now means Recall.
+            activeFeature = UfoFeatureType.Mark;
         }
         else if (canShowFeedback &&
                  rocketLauncher != null &&
-                 rocketLauncher.TryGetAimTarget(out selectedRocketTarget))
+                 rocketLauncher.TryGetAimTarget(
+                     out selectedRocketTarget))
         {
+            // Rocket stays ahead of Siphon so roots or blocked
+            // rocks cannot lose feedback to an object behind them.
             activeFeature = UfoFeatureType.Rocket;
+        }
+        else if (canShowFeedback &&
+                 siphonController != null &&
+                 siphonController.TryGetAimTarget(out _))
+        {
+            activeFeature = UfoFeatureType.Siphon;
         }
         else if (canShowFeedback &&
                  heatRayController != null &&
@@ -69,108 +125,131 @@ public class UfoAimFeatureFeedbackController : MonoBehaviour
         ApplyRocketOutlineState(selectedRocketTarget);
     }
 
-    private void ApplyCrosshair(UfoFeatureType activeFeature)
+    private void ApplyCrosshair(
+        UfoFeatureType activeFeature)
     {
-        if (crosshairImage == null || siphonController == null)
+        if (crosshairImage == null)
             return;
 
         crosshairImage.color =
             activeFeature == UfoFeatureType.None
-                ? siphonController.NormalCrosshairColor
-                : siphonController.TargetCrosshairColor;
+                ? normalCrosshairColor
+                : validTargetCrosshairColor;
     }
 
-    private void ApplyFeatureGlow(UfoFeatureType activeFeature)
+    private void ApplyFeatureGlow(
+        UfoFeatureType activeFeature)
     {
         if (featureButtons == null)
             return;
 
-        foreach (UfoFeatureButtonGlow button in featureButtons)
+        foreach (UfoFeatureButtonGlow button
+                 in featureButtons)
         {
             if (button == null)
                 continue;
 
-            button.SetGlowing(
+            bool shouldGlow =
                 activeFeature != UfoFeatureType.None &&
-                button.FeatureType == activeFeature
-            );
+                button.FeatureType == activeFeature;
+
+            button.SetGlowing(shouldGlow);
         }
     }
 
-    private void ApplyRocketOutlineState(MonoBehaviour selectedTarget)
+    private void ApplyRocketOutlineState(
+        MonoBehaviour selectedTarget)
     {
-        if (rocketTargets == null || rocketTargets.Length == 0)
-            RefreshRocketTargets();
-
-        bool showIdle =
-            IsUfoView() &&
-            rocketLauncher != null &&
-            rocketLauncher.enabled &&
-            rocketLauncher.gameObject.activeInHierarchy;
-
-        if (rocketTargets == null)
+        if (hoveredRocketTarget == selectedTarget)
             return;
 
-        foreach (MonoBehaviour target in rocketTargets)
+        if (hoveredRocketTarget != null)
         {
-            if (target == null)
-                continue;
-
-            if (target == selectedTarget)
-            {
-                SetTargetOutline(target, UfoSelectableOutline.OutlineState.UfoSelected);
-                continue;
-            }
-
-            bool canTarget = GetCanBeRocketTargetNow(target);
-
             SetTargetOutline(
-                target,
-                showIdle && canTarget
-                    ? UfoSelectableOutline.OutlineState.UfoIdle
-                    : UfoSelectableOutline.OutlineState.Default
+                hoveredRocketTarget,
+                UfoSelectableOutline
+                    .OutlineState.Default
             );
         }
 
         hoveredRocketTarget = selectedTarget;
+
+        if (hoveredRocketTarget != null)
+        {
+            SetTargetOutline(
+                hoveredRocketTarget,
+                UfoSelectableOutline
+                    .OutlineState.UfoSelected
+            );
+        }
     }
 
-    private bool GetCanBeRocketTargetNow(MonoBehaviour target)
+    private void SetTargetOutline(
+        MonoBehaviour target,
+        UfoSelectableOutline.OutlineState state)
     {
         if (target is BlastBlockedRockTarget rock)
-            return rock.CanBeRocketTargetNow();
-
-        if (target is BlastBlockedRootTarget root)
-            return root.CanBeRocketTargetNow();
-
-        return false;
-    }
-
-    private void SetTargetOutline(MonoBehaviour target, UfoSelectableOutline.OutlineState state)
-    {
-        if (target is BlastBlockedRockTarget rock)
+        {
             rock.SetOutlineState(state);
+        }
         else if (target is BlastBlockedRootTarget root)
+        {
             root.SetOutlineState(state);
+        }
     }
 
     private void RefreshRocketTargets()
     {
-        BlastBlockedRockTarget[] rocks = FindObjectsOfType<BlastBlockedRockTarget>(true);
-        BlastBlockedRootTarget[] roots = FindObjectsOfType<BlastBlockedRootTarget>(true);
+        BlastBlockedRockTarget[] rocks =
+            FindObjectsOfType<BlastBlockedRockTarget>(true);
 
-        rocketTargets = new MonoBehaviour[rocks.Length + roots.Length];
+        BlastBlockedRootTarget[] roots =
+            FindObjectsOfType<BlastBlockedRootTarget>(true);
+
+        rocketTargets =
+            new MonoBehaviour[rocks.Length + roots.Length];
+
         rocks.CopyTo(rocketTargets, 0);
         roots.CopyTo(rocketTargets, rocks.Length);
+    }
+
+    private void ClearAllRocketOutlines()
+    {
+        if (rocketTargets == null ||
+            rocketTargets.Length == 0)
+        {
+            RefreshRocketTargets();
+        }
+
+        if (rocketTargets != null)
+        {
+            foreach (MonoBehaviour target
+                     in rocketTargets)
+            {
+                if (target == null)
+                    continue;
+
+                SetTargetOutline(
+                    target,
+                    UfoSelectableOutline
+                        .OutlineState.Default
+                );
+            }
+        }
+
+        hoveredRocketTarget = null;
     }
 
     private bool IsUfoView()
     {
         if (viewToggleButton != null)
+        {
             return viewToggleButton.IsUfoView();
+        }
 
-        return SwitchPerspectiveButtonController.Instance != null &&
-               SwitchPerspectiveButtonController.Instance.IsUfoView;
+        return
+            SwitchPerspectiveButtonController.Instance != null &&
+            SwitchPerspectiveButtonController.Instance.IsUfoView;
     }
 
     private void ClearFeatureGlow()
@@ -181,8 +260,7 @@ public class UfoAimFeatureFeedbackController : MonoBehaviour
     private void OnDisable()
     {
         ClearFeatureGlow();
-
-        if (hoveredRocketTarget != null)
-            SetTargetOutline(hoveredRocketTarget, UfoSelectableOutline.OutlineState.Default);
+        ClearAllRocketOutlines();
+        ApplyCrosshair(UfoFeatureType.None);
     }
 }

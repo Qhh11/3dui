@@ -60,6 +60,7 @@ public class Level2AFlowController : MonoBehaviour
     [SerializeField] private float afterSignalLostDialogueDelay = 0.2f;
 
     private bool siphonAttempted = false;
+    private bool shootRootsQuestStarted = false;
     private bool rootsDestroyed = false;
     private bool energyCollected = false;
     private bool readyForUfoCheck = false;  // 加这个
@@ -139,6 +140,11 @@ public class Level2AFlowController : MonoBehaviour
     // Called by DialogueEventRouter: level2a_quest_shoot_roots
     public void OnQuestShootRoots()
     {
+        if (shootRootsQuestStarted || rootsDestroyed)
+            return;
+
+        shootRootsQuestStarted = true;
+
         if (ObjectivePanelController.Instance != null)
         {
             ObjectivePanelController.Instance.CompleteAndSetNextObjective(
@@ -147,15 +153,7 @@ public class Level2AFlowController : MonoBehaviour
             );
         }
 
-        if (shootingButtonRoot != null)
-        {
-            shootingButtonRoot.SetActive(true);
-        }
-
-        if (rocketLauncher != null)
-        {
-            rocketLauncher.enabled = true;
-        }
+        SetShootingUnlocked(true);
     }
 
     // Called when shooting destroys the tree roots
@@ -164,15 +162,8 @@ public class Level2AFlowController : MonoBehaviour
         if (rootsDestroyed) return;
         rootsDestroyed = true;
 
-        if (shootingButtonRoot != null)
-        {
-            shootingButtonRoot.SetActive(false);
-        }
-
-        if (rocketLauncher != null)
-        {
-            rocketLauncher.enabled = false;
-        }
+        // 不关闭 Rocket，保留给玩家自由使用
+        // SetShootingUnlocked(false);
 
         if (treeRoots != null)
             treeRoots.SetActive(false);
@@ -292,5 +283,26 @@ public class Level2AFlowController : MonoBehaviour
         if (ObjectivePanelController.Instance != null)
         ObjectivePanelController.Instance
             .CompleteAndSetNextObjective("Switch to UFO view");
+    }
+
+    private void SetShootingUnlocked(bool unlocked)
+    {
+        ResolveRocketLauncher();
+
+        if (rocketLauncher != null)
+            rocketLauncher.enabled = unlocked;
+        else
+            Debug.LogError("[Level2AFlow] RocketLauncher is not assigned and could not be found under Shooting Button Root.", this);
+
+        if (shootingButtonRoot != null)
+            shootingButtonRoot.SetActive(unlocked);
+        else
+            Debug.LogError("[Level2AFlow] Shooting Button Root is not assigned.", this);
+    }
+
+    private void ResolveRocketLauncher()
+    {
+        if (rocketLauncher == null && shootingButtonRoot != null)
+            rocketLauncher = shootingButtonRoot.GetComponentInChildren<RocketLauncher>(true);
     }
 }

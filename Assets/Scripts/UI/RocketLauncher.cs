@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,11 +20,11 @@ public class RocketLauncher : MonoBehaviour
     [Header("Cooldown")]
     public float fireCooldown = 1f;
 
-    private bool isCoolingDown;
-    
+    private float nextFireAllowedTime;
     private int lastFireFrame = -1;
 
     public bool FiredThisFrame => lastFireFrame == Time.frameCount;
+    private bool IsCoolingDown => Time.unscaledTime < nextFireAllowedTime;
 
     private void Start()
     {
@@ -38,18 +37,11 @@ public class RocketLauncher : MonoBehaviour
     }
     private void OnEnable()
     {
-        isCoolingDown = false;
-        lastFireFrame = -1;
         RefreshButtonState();
     }
 
     private void OnDisable()
     {
-        StopAllCoroutines();
-
-        isCoolingDown = false;
-        lastFireFrame = -1;
-
         if (rocketButton != null)
         {
             rocketButton.interactable = false;
@@ -71,14 +63,19 @@ public class RocketLauncher : MonoBehaviour
         }
         
         lastFireFrame = Time.frameCount;
-
-        StartCoroutine(CooldownRoutine());
+        nextFireAllowedTime = Time.unscaledTime + Mathf.Max(0f, fireCooldown);
+        RefreshButtonState();
 
         Ray ray = aimCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
         Vector3 targetPoint;
 
-        if (Physics.Raycast(ray, out RaycastHit hit, maxAimDistance, aimMask))
+        if (Physics.Raycast(
+                ray,
+                out RaycastHit hit,
+                maxAimDistance,
+                aimMask,
+                QueryTriggerInteraction.Ignore))
         {
             targetPoint = hit.point;
         }
@@ -105,7 +102,10 @@ public class RocketLauncher : MonoBehaviour
 
     private bool CanFire()
     {
-        if (isCoolingDown)
+        if (!isActiveAndEnabled)
+            return false;
+
+        if (IsCoolingDown)
             return false;
 
         if (siphonController != null &&
@@ -127,17 +127,6 @@ public class RocketLauncher : MonoBehaviour
         }
 
         return true;
-    }
-
-    private IEnumerator CooldownRoutine()
-    {
-        isCoolingDown = true;
-        RefreshButtonState();
-
-        yield return new WaitForSeconds(fireCooldown);
-
-        isCoolingDown = false;
-        RefreshButtonState();
     }
 
     private void RefreshButtonState()
@@ -171,7 +160,7 @@ public class RocketLauncher : MonoBehaviour
 
         Ray ray = aimCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 
-        if (!Physics.Raycast(ray, out RaycastHit hit, maxAimDistance, aimMask, QueryTriggerInteraction.Collide))
+        if (!Physics.Raycast(ray, out RaycastHit hit, maxAimDistance, aimMask, QueryTriggerInteraction.Ignore))
             return false;
 
         BlastBlockedRockTarget rockTarget = hit.collider.GetComponentInParent<BlastBlockedRockTarget>();

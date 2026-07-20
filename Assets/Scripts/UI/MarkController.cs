@@ -410,6 +410,15 @@ public class MarkController : MonoBehaviour
     {
         return CanOperateMark();
     }
+    
+    public bool TryGetRecallAimTarget(out MarkInstance target)
+    {
+        target = hoveredMark;
+
+        return target != null &&
+               target.IsDeployed &&
+               CanOperateMark();
+    }
 
     private bool IsUfoView()
     {

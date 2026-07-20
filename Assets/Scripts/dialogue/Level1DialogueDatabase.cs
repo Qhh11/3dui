@@ -239,7 +239,7 @@ public class Level1DialogueDatabase : MonoBehaviour, IDialogueDatabase
         sequence.entries.Add(
             Line(
                 terminal,
-                "Aim at the tent and activate a marker. The marker will remain visible from Player perspective."
+                "You have three reusable markers. Tap a colored marker orb to select it, then aim at the tent and activate Mark. The deployed marker will remain visible from Player perspective."
             )
         );
 

@@ -2,11 +2,11 @@ using UnityEngine;
 
 public enum UfoFeatureType
 {
-    None,
-    Siphon,
-    Rocket,
-    Analyze,
-    Melt
+    None = 0,
+    Siphon = 1,
+    Rocket = 2,
+    Mark = 3,
+    Melt = 4
 }
 
 public class UfoFeatureButtonGlow : MonoBehaviour
@@ -24,7 +24,9 @@ public class UfoFeatureButtonGlow : MonoBehaviour
     public void SetGlowing(bool glowing)
     {
         if (glowObject != null)
+        {
             glowObject.SetActive(glowing);
+        }
     }
 
     private void OnDisable()

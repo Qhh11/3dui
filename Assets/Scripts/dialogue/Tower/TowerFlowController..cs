@@ -406,15 +406,23 @@ public class TowerFlowController : MonoBehaviour
 
     private void SetRocketUnlocked(bool unlocked)
     {
-        if (rocketButtonRoot != null)
-        {
-            rocketButtonRoot.SetActive(unlocked);
-        }
+        ResolveRocketLauncher();
 
-        //if (rocketLauncher != null)
-        //{
-        //    rocketLauncher.enabled = unlocked;
-        //}
+        if (rocketLauncher != null)
+            rocketLauncher.enabled = unlocked;
+        else
+            Debug.LogError("[TowerFlow] RocketLauncher is not assigned and could not be found under Rocket Button Root.", this);
+
+        if (rocketButtonRoot != null)
+            rocketButtonRoot.SetActive(unlocked);
+        else
+            Debug.LogError("[TowerFlow] Rocket Button Root is not assigned.", this);
+    }
+
+    private void ResolveRocketLauncher()
+    {
+        if (rocketLauncher == null && rocketButtonRoot != null)
+            rocketLauncher = rocketButtonRoot.GetComponentInChildren<RocketLauncher>(true);
     }
 
     private void SetNewPathVisible(bool visible)

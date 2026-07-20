@@ -50,7 +50,16 @@ public class RocketProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Explode();
+        // Task volumes and other gameplay triggers must not intercept rockets.
+        // A rocket target may itself use a trigger collider, so keep those valid.
+        bool isRocketTarget =
+            other.GetComponentInParent<BlastBlockedRockTarget>() != null ||
+            other.GetComponentInParent<BlastBlockedRootTarget>() != null;
+
+        if (isRocketTarget)
+        {
+            Explode();
+        }
     }
 
     private void Explode()
