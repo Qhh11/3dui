@@ -29,12 +29,13 @@ public class Level2HeatRayController : MonoBehaviour
     [SerializeField] private Color normalCrosshairColor = Color.white;
     [SerializeField] private Color targetCrosshairColor = Color.red;
 
-    private Level2HeatMeltableObject hoveredObject;
+    private Level2HeatMeltableObject[] meltTargets;
 
     public bool IsUnlocked => unlocked;
 
     private void Start()
     {
+        RefreshMeltTargets();
         SetUnlocked(unlocked);
         HideBeam();
         SetCrosshairColor(normalCrosshairColor);
@@ -44,7 +45,7 @@ public class Level2HeatRayController : MonoBehaviour
     {
         if (!unlocked || !IsUfoView())
         {
-            ClearHover();
+            ApplyMeltOutlineState(null, false);
             HideBeam();
             SetButtonInteractable(false);
             SetCrosshairColor(normalCrosshairColor);
@@ -53,7 +54,8 @@ public class Level2HeatRayController : MonoBehaviour
 
         bool hasTarget = TryGetHeatTarget(out Level2HeatMeltableObject target, out RaycastHit hit);
 
-        UpdateHover(target);
+        ApplyMeltOutlineState(target, true);
+        SetCrosshairColor(hasTarget ? targetCrosshairColor : normalCrosshairColor);
 
         SetButtonInteractable(hasTarget);
 
@@ -83,9 +85,13 @@ public class Level2HeatRayController : MonoBehaviour
 
         if (!value)
         {
-            ClearHover();
+            ApplyMeltOutlineState(null, false);
             HideBeam();
+            return;
         }
+
+        RefreshMeltTargets();
+        ApplyMeltOutlineState(null, IsUfoView());
     }
 
     public bool TryGetAimTarget(out Level2HeatMeltableObject target)
@@ -133,34 +139,50 @@ public class Level2HeatRayController : MonoBehaviour
         return viewToggleButton != null && viewToggleButton.IsUfoView();
     }
 
-    private void UpdateHover(Level2HeatMeltableObject target)
+    private void RefreshMeltTargets()
     {
-        if (hoveredObject != null && hoveredObject != target)
-        {
-            hoveredObject.SetOutlineState(Level2HeatMeltableObject.OutlineState.UfoIdle);
-            hoveredObject = null;
-        }
-
-        if (target == null)
-        {
-            SetCrosshairColor(normalCrosshairColor);
-            return;
-        }
-
-        hoveredObject = target;
-        hoveredObject.SetOutlineState(Level2HeatMeltableObject.OutlineState.UfoSelected);
-        SetCrosshairColor(targetCrosshairColor);
+        meltTargets = FindObjectsOfType<Level2HeatMeltableObject>(true);
     }
 
-    private void ClearHover()
+    private void ApplyMeltOutlineState(
+        Level2HeatMeltableObject selectedTarget,
+        bool showIdle)
     {
-        if (hoveredObject == null)
+        if (meltTargets == null || meltTargets.Length == 0)
+        {
+            RefreshMeltTargets();
+        }
+
+        if (meltTargets == null)
         {
             return;
         }
 
-        hoveredObject.SetOutlineState(Level2HeatMeltableObject.OutlineState.Default);
-        hoveredObject = null;
+        foreach (Level2HeatMeltableObject target in meltTargets)
+        {
+            if (target == null)
+            {
+                continue;
+            }
+
+            if (target.IsCompleted)
+            {
+                target.SetOutlineState(Level2HeatMeltableObject.OutlineState.Default);
+                continue;
+            }
+
+            if (target == selectedTarget)
+            {
+                target.SetOutlineState(Level2HeatMeltableObject.OutlineState.UfoSelected);
+                continue;
+            }
+
+            target.SetOutlineState(
+                showIdle
+                    ? Level2HeatMeltableObject.OutlineState.UfoIdle
+                    : Level2HeatMeltableObject.OutlineState.Default
+            );
+        }
     }
 
     private void SetButtonInteractable(bool interactable)
@@ -207,5 +229,12 @@ public class Level2HeatRayController : MonoBehaviour
         {
             crosshairImage.color = color;
         }
+    }
+
+    private void OnDisable()
+    {
+        ApplyMeltOutlineState(null, false);
+        HideBeam();
+        SetButtonInteractable(false);
     }
 }
