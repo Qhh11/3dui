@@ -411,10 +411,10 @@ public class TowerFlowController : MonoBehaviour
             rocketButtonRoot.SetActive(unlocked);
         }
 
-        if (rocketLauncher != null)
-        {
-            rocketLauncher.enabled = unlocked;
-        }
+        //if (rocketLauncher != null)
+        //{
+        //    rocketLauncher.enabled = unlocked;
+        //}
     }
 
     private void SetNewPathVisible(bool visible)

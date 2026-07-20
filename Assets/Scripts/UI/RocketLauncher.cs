@@ -36,6 +36,25 @@ public class RocketLauncher : MonoBehaviour
     {
         RefreshButtonState();
     }
+    private void OnEnable()
+    {
+        isCoolingDown = false;
+        lastFireFrame = -1;
+        RefreshButtonState();
+    }
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+
+        isCoolingDown = false;
+        lastFireFrame = -1;
+
+        if (rocketButton != null)
+        {
+            rocketButton.interactable = false;
+        }
+    }
 
     public void Fire()
     {

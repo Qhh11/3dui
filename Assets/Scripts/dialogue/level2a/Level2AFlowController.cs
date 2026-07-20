@@ -54,6 +54,7 @@ public class Level2AFlowController : MonoBehaviour
 
     [Header("Shooting")]
     [SerializeField] private GameObject shootingButtonRoot;
+    [SerializeField] private RocketLauncher rocketLauncher;
 
     [Header("Timing")]
     [SerializeField] private float afterSignalLostDialogueDelay = 0.2f;
@@ -139,14 +140,22 @@ public class Level2AFlowController : MonoBehaviour
     public void OnQuestShootRoots()
     {
         if (ObjectivePanelController.Instance != null)
-            ObjectivePanelController.Instance
-                .CompleteAndSetNextObjective(
-                    "Use Shooting to clear the roots",
-                    treeRootsHintTarget
-                );
+        {
+            ObjectivePanelController.Instance.CompleteAndSetNextObjective(
+                "Use Shooting to clear the roots",
+                treeRootsHintTarget
+            );
+        }
 
         if (shootingButtonRoot != null)
+        {
             shootingButtonRoot.SetActive(true);
+        }
+
+        if (rocketLauncher != null)
+        {
+            rocketLauncher.enabled = true;
+        }
     }
 
     // Called when shooting destroys the tree roots
@@ -154,6 +163,16 @@ public class Level2AFlowController : MonoBehaviour
     {
         if (rootsDestroyed) return;
         rootsDestroyed = true;
+
+        if (shootingButtonRoot != null)
+        {
+            shootingButtonRoot.SetActive(false);
+        }
+
+        if (rocketLauncher != null)
+        {
+            rocketLauncher.enabled = false;
+        }
 
         if (treeRoots != null)
             treeRoots.SetActive(false);
