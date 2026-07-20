@@ -16,6 +16,40 @@ public class SwitchPerspectiveButtonController : MonoBehaviour
         private set;
     }
 
+    /// <summary>
+    /// Switch 当前是否真的能被玩家操作。
+    ///
+    /// 同时检查界面实际状态和 OnSwitchButtonClicked
+    /// 会执行的业务判断，供自动恢复等外部逻辑使用。
+    /// </summary>
+    public bool CanPlayerSwitchNow
+    {
+        get
+        {
+            if (!isActiveAndEnabled ||
+                switchUiRoot == null ||
+                !switchUiRoot.activeInHierarchy ||
+                switchButton == null ||
+                !switchButton.isActiveAndEnabled ||
+                !switchButton.gameObject.activeInHierarchy)
+            {
+                return false;
+            }
+
+            if (switchUiCanvasGroup != null &&
+                (!switchUiCanvasGroup.interactable ||
+                 !switchUiCanvasGroup.blocksRaycasts))
+            {
+                return false;
+            }
+
+            return
+                CanSwitchNow() &&
+                switchButton.interactable &&
+                switchButton.IsInteractable();
+        }
+    }
+
     private enum SwitchRequestMode
     {
         None,

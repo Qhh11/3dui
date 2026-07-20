@@ -41,17 +41,24 @@ public class UfoMovement : MonoBehaviour
     private bool playerControllerWasEnabled;
     private bool pendingPlayerControllerRestore;
 
-    // UFO 内平滑转向只插值校准四元数。
-    // 相机位置和设备姿态仍然实时生效。
+    // 普通 Hint 回中只插值校准四元数。
+    // 自动漂移恢复还会平滑重建位置锚点。
     private bool rotationBlendActive;
     private Quaternion rotationBlendStart;
     private Quaternion rotationBlendTarget;
     private float rotationBlendStartTime;
     private float rotationBlendDuration;
 
+    private bool positionBlendActive;
+    private Vector3 positionBlendStart;
+    private Vector3 positionBlendTarget;
+    private float positionBlendStartTime;
+    private float positionBlendDuration;
+
     public bool IsActive => active;
     public bool IsRecenterBlending =>
-        rotationBlendActive;
+        rotationBlendActive ||
+        positionBlendActive;
 
     private void Update()
     {
@@ -67,6 +74,7 @@ public class UfoMovement : MonoBehaviour
             return;
         }
 
+        UpdatePositionBlend();
         UpdateRotationBlend();
         ApplyCurrentPoseImmediately();
 
@@ -84,7 +92,7 @@ public class UfoMovement : MonoBehaviour
             $"[UFO] rotation=" +
             $"{cam.rotation.eulerAngles:F1} " +
             $"position={cam.position:F1} " +
-            $"hintBlend={rotationBlendActive}"
+            $"recenterBlend={IsRecenterBlending}"
         );
     }
 
@@ -93,7 +101,7 @@ public class UfoMovement : MonoBehaviour
         if (!PrepareEnter())
             return;
 
-        CancelRotationBlend();
+        CancelRecenterBlend();
 
         Transform anchor =
             ResolveHeadTransform();
@@ -140,7 +148,7 @@ public class UfoMovement : MonoBehaviour
         if (!PrepareEnter())
             return;
 
-        CancelRotationBlend();
+        CancelRecenterBlend();
 
         Transform anchor =
             ResolveHeadTransform();
@@ -201,6 +209,9 @@ public class UfoMovement : MonoBehaviour
             return;
         }
 
+        // Hint 转向不应该继续一次尚未结束的自动位置恢复。
+        CancelPositionBlend();
+
         Quaternion targetCalibration =
             CalculateLookCalibration(
                 targetPosition
@@ -235,10 +246,80 @@ public class UfoMovement : MonoBehaviour
         rotationBlendActive = true;
     }
 
+    /// <summary>
+    /// AR 漂移恢复：从当前画面连续地回到 UFO 的运行时初始锚点，
+    /// 同时平滑朝向目标。重置 devicePose 基准可避免旧的巨大平移
+    /// 在下一帧再次把相机推走。
+    /// </summary>
+    public void RecenterPoseLookingAt(
+        Vector3 targetPosition,
+        float blendDuration)
+    {
+        if (!active ||
+            cam == null ||
+            devicePose == null)
+        {
+            EnterUfoLookingAt(targetPosition);
+            return;
+        }
+
+        CancelRecenterBlend();
+
+        Vector3 currentWorldPosition =
+            EvaluateCurrentWorldPosition();
+
+        Vector3 targetWorldPosition =
+            ResolveHeadTransform().position +
+            headOffset;
+
+        // 先以当前画面作为新锚点，重设设备平移基准；不会跳帧。
+        anchorPos = currentWorldPosition;
+        baseDevicePos = devicePose.position;
+
+        Quaternion targetCalibration =
+            CalculateLookCalibration(
+                targetPosition,
+                targetWorldPosition
+            );
+
+        Quaternion targetWorldRotation =
+            targetCalibration *
+            devicePose.rotation;
+
+        UpdateTranslationYawForLook(
+            targetWorldRotation
+        );
+
+        if (blendDuration <= 0f)
+        {
+            anchorPos = targetWorldPosition;
+            rotationCalibration = targetCalibration;
+            ApplyCurrentPoseImmediately();
+            return;
+        }
+
+        float safeDuration = Mathf.Max(
+            0.0001f,
+            blendDuration
+        );
+
+        positionBlendStart = currentWorldPosition;
+        positionBlendTarget = targetWorldPosition;
+        positionBlendStartTime = Time.unscaledTime;
+        positionBlendDuration = safeDuration;
+        positionBlendActive = true;
+
+        rotationBlendStart = rotationCalibration;
+        rotationBlendTarget = targetCalibration;
+        rotationBlendStartTime = Time.unscaledTime;
+        rotationBlendDuration = safeDuration;
+        rotationBlendActive = true;
+    }
+
     public void ExitUfo()
     {
         active = false;
-        CancelRotationBlend();
+        CancelRecenterBlend();
 
         if (playerController == null)
             return;
@@ -308,8 +389,16 @@ public class UfoMovement : MonoBehaviour
     private Quaternion CalculateLookCalibration(
         Vector3 targetPosition)
     {
-        Vector3 cameraPosition =
-            EvaluateCurrentWorldPosition();
+        return CalculateLookCalibration(
+            targetPosition,
+            EvaluateCurrentWorldPosition()
+        );
+    }
+
+    private Quaternion CalculateLookCalibration(
+        Vector3 targetPosition,
+        Vector3 cameraPosition)
+    {
 
         Vector3 direction =
             targetPosition - cameraPosition;
@@ -388,10 +477,52 @@ public class UfoMovement : MonoBehaviour
         rotationBlendActive = false;
     }
 
+    private void UpdatePositionBlend()
+    {
+        if (!positionBlendActive)
+            return;
+
+        float elapsed =
+            Time.unscaledTime -
+            positionBlendStartTime;
+
+        float t = Mathf.Clamp01(
+            elapsed /
+            positionBlendDuration
+        );
+
+        float eased =
+            t * t * (3f - 2f * t);
+
+        anchorPos = Vector3.Lerp(
+            positionBlendStart,
+            positionBlendTarget,
+            eased
+        );
+
+        if (t < 1f)
+            return;
+
+        anchorPos = positionBlendTarget;
+        positionBlendActive = false;
+    }
+
     private void CancelRotationBlend()
     {
         rotationBlendActive = false;
         rotationBlendDuration = 0f;
+    }
+
+    private void CancelPositionBlend()
+    {
+        positionBlendActive = false;
+        positionBlendDuration = 0f;
+    }
+
+    private void CancelRecenterBlend()
+    {
+        CancelPositionBlend();
+        CancelRotationBlend();
     }
 
     private Quaternion SafeLookRotation(
